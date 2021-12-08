@@ -59,6 +59,11 @@ class User extends Authenticatable
         return ($this->role->privilege == $this->privilege['project_manager']);
     }
 
+    public function getIsEmployeeAttribute()
+    {
+        return ($this->role->privilege == $this->privilege['employee']);
+    }
+
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id', 'id');
