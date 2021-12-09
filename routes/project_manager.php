@@ -14,5 +14,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/dashboard', function () {
-    return view('project_manager.dashboard.dashboard');
+    return view('project_manager.pages.dashboard.dashboard');
 })->middleware(['project_manager'])->name('dashboard');
+
+Route::group([
+    'as'     => 'projects.',
+    'prefix' => 'projects',
+], function () {
+
+    Route::get('/', 'ProjectController@index')
+                    ->name('all');
+    Route::get('/create', 'ProjectController@create')
+                    ->name('create');
+
+});

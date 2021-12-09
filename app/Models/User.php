@@ -73,4 +73,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Division::class, 'division_id', 'id');
     }
+    
+    public function projects()
+    {
+        return $this->hasMany(Project::class, 'user_id');
+    }
 }
