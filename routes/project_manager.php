@@ -26,5 +26,7 @@ Route::group([
                     ->name('all');
     Route::get('/create', 'ProjectController@create')
                     ->name('create');
+    Route::post('/store', 'ProjectController@store')
+                    ->name('store');
 
 });

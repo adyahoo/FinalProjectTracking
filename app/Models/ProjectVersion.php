@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProjectVersion extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'project_id', 
         'version_number',

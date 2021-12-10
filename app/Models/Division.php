@@ -11,6 +11,6 @@ class Division extends Model
 
     public function user()
     {
-        return $this->hasMany(User::class, 'division_id');
+        return $this->hasMany(User::class);
     }
 }
