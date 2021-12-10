@@ -32,6 +32,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        if(Auth::user()->isProjectManager)
+            return redirect()->route('project_manager.dashboard');
+        else if(Auth::user()->isAdmin)
+            return redirect()->route('admin.dashboard');
+        else if(Auth::user()->isEmployee)
+            return redirect()->route('employee.dashboard');
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
