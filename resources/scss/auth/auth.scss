@@ -1,0 +1,27 @@
+@use '../config/__config.scss' as *;
+@use 'sass:map';
+
+* {
+    box-sizing: border-box;
+}
+
+.section-login {
+    background-color: map.get($color, "light");
+    
+    &__logo {
+        width: 300px;
+        height: 100px;
+        object-fit: cover;
+    }
+
+    &__btn {
+        margin-bottom: 10px;
+        width: 80%;
+        max-width: 450px;
+        height: 40px;
+        background-color: map.get($color, "primary");
+        color: white;
+        border-radius: 10px;
+        font-size: 16px;
+    }
+}

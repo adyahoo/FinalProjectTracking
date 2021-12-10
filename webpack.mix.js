@@ -16,3 +16,8 @@ mix.js('resources/js/app.js', 'public/js').postCss('resources/css/app.css', 'pub
     require('tailwindcss'),
     require('autoprefixer'),
 ]);
+
+mix.sass('resources/scss/auth/auth.scss', 'public/css/auth')
+    .sourceMaps(true, 'source-map');
+
+mix.version();

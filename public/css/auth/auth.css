@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+}
+
+.section-login {
+  background-color: #F9FDFF;
+}
+.section-login__logo {
+  width: 300px;
+  height: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.section-login__btn {
+  margin-bottom: 10px;
+  width: 80%;
+  max-width: 450px;
+  height: 40px;
+  background-color: #6DDA5F;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+/*# sourceMappingURL=auth.css.map*/
