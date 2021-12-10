@@ -5,7 +5,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>General Dashboard &mdash; Stisla</title>
 
-    @include('layouts.components.project_manager.style')
+    @include('layouts.components.project.style')
   </head>
 
   <body>
@@ -85,7 +85,7 @@
         </nav>
         <div class="main-sidebar">
           <aside id="sidebar-wrapper">
-              @include('layouts.components.project_manager.sidebar')
+              @include('layouts.components.project.project_manager.sidebar')
           </aside>
         </div>
 
@@ -106,6 +106,6 @@
       </div>
     </div>
 
-    @include('layouts.components.project_manager.script')
+    @include('layouts.components.project.script')
   </body>
 </html>

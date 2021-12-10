@@ -16,17 +16,17 @@ class RoleSeeder extends Seeder
     {
         DB::table('roles')->insert([
             'name'      => 'Admin',
-            'previlege' => 'admin'
+            'privilege' => 'admin'
         ]);
 
         DB::table('roles')->insert([
             'name'      => 'Project Manager',
-            'previlege' => 'project_manager'
+            'privilege' => 'project_manager'
         ]);
 
         DB::table('roles')->insert([
             'name'      => 'Programmer',
-            'previlege' => 'employee'
+            'privilege' => 'employee'
         ]);
     }
 }

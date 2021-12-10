@@ -1,0 +1,22 @@
+@use '../config/__config.scss' as *;
+
+.section-banner {
+    &__container {
+        // @include spaceImage($maxWidth: 1920px, $imgWidth: 1920, $imgHeight: 1080);
+        @include spaceImage($maxWidth: 1920px, $imgWidth: 1309, $imgHeight: 447);
+    }
+
+    &__img {
+        @include imgToFillSpace;
+        object-fit: cover;
+    }
+
+    &__content-container {
+        @include spaceImage($maxWidth: 250px, $imgWidth: 371, $imgHeight: 371);
+    }
+
+    &__content-img {
+        @include imgToFillSpace;
+        object-fit: cover;
+    }
+}

@@ -1,5 +1,8 @@
 {
-    "/js/app.js": "/js/app.js?id=d0855cefffddf0306108",
+    "/js/app.js": "/js/app.js?id=cad3bc4946946287db02",
+    "/js/blog/layout.js": "/js/blog/layout.js?id=dd0bd0259f4550b5d021",
     "/css/app.css": "/css/app.css?id=e32e64724e1b64e0bb20",
+    "/css/blog/banner.css": "/css/blog/banner.css?id=d00bf44f1bfcc6163e21",
+    "/css/blog/layout.css": "/css/blog/layout.css?id=4987c325fd29bc7f1cfe",
     "/css/auth/auth.css": "/css/auth/auth.css?id=1377519d8f21aa5659e2"
 }

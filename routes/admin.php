@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/dashboard', function () {
-    return view('admin.pages.dashboard.dashboard');
+    return view('project.admin.pages.dashboard.dashboard');
 })->middleware(['admin'])->name('dashboard');
