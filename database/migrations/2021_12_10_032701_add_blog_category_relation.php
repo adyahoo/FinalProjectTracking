@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLogs extends Migration
+class AddBlogCategoryRelation extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateLogs extends Migration
      */
     public function up()
     {
-        Schema::create('logs', function (Blueprint $table) {
-            $table->id();
-            $table->string('desc');
-            $table->timestamps();
+        Schema::table('blogs', function (Blueprint $table) {
+            $table->foreign('blog_category_id')->references('id')->on('blog_categories');
         });
     }
 
@@ -27,6 +25,8 @@ class CreateLogs extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('logs');
+        Schema::table('blogs', function (Blueprint $table) {
+            $table->dropForeign(['blog_category_id']);
+        });
     }
 }
