@@ -1,8 +1,10 @@
 {
-    "/js/app.js": "/js/app.js?id=cad3bc4946946287db02",
+    "/js/app.js": "/js/app.js?id=5dc7b71b1fc034644246",
     "/js/blog/layout.js": "/js/blog/layout.js?id=dd0bd0259f4550b5d021",
+    "/js/blog/swiper-js.js": "/js/blog/swiper-js.js?id=40e7dec2a29cec4ccef5",
     "/css/app.css": "/css/app.css?id=e32e64724e1b64e0bb20",
-    "/css/blog/banner.css": "/css/blog/banner.css?id=d00bf44f1bfcc6163e21",
-    "/css/blog/layout.css": "/css/blog/layout.css?id=4987c325fd29bc7f1cfe",
+    "/css/blog/home/home.css": "/css/blog/home/home.css?id=7fac23934d03b865d09a",
+    "/css/blog/banner.css": "/css/blog/banner.css?id=6abe429b1d6a2da54025",
+    "/css/blog/layout.css": "/css/blog/layout.css?id=7695de545d8f0f59b3a8",
     "/css/auth/auth.css": "/css/auth/auth.css?id=1377519d8f21aa5659e2"
 }

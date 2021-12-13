@@ -1,22 +1,62 @@
 @use '../config/__config.scss' as *;
+@use 'sass:map';
 
 .section-banner {
     &__container {
         // @include spaceImage($maxWidth: 1920px, $imgWidth: 1920, $imgHeight: 1080);
         @include spaceImage($maxWidth: 1920px, $imgWidth: 1309, $imgHeight: 447);
     }
-
+    
     &__img {
         @include imgToFillSpace;
         object-fit: cover;
     }
-
+    
+    &__content {
+        position: absolute;
+        width: auto;
+        top: 55px;
+        left: 180px;
+    }
+    
     &__content-container {
         @include spaceImage($maxWidth: 250px, $imgWidth: 371, $imgHeight: 371);
     }
-
+    
     &__content-img {
         @include imgToFillSpace;
         object-fit: cover;
+    }
+    
+    &__desc {
+        display: -webkit-box;
+        line-height: 1.5;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis
+    }
+    
+    &__date-created {
+        color: map.get($color, "primary");
+    }
+}
+
+.swiper {
+    margin-left: 0px !important;
+    width: 80%;
+    max-width: 1000px;
+
+    &-pagination-bullets {
+        bottom: 0px !important;
+    }
+
+    &-pagination-bullet {
+        background: none !important;
+        border: 1px solid map.get($color, "dark") !important;
+        
+        &-active {
+            background: map.get($color, "primary") !important;
+        }
     }
 }
