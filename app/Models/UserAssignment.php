@@ -11,7 +11,7 @@ class UserAssignment extends Model
 
     protected $fillable = [
         'user_id',
-        'module_id',
+        'project_detail_id',
     ];
 
     public function user()

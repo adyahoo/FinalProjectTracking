@@ -16,7 +16,7 @@ class CreateUserAssignments extends Migration
         Schema::create('user_assignments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('module_id');
+            $table->unsignedBigInteger('project_detail_id');
             $table->timestamps();
         });
     }
