@@ -31,18 +31,24 @@ class ProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'      => 'required',
-            'start_date' => 'required',
-            'end_date'   => 'required'
+            'name'        => 'required',
+            'start_date'  => 'required',
+            'end_date'    => 'required',
+            'description' => 'required',
+            'scope'       => 'required',
+            'credentials' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'title.required'      => 'A title is required',
-            'start_date.required' => 'A start date is required',
-            'end_date.required'   => 'A end date is required'
+            'name.required'        => 'A name is required',
+            'start_date.required'  => 'A start date is required',
+            'end_date.required'    => 'A end date is required',
+            'description.required' => 'A description is required',
+            'scope.required'       => 'A scope is required',
+            'credentials.required' => 'A credentials is required'
         ];
     }
 }

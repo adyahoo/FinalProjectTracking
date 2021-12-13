@@ -7,16 +7,16 @@
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
           <div class="card">
-            <form action="{{ route('project_manager.projects.store') }}" method="POST">
+            <form action="{{ route('project_manager.projects.update', $project) }}" method="POST">
               @csrf
 
               <div class="card-header">
-                <h4>Create Project</h4>
+                <h4>Edit Project</h4>
               </div>
               <div class="card-body">
                 <div class="form-group">
                   <label>Name</label>
-                  <input type="text" value="{{ old('name') }}" @error('name') class="form-control is-invalid" @else class="form-control" @enderror name="name">
+                  <input type="text" value="{{ $project->name }}" @error('name') class="form-control is-invalid" @else class="form-control" @enderror name="name">
                   @error('name')
                       <div class="invalid-feedback">
                         {{ $message }}
@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group">
                   <label>Description</label>
-                  <textarea @error('description') class="form-control is-invalid" @else class="form-control" @enderror rows="10" name="description">{{ old('description') }}</textarea>
+                  <textarea @error('description') class="form-control is-invalid" @else class="form-control" @enderror rows="10" name="description">{{ $project->description }}</textarea>
                   @error('description')
                       <div class="invalid-feedback">
                         {{ $message }}
@@ -35,7 +35,7 @@
                 <div class="form-row">
                       <div class="form-group col-md-6 col-lg-6">
                           <label>Start Date</label>
-                          <input value="{{ old('start_date') }}" type="date" @error('start_date') class="form-control is-invalid" @else class="form-control" @enderror name="start_date">
+                          <input value="{{ $project->start_date->format('Y-m-d') }}" type="date" @error('start_date') class="form-control is-invalid" @else class="form-control" @enderror name="start_date">
                           @error('start_date')
                               <div class="invalid-feedback">
                                 {{ $message }}
@@ -44,7 +44,7 @@
                       </div>
                       <div class="form-group col-md-6 col-lg-6">
                           <label>End Date</label>
-                          <input value="{{ old('end_date') }}" type="date" @error('end_date') class="form-control is-invalid" @else class="form-control" @enderror name="end_date">
+                          <input value="{{ $project->end_date->format('Y-m-d') }}" type="date" @error('end_date') class="form-control is-invalid" @else class="form-control" @enderror name="end_date">
                           @error('end_date')
                               <div class="invalid-feedback">
                                 {{ $message }}
@@ -59,7 +59,7 @@
                         {{ $message }}
                     </div>
                   @enderror
-                  <textarea class="summernote" name="scope">{{ old('scope') }}</textarea>
+                  <textarea class="summernote" name="scope">{{ $project->scope }}</textarea>
                 </div>
                 <div class="form-group">
                   <label>Credentials</label>
@@ -68,7 +68,7 @@
                         {{ $message }}
                     </div>
                   @enderror
-                  <textarea class="summernote" name="credentials">{{ old('credentials') }}</textarea>
+                  <textarea class="summernote" name="credentials">{{ $project->credentials }}</textarea>
                 </div>
               </div>
               <div class="card-footer text-center">

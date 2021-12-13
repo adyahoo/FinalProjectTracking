@@ -15,4 +15,9 @@ class Module extends Model
         'start_date', 
         'end_date'
     ];
+
+    public function user_assigments()
+    {
+        return $this->hasMany(UserAssignment::class);
+    }
 }

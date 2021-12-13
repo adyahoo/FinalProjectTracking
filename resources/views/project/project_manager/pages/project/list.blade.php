@@ -10,7 +10,7 @@
                 <div class="card-header">
                     <h4>Project List</h4>
                     <div class="card-header-action">
-                        <a href="#" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
+                        <a href="{{ route('project_manager.projects.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
                     </div>
                 </div>
                 <div class="card-body p-0">
@@ -27,31 +27,34 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        Timedoor Internal Job Tracking
-                                        <div class="table-links">
-                                            <div class="bullet"></div>
-                                            <a href="#">View</a>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        3
-                                    </td>
-                                    <td>
-                                        5
-                                    </td>
-                                    <td>
-                                        08-07-2021
-                                    </td>
-                                    <td>
-                                        <div class="badge badge-warning">In Progress</div>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                        <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?" data-confirm-yes="alert('Deleted')"><i class="fas fa-trash"></i></a>
-                                    </td>
-                                </tr>
+                                @foreach($projects as $project)
+                                    <tr>
+                                        <td>
+                                            {{ $project->name }}
+                                            <div class="table-links">
+                                                <div class="bullet"></div>
+                                                <a href="#">View</a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            3
+                                        </td>
+                                        <td>
+                                            5
+                                        </td>
+                                        <td>
+                                            {{ $project->end_date->format('d-m-Y') }}
+                                        </td>
+                                        <td>
+                                            <div class="badge badge-warning">In Progress</div>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('project_manager.projects.edit', $project->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?" data-confirm-yes="deleteItem('{{ route('project_manager.projects.destroy', $project) }}', {{ $project }})"><i class="fas fa-trash"></i></a>
+                                            <a class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

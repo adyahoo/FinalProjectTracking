@@ -28,5 +28,11 @@ Route::group([
                     ->name('create');
     Route::post('/store', 'ProjectController@store')
                     ->name('store');
+    Route::get('/edit/{project}', 'ProjectController@edit')
+                    ->name('edit');
+    Route::post('/update/{project}', 'ProjectController@update')
+                    ->name('update');
+    Route::delete('/destroy/{project}', 'ProjectController@destroy')
+                    ->name('destroy');
 
 });

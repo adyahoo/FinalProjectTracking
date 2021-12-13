@@ -31,4 +31,9 @@ class ProjectDetail extends Model
     {
         return $this->morphTo();
     }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
 }
