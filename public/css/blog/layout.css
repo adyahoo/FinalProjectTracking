@@ -65,4 +65,17 @@ body {
   }
 }
 
+.footer {
+  height: 300px;
+  padding: 32px 0;
+  background-color: #44546A;
+}
+.footer__icon {
+  font-size: 32px;
+}
+
+.section {
+  margin-bottom: 60px;
+}
+
 /*# sourceMappingURL=layout.css.map*/
