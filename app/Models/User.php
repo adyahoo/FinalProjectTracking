@@ -66,16 +66,16 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->belongsTo(Role::class, 'role_id', 'id');
+        return $this->belongsTo(Role::class);
     }
 
     public function division()
     {
-        return $this->belongsTo(Division::class, 'division_id', 'id');
+        return $this->belongsTo(Division::class);
     }
     
     public function projects()
     {
-        return $this->hasMany(Project::class, 'user_id');
+        return $this->hasMany(Project::class);
     }
 }

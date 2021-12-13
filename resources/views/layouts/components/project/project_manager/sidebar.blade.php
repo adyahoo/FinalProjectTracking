@@ -11,7 +11,7 @@
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-project-diagram"></i> <span>Projects</span></a>
         <ul class="dropdown-menu">
             <li><a class="nav-link" href="{{ route('project_manager.projects.all') }}">Project List</a></li>
-            <li><a class="nav-link" href="{{ route('project_manager.projects.create') }}">Add Project</a></li>
+            <li><a class="nav-link" href="{{ route('project_manager.projects.create') }}">Create Project</a></li>
         </ul>
     </li>
     <li class="nav-item dropdown">
