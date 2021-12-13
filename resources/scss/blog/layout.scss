@@ -72,3 +72,17 @@ body {
         }
     }
 }
+
+.footer {
+    height: 300px;
+    padding: 32px 0;
+    background-color: map.get($colorText, "secondary");
+
+    &__icon {
+        font-size: map.get($footerFontSize, "title");
+    }
+}
+
+.section {
+    margin-bottom: 60px;
+}

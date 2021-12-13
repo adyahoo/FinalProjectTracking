@@ -11,8 +11,7 @@ class ProjectDetail extends Model
 
     protected $fillable = [
         'project_version_id',
-        'moduleable_id',
-        'moduleable_type',
+        'module_id',
         'status',
         'special_module',
         'start_date',

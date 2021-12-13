@@ -1,0 +1,9 @@
+.section-most-viewed__title, .section-popular-author__title {
+  display: inline-block;
+  margin-bottom: 40px;
+  padding: 0 30px;
+  color: black;
+  border-bottom: 2px solid black;
+}
+
+/*# sourceMappingURL=home.css.map*/

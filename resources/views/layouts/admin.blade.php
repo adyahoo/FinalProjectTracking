@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>General Dashboard &mdash; Stisla</title>
-
+    @yield('css')
     @include('layouts.components.project.style')
   </head>
 
@@ -105,7 +105,8 @@
         </footer>
       </div>
     </div>
-
+    @yield('modal')
     @include('layouts.components.project.script')
+    @yield('js')
   </body>
 </html>
