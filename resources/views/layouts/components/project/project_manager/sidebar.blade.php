@@ -1,7 +1,7 @@
 <div class="sidebar-brand">
     <a href="index.html">Project Tracker</a>
 </div>
-  <div class="sidebar-brand sidebar-brand-sm">
+<div class="sidebar-brand sidebar-brand-sm">
     <a href="index.html">Pt</a>
 </div>
 <ul class="sidebar-menu">
