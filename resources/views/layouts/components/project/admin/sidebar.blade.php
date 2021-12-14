@@ -17,9 +17,9 @@
     <li class="nav-item dropdown {{ Request::is('admin/membership/*') ? 'active' : '' }}">
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-users"></i> <span>Membership</span></a>
         <ul class="dropdown-menu">
-            <li><a class="nav-link" href="layout-default.html">Member List</a></li>
+            <li class="{{ Request::is('admin/membership/members/*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.members.index')}}">Member List</a></li>
             <li class="{{ Request::is('admin/membership/roles/*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.roles.index')}}">Roles</a></li>
-            <li><a class="nav-link" href="layout-transparent.html">Division</a></li>
+            <li class="{{ Request::is('admin/membership/divisions/*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.divisions.index')}}">Division</a></li>
         </ul>
     </li>
     <li class="nav-item dropdown">

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Roles')
+@section('title','Divisions')
 @section('css')
 <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
@@ -7,7 +7,7 @@
 
 @section('content')
 <div class="section-header">
-    <h1>Role Management</h1>
+    <h1>Divisions Management</h1>
 </div>
 
 <div class="section-body">
@@ -15,10 +15,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Roles Data</h4>
-                    <button data-action="{{route('admin.roles.store')}}" class="btn btn-primary btn-round ml-auto btn-add text-white" data-toggle="modal" data-target="#modal">
+                    <h4>Divisions Data</h4>
+                    <button data-action="{{route('admin.divisions.store')}}" class="btn btn-primary btn-round ml-auto btn-add text-white" data-toggle="modal" data-target="#modal">
                         <i class="fa fa-plus"></i>
-                        Add Role
+                        Add Division
                     </button>
                 </div>
                 <div class="card-body">
@@ -30,25 +30,23 @@
                                     <th style="width: 10%">
                                         No.
                                     </th>
-                                    <th>Role Name</th>
-                                    <th>Privilege</th>
+                                    <th>Division Name</th>
                                     <th style="width: 20%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($roles as $role)
+                                @foreach($divisions as $division)
                                     <tr>
                                         <td>
                                             {{$loop->iteration}}
                                         </td>
-                                        <td>{{$role->name}}</td>
-                                        <td>{{$role->privilege}}</td>
+                                        <td>{{$division->name}}</td>
                                         <td>
-                                            <a data-detail="{{route('admin.roles.show', $role)}}" data-action="{{route('admin.roles.update', $role)}}" href="#" class="btn btn-info btn-edit" data-toggle="modal" data-target="#modal"><i class="fa fa-pencil-alt"></i></a>
-                                            <a href="#" onclick="deleteConfirm('del{{$role->id}}')" class="btn btn-danger text-white">
+                                            <a data-detail="{{route('admin.divisions.show', $division)}}" data-action="{{route('admin.divisions.update', $division)}}" href="#" class="btn btn-info btn-edit" data-toggle="modal" data-target="#modal"><i class="fa fa-pencil-alt"></i></a>
+                                            <a href="#" onclick="deleteConfirm('del{{$division->id}}')" class="btn btn-danger text-white">
                                                 <i class="fa fa-trash"></i>
                                             </a>
-                                            <form id="del{{$role->id}}" action="{{ route('admin.roles.delete', $role) }}" method="post">        
+                                            <form id="del{{$division->id}}" action="{{ route('admin.divisions.delete', $division) }}" method="post">        
                                                 @method('delete')
                                                 @csrf
                                             </form>
@@ -73,28 +71,16 @@
             <input id="method" type="hidden" name="_method" value="" />
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 id="title" class="modal-title">Role Form</h5>
+                    <h5 id="title" class="modal-title">Division Form</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Role</label>
-                        <input id="roleName" name="name" value="" type="text" class="form-control" placeholder="Input Role Name">
+                        <label>Division</label>
+                        <input id="divisionName" name="name" value="" type="text" class="form-control" placeholder="Input Division Name">
                         @error('name')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label>Privilege</label>
-                        <select id="privilege" name="privilege" class="form-control">
-                            <option value="">Select privilege</option>
-                            <option value="admin">Admin</option>
-                            <option value="project_manager">Project Manager</option>
-                            <option value="employee">Employee</option>
-                        </select>
-                        @error('privilege')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
@@ -148,7 +134,7 @@
 <script>
     $(".btn-add").click(function(){
         let action = $(this).data('action');
-        $('#title').text('Add Role')
+        $('#title').text('Add Division')
         $('#form').attr('action', action);
         $("#form").attr("method", "post");
     });
@@ -156,13 +142,12 @@
     $(".btn-edit").click(function(){
         let action = $(this).data('action');
         let detail = $(this).data('detail');
-        $('#title').text('Edit Role')
+        $('#title').text('Edit Division')
         $('#form').attr('action', action);
         $("#form").attr("method", "post");
         $("#method").attr("value", "put");
         $.get(detail, function (data) {
-            $('#roleName').val(data.name);
-            $('#privilege').val(data.privilege);
+            $('#divisionName').val(data.name);
         });
     });
 </script>

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Hash;
 
 class User extends Authenticatable
 {
@@ -28,6 +29,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'gender',
+        'role_id',
+        'division_id',
+        'phone',
+        'profile_image',
+        'birth_date',
     ];
 
     /**
@@ -62,6 +69,11 @@ class User extends Authenticatable
     public function getIsEmployeeAttribute()
     {
         return ($this->role->privilege == $this->privilege['employee']);
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = !$value ?  null : Hash::make($value);
     }
 
     public function role()

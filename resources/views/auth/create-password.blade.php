@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('password.email') }}">
+    <form method="POST" action="{{ route('password.store', $user) }}">
         @csrf
         <x-auth-card>
             <x-slot name="logo">
@@ -27,6 +27,9 @@
                 name="password"
                 required autocomplete="current-password" 
                 placeholder="Type your password"/>
+                @error('password')
+                    <span style="color:red">{{$message}}</span>
+                @enderror
             </div>
             
             <!-- Confirm Password -->
@@ -35,13 +38,16 @@
                 
                 <x-input id="password" class="block mt-1 w-full"
                 type="password"
-                name="password"
+                name="password_confirmation"
                 required autocomplete="current-password" 
                 placeholder="Type your confirm password"/>
+                @error('password_confirmation')
+                    <span style="color:red">{{$message}}</span>
+                @enderror
             </div>
         </x-auth-card>
         <div class="section-login text-center">
-            <button type="submit" href="/" class="section-login__btn">
+            <button type="submit" class="section-login__btn">
                 Submit
             </button>
         </div>

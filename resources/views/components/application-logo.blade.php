@@ -1,1 +1,1 @@
-<img src="images/logo-timedoor.svg" alt="Logo icon" {{ $attributes }}/>
+<img src="{{asset('images/logo-timedoor.svg')}}" alt="Logo icon" {{ $attributes }}/>
