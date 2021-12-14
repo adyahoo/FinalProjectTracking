@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('title', 'Dashboard Admin')
 @section('content')
     <div class="section-header">
         <h1>Dashboard</h1>
