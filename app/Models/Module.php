@@ -16,8 +16,8 @@ class Module extends Model
         'end_date'
     ];
 
-    public function user_assigments()
+    public function project_detail()
     {
-        return $this->hasMany(UserAssignment::class);
+        return $this->hasMany(ProjectDetail::class);
     }
 }

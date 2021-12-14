@@ -13,7 +13,6 @@
 <script src="{{ asset('templates/stisla/node_modules/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
 <script src="{{ asset('templates/stisla/node_modules/summernote/dist/summernote-bs4.js') }}"></script>
 <script src="{{ asset('templates/stisla/node_modules/chocolat/dist/js/jquery.chocolat.min.js') }}"></script>
-<script src="{{ asset('templates/stisla/node_modules/sweetalert/dist/sweetalert.min.js') }}"></script>
 
 <!-- Template JS File -->
 <script src="{{ asset('templates/stisla/assets/js/scripts.js') }}"></script>
@@ -21,57 +20,3 @@
 
 <!-- Page Specific JS File -->
 <script src="{{ asset('templates/stisla/assets/js/page/index-0.js') }}"></script>
-
-<!-- Modal Custom Script -->
-@if (Session::has('success'))
-    <script>
-        swal("Success!", "{{ Session::get('success') }}", "success");
-    </script>
-@endif
-@if($errors->any())
-    <script>
-        var msg = "{{ implode(' \n', $errors->all(':message')) }}";
-        swal("Error!", msg , "error");
-    </script>
-@endif
-<script>
-    window.deleteConfirm = function(formId) {
-        swal({
-            title: 'Delete Confirmation',
-            icon: 'warning',
-            text: 'Do you want to delete this?',
-            buttons: true,
-            dangerMode: true,
-        }).then((willDelete) => {
-            if (willDelete) {
-                $('#'+formId).submit();
-            }
-        });
-    }
-</script>
-<script>
-    $("#table-1").dataTable({
-        
-    });
-</script>
-<script>
-    $(".btn-add").click(function(){
-        let action = $(this).data('action');
-        $('#title').text('Add Role')
-        $('#form').attr('action', action);
-        $("#form").attr("method", "post");
-    });
-
-    $(".btn-edit").click(function(){
-        let action = $(this).data('action');
-        let detail = $(this).data('detail');
-        $('#title').text('Edit Role')
-        $('#form').attr('action', action);
-        $("#form").attr("method", "post");
-        $("#method").attr("value", "put");
-        $.get(detail, function (data) {
-            $('#roleName').val(data.name);
-            $('#privilege').val(data.privilege);
-        });
-    });
-</script>

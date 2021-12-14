@@ -7,17 +7,17 @@
                 <h1>{{ $project->name }}</h1>
             </div>
             <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-right">
-                <p>Latest Version v1.0.0</p>
+                <p>Latest Version v{{ $latestVersion->version_number }}</p>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-8 col-md-8 col-12 col-sm-12">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link active-tab" href="#">Detail</a>
+                        <a class="nav-link active-tab" href="{{ route('project_manager.projects.detail', $project) }}">Detail</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Modules</a>
+                        <a class="nav-link" href="{{ route('project_manager.projects.modules', $project) }}">Modules</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Version</a>

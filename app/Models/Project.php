@@ -20,13 +20,31 @@ class Project extends Model
         'end_date'
     ];
 
+    public function scopeWhereDueDate($query, $dueDate)
+    {
+        if (!empty($dueDate))
+            return $query->where('end_date', $dueDate);
+    }
+
+    // public function scopeWhereRoleAssignee($query, $role)
+    // {
+    //     if (!empty($role))
+    //         return $query->where('end_date', $dueDate);
+    // }
+
+    // public function scopeWhereUserAssignee($query, $user)
+    // {
+    //     if (!empty($user))
+    //         return $query->where('end_date', $dueDate);
+    // }
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function project_details()
+    public function project_versions()
     {
-        return $this->hasMany(ProjectDetail::class);
+        return $this->hasMany(ProjectVersion::class);
     }
 }

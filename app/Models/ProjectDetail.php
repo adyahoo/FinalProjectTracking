@@ -26,13 +26,13 @@ class ProjectDetail extends Model
         return $this->belongsTo(ProjectVersion::class);
     }
 
-    public function moduleable()
+    public function modules()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Module::class);
     }
 
-    public function project()
+    public function user_assigments()
     {
-        return $this->belongsTo(Project::class);
+        return $this->hasMany(UserAssignment::class);
     }
 }

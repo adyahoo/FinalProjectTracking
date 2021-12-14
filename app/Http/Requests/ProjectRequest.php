@@ -43,12 +43,7 @@ class ProjectRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'        => 'A name is required',
-            'start_date.required'  => 'A start date is required',
-            'end_date.required'    => 'A end date is required',
-            'description.required' => 'A description is required',
-            'scope.required'       => 'A scope is required',
-            'credentials.required' => 'A credentials is required'
+            'required' => 'A :attribute is required'
         ];
     }
 }

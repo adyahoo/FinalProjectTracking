@@ -19,9 +19,9 @@ class UserAssignment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function module()
+    public function project_detail()
     {
-        return $this->belongsTo(Module::class);
+        return $this->belongsTo(ProjectDetail::class);
     }
 
 }
