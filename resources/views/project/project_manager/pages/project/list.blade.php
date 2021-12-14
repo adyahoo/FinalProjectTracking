@@ -33,7 +33,7 @@
                                             {{ $project->name }}
                                             <div class="table-links">
                                                 <div class="bullet"></div>
-                                                <a href="#">View</a>
+                                                <a href="{{ route('project_manager.projects.detail', $project) }}">View</a>
                                             </div>
                                         </td>
                                         <td>
@@ -50,8 +50,13 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('project_manager.projects.edit', $project->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                            <a class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete" data-confirm="Are You Sure?|This action can not be undone. Do you want to continue?" data-confirm-yes="deleteItem('{{ route('project_manager.projects.destroy', $project) }}', {{ $project }})"><i class="fas fa-trash"></i></a>
-                                            <a class="btn btn-danger" data-toggle="modal" data-target="#exampleModal"></a>
+                                            <a href="#" onclick="deleteConfirm('del{{ $project->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                            <form id="del{{ $project->id }}" action="{{ route('project_manager.projects.destroy', $project) }}" method="POST">
+                                                @method('delete')
+                                                @csrf
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

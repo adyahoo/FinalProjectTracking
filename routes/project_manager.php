@@ -21,9 +21,14 @@ Route::group([
     'as'     => 'projects.',
     'prefix' => 'projects',
 ], function () {
-
     Route::get('/', 'ProjectController@index')
                     ->name('all');
+    Route::get('/{project}', 'ProjectController@detail')
+                    ->name('detail');
+    Route::get('/{project}/scope', 'ProjectController@scope')
+                    ->name('scope');
+    Route::get('/{project}/credentials', 'ProjectController@credentials')
+                    ->name('credentials');
     Route::get('/create', 'ProjectController@create')
                     ->name('create');
     Route::post('/store', 'ProjectController@store')
@@ -34,5 +39,4 @@ Route::group([
                     ->name('update');
     Route::delete('/destroy/{project}', 'ProjectController@destroy')
                     ->name('destroy');
-
 });

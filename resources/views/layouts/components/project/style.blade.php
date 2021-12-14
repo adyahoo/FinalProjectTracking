@@ -11,3 +11,6 @@
 <!-- Template CSS -->
 <link rel="stylesheet" href="{{ asset('templates/stisla/assets/css/style.css') }}">
 <link rel="stylesheet" href="{{ asset('templates/stisla/assets/css/components.css') }}">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{{ asset('templates/stisla/assets/css/custom.css') }}">
