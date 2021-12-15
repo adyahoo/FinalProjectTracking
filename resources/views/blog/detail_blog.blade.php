@@ -20,14 +20,14 @@
             <div class="section section-detail">
                 <h2 class="text-dark">12 Tips On Creating Content For Your New Website (A Complete Guide)</h2>
                 <div class="row no-gutters align-items-center">
-                    <div class="col-2">
+                    <div class="col-3 col-lg-2">
                         <div class="rounded-circle section-detail__profile-container">
                             <img class="section-detail__profile-img" src="{{asset('images/img-profile.png')}}">
                         </div>
                     </div>
-                    <div class="col-5 section-detail__profile-info">
+                    <div class="col-7 col-lg-9 ml-3 section-detail__profile-info">
                         <a href="{{route('author')}}">
-                            <p class="section-detail__profile-name font-weight-bold d-inline-block">Emily Johnson</p>
+                            <p class="section-detail__profile-name font-weight-bold d-inline-block mb-0">Emily Johnson</p>
                         </a>
                         <p>
                             Published at: 12 Desember 2020<br>
@@ -62,7 +62,7 @@
         </h3>
         <div class="row">
             @for($i = 0; $i < 4; $i++)
-            <div class="col-6">
+            <div class="col-12 col-lg-6">
                 <x-content-horiz></x-content-horiz>
             </div>
             @endfor

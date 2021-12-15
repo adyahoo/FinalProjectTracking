@@ -16,6 +16,7 @@
 .fab-container {
   display: flex;
   position: fixed;
+  z-index: 10;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;

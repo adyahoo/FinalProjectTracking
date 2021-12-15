@@ -4,7 +4,7 @@
 .section-content {
     &__icon {
         margin-left: 20px;
-        font-size: map.get($footerFontSize, "title");
+        font-size: 20px;
     }
 
     &__content-container {
@@ -18,6 +18,12 @@
     
     &__date-created {
         color: map.get($color, "primary");
+
+        @media (max-width: 767px) {
+            margin-bottom: 5px;
+            font-size: 12px;
+            line-height: 15px;
+        }
     }
 
     &__desc {
@@ -26,7 +32,7 @@
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
-        text-overflow: ellipsis
+        text-overflow: ellipsis;
     }
 
     &__vert-img-container {
@@ -36,5 +42,11 @@
     &__vert-img {
         @include imgToFillSpace;
         object-fit: cover;
+    }
+}
+
+.fa-filter {
+    @media (min-width: 768px) {
+        display: none;
     }
 }
