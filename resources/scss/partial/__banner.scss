@@ -15,9 +15,14 @@
     
     &__content {
         position: absolute;
-        width: auto;
+        width: 80%;
         top: 55px;
         left: 190px;
+
+        @media (max-width: 575px) {
+            top: 13px;
+            left: 55px;
+        }
     }
     
     &__content-container {

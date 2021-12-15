@@ -13,7 +13,7 @@
     </h3>
     <div class="row">
         @for($i = 0; $i < 4; $i++)
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <x-content-horiz></x-content-horiz>
         </div>
         @endfor
@@ -25,7 +25,7 @@
     </h3>
     <div class="row">
         @for($i = 0; $i < 4; $i++)
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <x-content-horiz></x-content-horiz>
         </div>
         @endfor

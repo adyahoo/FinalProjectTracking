@@ -16,6 +16,7 @@
 .fab-container {
   display: flex;
   position: fixed;
+  z-index: 10;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
@@ -117,9 +118,6 @@
 }
 .section-detail__profile-name {
   color: #6DDA5F;
-}
-.section-detail__profile-info p {
-  margin: 10px 0px;
 }
 
 .section-body__img-container {

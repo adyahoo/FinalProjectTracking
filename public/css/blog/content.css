@@ -1,6 +1,6 @@
 .section-content__icon {
   margin-left: 20px;
-  font-size: 32px;
+  font-size: 20px;
 }
 .section-content__content-container {
   position: relative;
@@ -22,6 +22,13 @@
 }
 .section-content__date-created {
   color: #6DDA5F;
+}
+@media (max-width: 767px) {
+  .section-content__date-created {
+    margin-bottom: 5px;
+    font-size: 12px;
+    line-height: 15px;
+  }
 }
 .section-content__desc {
   display: -webkit-box;
@@ -48,6 +55,12 @@
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+@media (min-width: 768px) {
+  .fa-filter {
+    display: none;
+  }
 }
 
 /*# sourceMappingURL=content.css.map*/
