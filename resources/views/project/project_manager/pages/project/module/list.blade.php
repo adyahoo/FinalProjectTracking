@@ -19,13 +19,13 @@
             <div class="col-lg-8 col-md-8 col-12 col-sm-12">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Detail</a>
+                        <a class="nav-link" href="{{ route('project_manager.projects.detail', $project) }}">Detail</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active-tab" href="#">Modules</a>
+                        <a class="nav-link active-tab" href="{{ route('project_manager.projects.module.all', $project) }}">Modules</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Version</a>
+                        <a class="nav-link" href="{{ route('project_manager.projects.versions', $project) }}">Version</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Logs</a>
@@ -43,7 +43,10 @@
                 <div class="card-header">
                     <h4>Project Modules</h4>
                     <div class="card-header-action">
-                        <a href="{{ route('project_manager.projects.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
+                        <button data-action="{{route('project_manager.projects.module.create', $project)}}" class="btn btn-primary btn-round ml-auto btn-add text-white" data-toggle="modal" data-target="#modal">
+                            <i class="fa fa-plus"></i>
+                            Add Module
+                        </button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -58,8 +61,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($project->project_versions as $projectVersion)
-                                    @foreach($projectVersion->project_details as $projectDetail)
+                                @foreach($project->project_versions as $version)
+                                    @foreach($version->project_details as $projectDetail)
                                         <tr>
                                             <td>
                                                 @isset($projectDetail->special_module)
@@ -69,16 +72,20 @@
                                                 @endisset
                                                 <div class="mt-1">
                                                     <div class="bullet"></div>
-                                                    <a href="">View</a>
+                                                    <span>Added at : v{{ $version->version_number }}</span>
                                                 </div>
                                             </td>
                                             <td>
                                                 {{ $projectDetail->status }}
                                             </td>
                                             <td>
-                                                @foreach($projectDetail->user_assigments as $user)
-                                                    {{ $user->name }} ({{ $user->role->name }})
-                                                @endforeach
+                                                @empty($projectDetail->user_assigments)
+                                                    @foreach($projectDetail->user_assigments as $user)
+                                                        {{ $user->name }} ({{ $user->role->name }})
+                                                    @endforeach
+                                                @else
+                                                    no one assigned
+                                                @endempty
                                             </td>
                                             <td>
                                                 <a href="{{ route('project_manager.projects.edit', $projectDetail->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
@@ -100,6 +107,58 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('modal')
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+        <form id="form" action="" method="" enctype="multipart/form-data">
+            @csrf
+            <input id="method" type="hidden" name="_method" value="" />
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="title" class="modal-title">Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Module</label>
+                        <select id="module" name="module_id" class="form-control">
+                            @foreach($modules as $module)
+                                <option value="{{ $module->id }}">{{ $module->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('module')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 col-lg-6">
+                            <label>Start Date</label>
+                            <input value="{{ old('start_date') }}" type="date" name="start_date" class="form-control">
+                            @error('start_date')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6 col-lg-6">
+                            <label>End Date</label>
+                            <input value="{{ old('end_date') }}" type="date" name="end_date" class="form-control">
+                            @error('end_date')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection
 
 @section('script')
@@ -141,22 +200,22 @@
     <script>
         $(".btn-add").click(function(){
             let action = $(this).data('action');
-            $('#title').text('Add Role')
+            $('#title').text('Add Module')
             $('#form').attr('action', action);
             $("#form").attr("method", "post");
         });
 
-        $(".btn-edit").click(function(){
-            let action = $(this).data('action');
-            let detail = $(this).data('detail');
-            $('#title').text('Edit Role')
-            $('#form').attr('action', action);
-            $("#form").attr("method", "post");
-            $("#method").attr("value", "put");
-            $.get(detail, function (data) {
-                $('#roleName').val(data.name);
-                $('#privilege').val(data.privilege);
-            });
-        });
+        // $(".btn-edit").click(function(){
+        //     let action = $(this).data('action');
+        //     let detail = $(this).data('detail');
+        //     $('#title').text('Edit Role')
+        //     $('#form').attr('action', action);
+        //     $("#form").attr("method", "post");
+        //     $("#method").attr("value", "put");
+        //     $.get(detail, function (data) {
+        //         $('#roleName').val(data.name);
+        //         $('#privilege').val(data.privilege);
+        //     });
+        // });
     </script>
 @endsection

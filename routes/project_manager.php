@@ -39,6 +39,18 @@ Route::group([
                     ->name('scope');
     Route::get('/{project}/credentials', 'ProjectController@credentials')
                     ->name('credentials');
-    Route::get('/{project}/modules', 'ProjectController@modules')
-                    ->name('modules');
+    Route::get('/{project}/versions', 'ProjectVersionController@index')
+                    ->name('versions');
+    Route::get('/{project}/version/{version}', 'ProjectVersionController@detail')
+                    ->name('version');
+
+    Route::group([
+        'as'     => 'module.'
+    ], function () {
+        Route::get('/{project}/modules', 'ProjectDetailController@modules')
+                    ->name('all');
+        Route::post('/{project}/detail/create', 'ProjectDetailController@create')
+                    ->name('create');
+    });
+
 });

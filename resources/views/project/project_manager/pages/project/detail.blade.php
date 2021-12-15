@@ -17,10 +17,10 @@
                         <a class="nav-link active-tab" href="{{ route('project_manager.projects.detail', $project) }}">Detail</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('project_manager.projects.modules', $project) }}">Modules</a>
+                        <a class="nav-link" href="{{ route('project_manager.projects.module.all', $project) }}">Modules</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Version</a>
+                        <a class="nav-link" href="{{ route('project_manager.projects.versions', $project) }}">Version</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Logs</a>

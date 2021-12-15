@@ -29,10 +29,6 @@ class ProjectController extends Controller
 
     public function store(ProjectRequest $request)
     {
-        if($request->validator->fails())
-            return redirect()->route('project_manager.projects.create')
-                             ->withErrors($request->validator->messages());
-
         $project = $request->all();
         $project += ['user_id' => Auth::user()->id];
 
@@ -55,10 +51,6 @@ class ProjectController extends Controller
 
     public function update(ProjectRequest $request, Project $project)
     {
-        if($request->validator->fails())
-            return redirect()->route('project_manager.projects.edit', $project)
-                             ->withErrors($request->validator->messages());
-
         $project->update($request->all());
 
         return redirect()->route('project_manager.projects.all')->with('success', 'Project updated successfully');
@@ -91,11 +83,5 @@ class ProjectController extends Controller
         $text  = $project->credentials;
 
         return view('project.project_manager.pages.project.text_detail', compact('project', 'title', 'text'));
-    }
-
-    public function modules(Project $project)
-    {
-        $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
-        return view('project.project_manager.pages.project.modules', compact('project', 'latestVersion'));
     }
 }

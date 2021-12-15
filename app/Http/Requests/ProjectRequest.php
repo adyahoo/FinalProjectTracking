@@ -12,15 +12,10 @@ class ProjectRequest extends FormRequest
      *
      * @return bool
      */
-    public $validator = null;
 
     public function authorize()
     {
         return true;
-    }
-
-    protected function failedValidation(Validator $validator) {
-        $this->validator = $validator;
     }
 
     /**

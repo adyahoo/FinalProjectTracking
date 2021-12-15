@@ -26,7 +26,7 @@ class ProjectDetail extends Model
         return $this->belongsTo(ProjectVersion::class);
     }
 
-    public function modules()
+    public function module()
     {
         return $this->belongsTo(Module::class);
     }
