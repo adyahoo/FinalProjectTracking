@@ -12,5 +12,12 @@ class SpecialModule extends Model
     protected $fillable = [
         'name',
         'description',
+        'start_date',
+        'end_date'
     ];
+
+    public function project_detail()
+    {
+        return $this->morphOne(ProjectDetail::class, 'moduleable');
+    }
 }

@@ -9,9 +9,16 @@ class ProjectDetail extends Model
 {
     use HasFactory;
 
+    public $statusOption = [
+        'done'        => 'done',
+        'not_yet'     => 'not yet',
+        'on_progress' => 'on progress'
+    ];
+
     protected $fillable = [
         'project_version_id',
-        'module_id',
+        'moduleable_type',
+        'moduleable_id',
         'status',
         'special_module',
         'start_date',
@@ -26,9 +33,9 @@ class ProjectDetail extends Model
         return $this->belongsTo(ProjectVersion::class);
     }
 
-    public function module()
+    public function moduleable()
     {
-        return $this->belongsTo(Module::class);
+        return $this->morphTo();
     }
 
     public function user_assigments()

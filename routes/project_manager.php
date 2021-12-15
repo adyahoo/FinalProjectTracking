@@ -47,10 +47,14 @@ Route::group([
     Route::group([
         'as'     => 'module.'
     ], function () {
-        Route::get('/{project}/modules', 'ProjectDetailController@modules')
+        Route::get('/{project}/modules', 'ProjectDetailController@index')
                     ->name('all');
         Route::post('/{project}/detail/create', 'ProjectDetailController@create')
                     ->name('create');
+        Route::post('/{project}/detail/create_special', 'ProjectDetailController@createSpecial')
+                    ->name('create_special');
+        Route::get('/{project}/module/{module}', 'ProjectDetailController@show')
+                    ->name('show');
     });
 
 });

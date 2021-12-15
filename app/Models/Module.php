@@ -18,6 +18,6 @@ class Module extends Model
 
     public function project_detail()
     {
-        return $this->hasMany(ProjectDetail::class);
+        return $this->morphMany(ProjectDetail::class, 'moduleable');
     }
 }
