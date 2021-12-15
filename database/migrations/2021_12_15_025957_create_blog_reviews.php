@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSpecialModules extends Migration
+class CreateBlogReviews extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateSpecialModules extends Migration
      */
     public function up()
     {
-        Schema::create('special_modules', function (Blueprint $table) {
+        Schema::create('blog_reviews', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->unsignedBigInteger('blog_id');
+            $table->unsignedBigInteger('user_id');
+            $table->text('reviews');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateSpecialModules extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('special_modules');
+        Schema::dropIfExists('blog_reviews');
     }
 }
