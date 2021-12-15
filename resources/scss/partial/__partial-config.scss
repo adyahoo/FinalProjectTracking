@@ -1,0 +1,5 @@
+@use '__breadcrumb';
+@use '__share';
+
+@forward '__breadcrumb';
+@forward '__share';

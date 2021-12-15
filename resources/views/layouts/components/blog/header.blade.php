@@ -13,10 +13,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item nav-item--custom">
-                        <a class="nav-link home-link font-weight-bold nav-link--custom" href="#">Home</a>
+                        <a class="nav-link home-link font-weight-bold nav-link--custom" href="/">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link font-weight-bold" href="#">Blog</a>
+                    <li class="nav-item nav-item--custom">
+                        <a class="nav-link font-weight-bold nav-link--custom" href="{{ route('blog') }}">Blog</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

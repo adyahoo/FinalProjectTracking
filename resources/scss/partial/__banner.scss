@@ -1,9 +1,10 @@
 @use '../config/__config.scss' as *;
 @use 'sass:map';
 
+@forward '../config/_config';
+
 .section-banner {
     &__container {
-        // @include spaceImage($maxWidth: 1920px, $imgWidth: 1920, $imgHeight: 1080);
         @include spaceImage($maxWidth: 1920px, $imgWidth: 1309, $imgHeight: 447);
     }
     
@@ -16,7 +17,7 @@
         position: absolute;
         width: auto;
         top: 55px;
-        left: 180px;
+        left: 190px;
     }
     
     &__content-container {
@@ -28,6 +29,10 @@
         object-fit: cover;
     }
     
+    &__date-created {
+        color: map.get($color, "primary");
+    }
+
     &__desc {
         display: -webkit-box;
         line-height: 1.5;
@@ -35,11 +40,7 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis
-    }
-    
-    &__date-created {
-        color: map.get($color, "primary");
-    }
+    }    
 }
 
 .swiper {
