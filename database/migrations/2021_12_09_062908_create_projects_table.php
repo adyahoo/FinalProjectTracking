@@ -22,6 +22,7 @@ class CreateProjectsTable extends Migration
             $table->text('credentials');
             $table->date('start_date');
             $table->date('end_date');
+            $table->date('launch_date');
             $table->timestamps();
         });
     }

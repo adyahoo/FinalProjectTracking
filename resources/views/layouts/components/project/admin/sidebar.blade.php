@@ -7,11 +7,11 @@
 <ul class="sidebar-menu">
     <li class="menu-header">Menu</li>
     <li class="{{ Request::is('admin/dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.dashboard')}}"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
-    <li class="nav-item dropdown">
+    <li class="nav-item dropdown {{ Request::is('admin/projects/*') ? 'active' : '' }}">
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-project-diagram"></i> <span>Projects</span></a>
         <ul class="dropdown-menu">
-            <li><a class="nav-link" href="layout-default.html">Project List</a></li>
-            <li><a class="nav-link" href="layout-transparent.html">Modules</a></li>
+            <li ><a class="nav-link" href="">Project List</a></li>
+            <li class="{{ Request::is('admin/projects/modules/*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.modules.index')}}">Modules</a></li>
         </ul>
     </li>
     <li class="nav-item dropdown {{ Request::is('admin/membership/*') ? 'active' : '' }}">
@@ -36,4 +36,5 @@
             <li><a class="nav-link" href="layout-default.html">Change Logo</a></li>
         </ul>
     </li>
+    <li class=""><a class="nav-link" href="#"><i class="fas fa-list"></i> <span>Logs Activity</span></a></li>
 </ul>
