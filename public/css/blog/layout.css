@@ -2,6 +2,14 @@
   box-sizing: border-box;
 }
 
+a {
+  color: black;
+  text-decoration: none !important;
+}
+a:hover {
+  color: black;
+}
+
 body {
   background-color: #F9FDFF;
 }
@@ -76,6 +84,14 @@ body {
 
 .section {
   margin-bottom: 60px;
+}
+
+.section-most-viewed__title, .section-popular-author__title, .section-related__title {
+  display: inline-block;
+  margin-bottom: 40px;
+  padding: 0 30px;
+  color: black;
+  border-bottom: 2px solid black;
 }
 
 /*# sourceMappingURL=layout.css.map*/

@@ -20,7 +20,7 @@
   position: absolute;
   width: auto;
   top: 55px;
-  left: 180px;
+  left: 190px;
 }
 .section-banner__content-container {
   position: relative;
@@ -40,6 +40,9 @@
   -o-object-fit: cover;
      object-fit: cover;
 }
+.section-banner__date-created {
+  color: #6DDA5F;
+}
 .section-banner__desc {
   display: -webkit-box;
   line-height: 1.5;
@@ -47,9 +50,6 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-.section-banner__date-created {
-  color: #6DDA5F;
 }
 
 .swiper {
@@ -68,4 +68,15 @@
   background: #6DDA5F !important;
 }
 
-/*# sourceMappingURL=banner.css.map*/
+.form-group label {
+  font-size: 16px !important;
+}
+
+.section-blog__label {
+  width: 100%;
+  max-width: 100px;
+  padding: 5px 10px;
+  background-color: #6DDA5F;
+}
+
+/*# sourceMappingURL=blog.css.map*/

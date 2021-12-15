@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDetailModuleRelation extends Migration
+class AddUserReviewRelation extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddDetailModuleRelation extends Migration
      */
     public function up()
     {
-        Schema::table('project_details', function (Blueprint $table) {
-            $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');
+        Schema::table('blog_reviews', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -25,8 +25,8 @@ class AddDetailModuleRelation extends Migration
      */
     public function down()
     {
-        Schema::table('project_details', function (Blueprint $table) {
-            $table->dropForeign(['module_id']);
+        Schema::table('blog_reviews', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
         });
     }
 }

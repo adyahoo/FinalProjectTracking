@@ -1,0 +1,40 @@
+@use '../config/__config.scss' as *;
+@use 'sass:map';
+
+.section-content {
+    &__icon {
+        margin-left: 20px;
+        font-size: map.get($footerFontSize, "title");
+    }
+
+    &__content-container {
+        @include spaceImage($maxWidth: 250px, $imgWidth: 371, $imgHeight: 371);
+    }
+    
+    &__content-img {
+        @include imgToFillSpace;
+        object-fit: cover;
+    }
+    
+    &__date-created {
+        color: map.get($color, "primary");
+    }
+
+    &__desc {
+        display: -webkit-box;
+        line-height: 1.5;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis
+    }
+
+    &__vert-img-container {
+        @include spaceImage($maxWidth: 100%, $imgWidth: 368, $imgHeight: 221);
+    }
+
+    &__vert-img {
+        @include imgToFillSpace;
+        object-fit: cover;
+    }
+}

@@ -1,0 +1,33 @@
+@use '../../config/_config' as *;
+@use '../../partial/_partial-config' as *;
+@use 'sass:map';
+
+.section-detail {
+    &__profile-container {
+        @include spaceImage($maxWidth: 133px, $imgWidth: 1, $imgHeight: 1);
+    }
+    
+    &__profile-img {
+        @include imgToFillSpace();
+        object-fit: cover;
+    }
+    
+    &__profile-name {
+        color: map.get($color, "primary");
+    }
+    
+    &__profile-info p {
+        margin: 10px 0px;
+    }
+}
+
+.section-body {
+    &__img-container {
+        @include spaceImage($maxWidth: 100%, $imgWidth: 925, $imgHeight: 492);
+    }
+    
+    &__img {
+        @include imgToFillSpace();
+        object-fit: cover;
+    }
+}

@@ -1,0 +1,16 @@
+@use '../../config/_config' as *;
+@use '../../partial/_banner' as *;
+@use 'sass:map';
+
+.form-group label {
+    font-size: 16px !important;
+}
+
+.section-blog {
+    &__label {
+        width: 100%;
+        max-width: 100px;
+        padding: 5px 10px;
+        background-color: map.get($color, "primary");
+    }
+}

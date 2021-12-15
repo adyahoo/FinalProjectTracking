@@ -45,3 +45,17 @@ Route::group(['prefix'=>'membership'], function () {
         Route::delete('/delete/{member}', 'MemberController@destroy')->name('delete');
     });
 });
+
+Route::group(['prefix'=>'projects'], function () {
+
+    #Modules
+    Route::group(['prefix'=>'modules', 'as'=>'modules.'],function () {
+        Route::get('/index', 'ModulesController@index')->name('index');
+        Route::post('/store', 'ModulesController@store')->name('store');
+        Route::get('/show/{module}', 'ModulesController@show')->name('show');
+        Route::put('/update/{module}', 'ModulesController@update')->name('update');
+        Route::delete('/delete/{module}', 'ModulesController@destroy')->name('delete');
+    });
+
+
+});

@@ -16,7 +16,9 @@ class CreateSpecialModules extends Migration
         Schema::create('special_modules', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description');
+            $table->string('description');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }

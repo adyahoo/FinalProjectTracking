@@ -1,0 +1,22 @@
+@use '../config/_config' as *;
+@use 'sass:map';
+
+@forward '../config/_config';
+
+.breadcrumb {
+    background-color: map.get($color, "light");
+    
+    & li a {
+        color: black;
+        text-decoration: none !important;
+        
+        &:hover {
+            color: map.get($color, "primary");
+        }
+    }
+    
+    &-item+.breadcrumb-item::before {
+        content: ">" !important;
+        color: map.get($color, "primary") !important;
+    }
+}

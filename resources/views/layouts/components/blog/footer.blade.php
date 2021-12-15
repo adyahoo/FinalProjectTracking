@@ -31,9 +31,9 @@
                 <div class="section-socmed col-4 text-center">
                     <h4>Our Social Media</h4>
                     <div class="row no-gutters justify-content-around">
-                        <i class="fab fa-facebook-square footer__icon"></i>
-                        <i class="fab fa-linkedin footer__icon"></i>
-                        <i class="fab fa-instagram footer__icon"></i>
+                        <a class="text-white" href="https://www.facebook.com/timedoorindonesia"><i class="fab fa-facebook-square footer__icon"></i></a>
+                        <a class="text-white" href="https://www.linkedin.com/company/pt-timedoor-indonesia"><i class="fab fa-linkedin footer__icon"></i></a>
+                        <a class="text-white" href="https://www.instagram.com/timedoorindonesia/"><i class="fab fa-instagram footer__icon"></i></a>
                     </div>
                 </div>
             </div>
