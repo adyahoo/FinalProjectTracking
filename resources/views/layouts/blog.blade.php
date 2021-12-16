@@ -22,11 +22,11 @@
 
         @include('layouts.components.blog.footer')
 
-        <script src="js/jquery.min.js"></script>
-        <script src="js/popper.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/blog/layout.js"></script>        
-        <script src="js/blog/swiper-js.js"></script>
+        <script src="{{asset('js/jquery.min.js')}}"></script>
+        <script src="{{asset('js/popper.min.js')}}"></script>
+        <script src="{{asset('js/bootstrap.min.js')}}"></script>
+        <script src="{{asset('js/blog/layout.js')}}"></script>
+        <script src="{{asset('js/blog/swiper-js.js')}}"></script>
         @stack('js')
     </body>
 </html>
