@@ -49,11 +49,11 @@
                                         <td>{{$blog->view_count}}</td>
                                         <td>
                                             <a href="{{route('admin.blog.preview', $blog->slug)}}" class="btn btn-primary btn-edit"><i class="fa fa-eye"></i></a>
-                                            <a href="#" class="btn btn-info btn-edit"><i class="fa fa-pencil-alt"></i></a>
-                                            <a href="#" onclick="deleteConfirm('del{{$blog->id}}')" class="btn btn-danger text-white">
+                                            <a href="{{route('admin.blog.edit', $blog)}}" class="btn btn-info btn-edit"><i class="fa fa-pencil-alt"></i></a>
+                                            <a onclick="deleteConfirm('del{{$blog->id}}')" class="btn btn-danger text-white">
                                                 <i class="fa fa-trash"></i>
                                             </a>
-                                            <form id="del{{$blog->id}}" action="#" method="post">        
+                                            <form id="del{{$blog->id}}" action="{{route('admin.blog.delete', $blog)}}" method="post">        
                                                 @method('delete')
                                                 @csrf
                                             </form>

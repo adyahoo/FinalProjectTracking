@@ -26,7 +26,7 @@
                         <h4>Add Meta Data</h4>
                         <i class="fa fa-angle-down ml-auto"></i>
                     </div>
-                    <div class="accordion-body collapse" id="panel-body-1" data-parent="#accordion">
+                    <div class="accordion-body collapse show" id="panel-body-1" data-parent="#accordion">
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Meta Title <sup style="color: red">*optional</sup></label>

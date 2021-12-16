@@ -3,6 +3,7 @@ namespace App\Traits;
 use DOMDocument;
 use App\Models\Blog;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
 
 trait ImageTrait
 {
@@ -19,26 +20,34 @@ trait ImageTrait
     }
 
     public function getImageFromBlogContent($content) {
-        $dom = new DomDocument();
-        $dom->loadHtml($content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        $imageFile = $dom->getElementsByTagName('img');
-
-        foreach($imageFile as $item => $image){
-            $data = $image->getAttribute('src');
-
-            list($type, $data) = explode(';', $data);
-            list(, $data)      = explode(',', $data);
-
-            $imgeData   = base64_decode($data);
-            $image_name = time().$item.'.jpg';
-            file_put_contents('../public/storage/blog_images/'.$image_name, $imgeData);
-            
-            $image->removeAttribute('src');
-            $image->setAttribute('src', Storage::url('blog_images/'.$image_name));
+        $dom = new DOMDocument();
+        libxml_use_internal_errors(true);
+        $dom->loadHTML($content);
+        libxml_clear_errors();
+        $images = $dom->getElementsByTagName('img');
+        if(isset($images)){
+            foreach ($images as $img){
+                $src = $img->getAttribute('src');
+                if(preg_match('/data:image/',$src)){
+                    preg_match('/data:image\/(?<mime>.*?)\;/',$src,$groups);
+                    $mimetype            = $groups['mime'];
+                    $fileNameContent     = uniqid();
+                    $fileNameContentRand = substr(md5($fileNameContent),6,6).'_'.time();
+                    $fileNameFinal       = $fileNameContentRand.'.'.$mimetype;
+                    $filepath            = ("../public/storage/blog_images/".$fileNameFinal);
+                    $image               = Image::make($src)
+                                                ->resize(1200,1200)
+                                                ->encode($mimetype,100)
+                                                ->save($filepath);
+                    $img->removeAttribute('src');
+                    $img->setAttribute('src', Storage::url('blog_images/'.$fileNameFinal));
+                }
+            }
+            $dom->removeChild($dom->doctype);  
+            $content = $dom->saveHTML(); 
+            $content = str_replace('<html><body>', '', $content);
+            $content = str_replace('</body></html>', '', $content);
+            return $content;
         }
-
-        $content = $dom->saveHTML();
-
-        return $content;
     }
 }

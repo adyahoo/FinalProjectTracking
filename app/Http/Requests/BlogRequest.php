@@ -25,15 +25,26 @@ class BlogRequest extends FormRequest
     {
         $rules = [
             'blog_category_id' => 'required',
-            'title'            => 'required|min:10|max:50',
+            'title'            => 'required|min:10|max:60',
             'content'          => 'required|min:100',
-            'image'            => 'required|mimes:jpeg,png,jpg,gif|max:2048',
             'status'           => 'required',
-            'meta_title'       => 'nullable|min:20|max:60',
-            'meta_description' => 'nullable|min:30',
             'slug'             => 'nullable|min:10|max:50',
 
         ];
+
+        if($this->method() == 'PUT'){
+            $rules += [
+                'image'            => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'meta_title'       => 'required|min:10|max:60',
+                'meta_description' => 'required|min:30',
+            ]; 
+        }else{
+            $rules += [
+                'image'            => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'meta_title'       => 'nullable|min:10|max:60',
+                'meta_description' => 'nullable|min:30',
+            ];
+        }
 
         return $rules;
     }
@@ -43,7 +54,6 @@ class BlogRequest extends FormRequest
         return [
             'blog_category_id.required' => 'Blog category is required',
             'required'                  => 'This :attribute collumn is Required!',
-            'unique'                    => 'Kolom :attribute Tidak Boleh Sama!',
             'min'                       => 'Your :attribute min length :min character long',
             'max'                       => 'Your :attribute max length :max character long',
             'image.max'                 => 'Your :attribute is only valid :max MB or less',
