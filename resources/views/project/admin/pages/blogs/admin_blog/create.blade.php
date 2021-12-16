@@ -8,120 +8,136 @@
 @section('content')
 <div class="section-header">
     <div class="section-header-back">
-        <a href="features-posts.html" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+        <a href="{{route('admin.blog.index')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
     </div>
-    <h1>Create New Post</h1>
+    <h1>Create New Blog</h1>
 </div>
 
 <div class="section-body">
-    <h2 class="section-title">Create New Post</h2>
-    <p class="section-lead">
-    On this page you can create a new post and fill in all fields.
-    </p>
-    <div class="card">
-        <div id="accordion">
-            <div class="accordion">
-            <div class="card-header" data-toggle="collapse" data-target="#panel-body-1">
-                <h4>Add Meta</h4>
-                <i class="fa fa-angle-down ml-auto"></i>
-            </div>
-            <div class="accordion-body collapse" id="panel-body-1" data-parent="#accordion">
-                <div class="card-body">
-                    <div class="form-group">
-                        <label>Meta Title <span style="color: red">*optional</span></label>
-                        <input name="meta_title" value="" type="text" class="form-control" placeholder="Input Meta Title">
-                        @error('name')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+    <form action="{{route('admin.blog.store')}}" enctype="multipart/form-data" method="POST">
+        @csrf
+        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+        <h2 class="section-title">Create New Blog</h2>
+        <p class="section-lead">On this page, you can create a new blog and fill in all required fields.</p>
+        <div class="card">
+            <div id="accordion">
+                <div class="accordion">
+                    <div class="card-header" data-toggle="collapse" data-target="#panel-body-1">
+                        <h4>Add Meta Data</h4>
+                        <i class="fa fa-angle-down ml-auto"></i>
                     </div>
-                    <div class="form-group">
-                        <label>Meta Description <span style="color: red">*optional</span></label>
-                        <textarea style="height: 200px" name="meta_description" value="" type="text" class="form-control" placeholder="Input Meta Description"></textarea>
-                        @error('meta_description')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div id="accordion">
-            <div class="accordion">
-            <div class="card-header" data-toggle="collapse" data-target="#panel-body-2" >
-                <h4>Add Thumbnail</h4>
-                <i class="fa fa-angle-down ml-auto"></i>
-            </div>
-            <div class="accordion-body collapse show" id="panel-body-2" data-parent="#accordion">
-                <div class="card-body">
-                    <div class="form-group text-center">
-                        <div class="col-sm-12">
-                            <div id="image-preview" class="image-preview w-50 mx-auto">
-                                <label for="image-upload" id="image-label">Choose File</label>
-                                <input type="file" name="image" id="image-upload" />
+                    <div class="accordion-body collapse show" id="panel-body-1" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Meta Title <sup style="color: red">*optional</sup></label>
+                                <input name="meta_title" value="{{ old('meta_title') }}" type="text" class="form-control" placeholder="Input Meta Title">
+                                @error('meta_title')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Meta Description <sup style="color: red">*optional</sup></label>
+                                <textarea style="height: 200px" name="meta_description" value="" type="text" class="form-control" placeholder="Input Meta Description">{{ old('meta_description') }}</textarea>
+                                @error('meta_description')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
-                        <span class="text-danger">p</span>
                     </div>
                 </div>
-            </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Write Your Blog</h4>
-                </div>
-                <div class="card-body">
-                    <div class="form-group row mb-4">
-                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Title</label>
-                        <div class="col-sm-12 col-md-7">
-                            <input name="title" type="text" class="form-control" placeholder="Input Blog Title">
-                        </div>
-                        @error('title')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+        <div class="card">
+            <div id="accordion">
+                <div class="accordion">
+                    <div class="card-header" data-toggle="collapse" data-target="#panel-body-2" >
+                        <h4>Add Thumbnail</h4>
+                        <i class="fa fa-angle-down ml-auto"></i>
                     </div>
-                    <div class="form-group row mb-4">
-                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Category</label>
-                        <div class="col-sm-12 col-md-7">
-                            <select class="form-control selectric">
-                            <option>Tech</option>
-                            <option>News</option>
-                            <option>Political</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Content</label>
-                        <textarea name="content" class="summernotes"></textarea>
-                        @error('content')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="form-group row mb-4">
-                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Status</label>
-                        <div class="col-sm-12 col-md-7">
-                            <select class="form-control selectric">
-                                <option>Publish</option>
-                                <option>Draft</option>
-                                <option>Pending</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row mb-4">
-                        <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
-                        <div class="col-sm-12 col-md-7">
-                            <button class="btn btn-primary">Create Post</button>
+                    <div class="accordion-body collapse show" id="panel-body-2" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="form-group text-center">
+                                <div class="col-sm-12">
+                                    <div id="image-preview" class="image-preview w-50 mx-auto">
+                                        <label for="image-upload" id="image-label">Choose File</label>
+                                        <input value="{{ old('image') }}" type="file" name="image" id="image-upload" />
+                                    </div>
+                                </div>
+                                @error('image')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Write Your Blog</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Title</label>
+                            <div class="col-sm-12 col-md-7">
+                                <input value="{{ old('title') }}" name="title" type="text" class="form-control" placeholder="Input Blog Title">
+                                @error('title')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Slug <sup style="color: red">*optional</sup></label>
+                            <div class="col-sm-12 col-md-7">
+                                <input value="{{ old('slug') }}" name="slug" type="text" class="form-control" placeholder="Input Slug">
+                                @error('slug')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Category</label>
+                            <div class="col-sm-12 col-md-7">
+                                <select name="blog_category_id" class="form-control selectric">
+                                    <option value="">Select Blog Category</option>
+                                    @foreach ($categories as $blog_category)
+                                        <option {{ old('blog_category_id') == $blog_category->id ? 'selected' : '' }} value="{{$blog_category->id}}">{{$blog_category->name}}</option>
+                                    @endforeach
+                                </select>
+                                @error('blog_category_id')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Content</label>
+                            @error('content')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                            <textarea name="content" class="summernotes">{{ old('content') }}</textarea>
+                        </div>
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Status</label>
+                            <div class="col-sm-12 col-md-7">
+                                <select name="status" class="form-control selectric">
+                                    <option {{ old('status') == 'Draft' ? 'selected' : '' }} value="Draft">Draft</option>
+                                    <option {{ old('status') == 'Published' ? 'selected' : '' }} value="Published">Publish</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
+                            <div class="col-sm-12 col-md-7">
+                                <button type="submit" class="btn btn-primary">Create Blog</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 @endsection
 

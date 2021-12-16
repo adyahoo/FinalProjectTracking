@@ -18,11 +18,6 @@ $("#view_id").click(function () {
 
 (function ($, document, window, viewport) {
   var sticky = function sticky() {
-    if (viewport.current() == 'md') {
-      alert(viewport.current());
-      $('#collapseSidebar').addClass('show');
-    }
-
     if (viewport.is("lg")) {
       $('#sidebar').addClass('sticky-top');
       $('#collapseSidebar').addClass('show');

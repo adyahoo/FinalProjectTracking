@@ -20,9 +20,9 @@ class CreateBlogs extends Migration
             $table->string('title');
             $table->text('content');
             $table->string('image');
-            $table->integer('view_count')->default(0);
+            $table->integer('view_count')->default(0)->nullable();
             $table->string('meta_title')->nullable();
-            $table->string('meta_description')->nullable();
+            $table->text('meta_description')->nullable();
             $table->string('slug')->nullable();
             $table->enum('status', ['Draft', 'Waiting for Review', 'Published', 'Rejected']);
             $table->datetime('published_at')->nullable();

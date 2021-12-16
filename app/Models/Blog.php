@@ -4,11 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\ImageTrait;
+use Str;
 
 class Blog extends Model
 {
-    use HasFactory;
+    use HasFactory, ImageTrait;
 
+    const IMAGE_PATH    = 'public/blog_images/';
     protected $fillable = [
         'user_id', 
         'blog_category_id',
@@ -31,5 +34,18 @@ class Blog extends Model
     public function blogCategory()
     {
         return $this->belongsTo(BlogCategories::class);
+    }
+
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = Str::slug($value);
+    }
+
+    public function setContentAttribute($value){
+        $this->attributes['content'] = $this->getImageFromBlogContent($value);
+    }
+
+    public function setImageAttribute($value){
+        $this->attributes['image'] = $this->uploadImage($value, self::IMAGE_PATH);
     }
 }
