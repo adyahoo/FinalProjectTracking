@@ -19,7 +19,8 @@ class Blog extends Model
         'meta_title',
         'meta_description',
         'slug',
-        'published_at'
+        'published_at',
+        'status'
     ];
 
     public function user()

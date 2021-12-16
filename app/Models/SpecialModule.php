@@ -12,8 +12,7 @@ class SpecialModule extends Model
     protected $fillable = [
         'name',
         'description',
-        'start_date',
-        'end_date'
+        'time_estimation',
     ];
 
     public function project_detail()

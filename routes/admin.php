@@ -59,3 +59,18 @@ Route::group(['prefix'=>'projects'], function () {
 
 
 });
+
+Route::group(['prefix'=>'blogs'], function () {
+    #Categories
+    Route::group(['prefix'=>'blog_categories', 'as'=>'blog_categories.'],function () {
+        Route::get('/index', 'BlogCategoriesController@index')->name('index');
+        Route::post('/store', 'BlogCategoriesController@store')->name('store');
+        Route::get('/show/{category}', 'BlogCategoriesController@show')->name('show');
+        Route::put('/update/{category}', 'BlogCategoriesController@update')->name('update');
+        Route::delete('/delete/{category}', 'BlogCategoriesController@destroy')->name('delete');
+    });
+    Route::group(['prefix'=>'admin_blog','as'=>'blog.'],function () {
+        Route::get('/index', 'BlogController@index')->name('index');
+        Route::get('/create', 'BlogController@create')->name('create');
+    });
+});

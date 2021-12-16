@@ -35,6 +35,7 @@ class User extends Authenticatable
         'phone',
         'profile_image',
         'birth_date',
+        'bio'
     ];
 
     /**

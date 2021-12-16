@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Modules')
+@section('title','Blog Categories')
 @section('css')
 <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
@@ -7,7 +7,7 @@
 
 @section('content')
 <div class="section-header">
-    <h1>Modules Management</h1>
+    <h1>Blog Categories Management</h1>
 </div>
 
 <div class="section-body">
@@ -15,10 +15,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Modules Data</h4>
-                    <button data-action="{{route('admin.modules.store')}}" class="btn btn-primary btn-round ml-auto btn-add text-white" data-toggle="modal" data-target="#modal">
+                    <h4>Blog Categories Data</h4>
+                    <button data-action="{{route('admin.blog_categories.store')}}" class="btn btn-primary btn-round ml-auto btn-add text-white" data-toggle="modal" data-target="#modal">
                         <i class="fa fa-plus"></i>
-                        Add Module
+                        Add Blog Category
                     </button>
                 </div>
                 <div class="card-body">
@@ -30,27 +30,23 @@
                                     <th style="width: 10%">
                                         No.
                                     </th>
-                                    <th>Module Name</th>
-                                    <th>Description</th>
-                                    <th>Time Estimation</th>
+                                    <th>Category</th>
                                     <th style="width: 20%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($modules as $module)
+                                @foreach($categories as $category)
                                     <tr>
                                         <td>
                                             {{$loop->iteration}}
                                         </td>
-                                        <td>{{$module->name}}</td>
-                                        <td>{{$module->description}}</td>
-                                        <td>{{$module->time_estimation}} Hour</td>
+                                        <td>{{$category->name}}</td>
                                         <td>
-                                            <a data-detail="{{route('admin.modules.show', $module)}}" data-action="{{route('admin.modules.update', $module)}}" href="#" class="btn btn-info btn-edit" data-toggle="modal" data-target="#modal"><i class="fa fa-pencil-alt"></i></a>
-                                            <a href="#" onclick="deleteConfirm('del{{$module->id}}')" class="btn btn-danger text-white">
+                                            <a data-detail="{{route('admin.blog_categories.show', $category)}}" data-action="{{route('admin.blog_categories.update', $category)}}" href="#" class="btn btn-info btn-edit" data-toggle="modal" data-target="#modal"><i class="fa fa-pencil-alt"></i></a>
+                                            <a href="#" onclick="deleteConfirm('del{{$category->id}}')" class="btn btn-danger text-white">
                                                 <i class="fa fa-trash"></i>
                                             </a>
-                                            <form id="del{{$module->id}}" action="{{ route('admin.modules.delete', $module) }}" method="post">        
+                                            <form id="del{{$category->id}}" action="{{ route('admin.blog_categories.delete', $category) }}" method="post">        
                                                 @method('delete')
                                                 @csrf
                                             </form>
@@ -75,30 +71,16 @@
             <input id="method" type="hidden" name="_method" value="" />
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 id="title" class="modal-title">Module Form</h5>
+                    <h5 id="title" class="modal-title">Blog Categories Form</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Module Name</label>
-                        <input id="moduleName" name="name" value="" type="text" class="form-control" placeholder="Input Module Name">
+                        <label>Category</label>
+                        <input id="categoryName" name="name" value="" type="text" class="form-control" placeholder="Input Blog Category Name">
                         @error('name')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea style="height: 200px" id="moduleDescription" name="description" value="" type="text" class="form-control" placeholder="Input Description"></textarea>
-                        @error('description')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label>Time Estimation (in Hour)</label>
-                        <input id="moduleEstimation" name="time_estimation" value="" type="number" class="form-control" placeholder="Input Time Estimation">
-                        @error('time_estimation')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
@@ -152,7 +134,7 @@
 <script>
     $(".btn-add").click(function(){
         let action = $(this).data('action');
-        $('#title').text('Add Module')
+        $('#title').text('Add Blog Categories')
         $('#form').attr('action', action);
         $("#form").attr("method", "post");
     });
@@ -160,14 +142,12 @@
     $(".btn-edit").click(function(){
         let action = $(this).data('action');
         let detail = $(this).data('detail');
-        $('#title').text('Edit Module')
+        $('#title').text('Edit Blog Categories')
         $('#form').attr('action', action);
         $("#form").attr("method", "post");
         $("#method").attr("value", "put");
         $.get(detail, function (data) {
-            $('#moduleName').val(data.name);
-            $('#moduleDescription').val(data.description);
-            $('#moduleEstimation').val(data.time_estimation);
+            $('#categoryName').val(data.name);
         });
     });
 </script>

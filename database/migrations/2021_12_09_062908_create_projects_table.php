@@ -20,8 +20,8 @@ class CreateProjectsTable extends Migration
             $table->string('description');
             $table->text('scope');
             $table->text('credentials');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->datetime('start_date');
+            $table->datetime('end_date');
             $table->date('launch_date')->nullable();
             $table->timestamps();
         });

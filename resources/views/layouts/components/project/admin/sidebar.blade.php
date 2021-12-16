@@ -22,11 +22,11 @@
             <li class="{{ Request::is('admin/membership/divisions/*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.divisions.index')}}">Division</a></li>
         </ul>
     </li>
-    <li class="nav-item dropdown">
+    <li class="nav-item dropdown {{ Request::is('admin/blogs/*') ? 'active' : '' }}">
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-blog"></i> <span>Blogs</span></a>
         <ul class="dropdown-menu">
-            <li><a class="nav-link" href="layout-default.html">Blog List</a></li>
-            <li><a class="nav-link" href="layout-transparent.html">Blog Categories</a></li>
+            <li class="{{ Request::is('admin/blogs/admin_blog/*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.blog.index')}}">Blog List</a></li>
+            <li class="{{ Request::is('admin/blogs/blog_categories/*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.blog_categories.index')}}">Blog Categories</a></li>
             <li><a class="nav-link" href="layout-transparent.html">Blog Approval</a></li>
         </ul>
     </li>

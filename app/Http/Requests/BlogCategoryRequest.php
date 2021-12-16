@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ModuleRequest extends FormRequest
+class BlogCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,7 @@ class ModuleRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name'            => 'required',
-            'description'     => 'required',
-            'time_estimation' => 'required',
+            'name'      => 'required',
         ];
 
         return $rules;
