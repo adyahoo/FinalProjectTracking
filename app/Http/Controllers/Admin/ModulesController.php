@@ -14,7 +14,6 @@ class ModulesController extends Controller
         return view('project.admin.pages.modules.index', compact('modules'));
     }
 
-
     public function store(ModuleRequest $request)
     {
         $module = new Module($request->all());

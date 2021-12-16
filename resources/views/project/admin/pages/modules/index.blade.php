@@ -32,7 +32,8 @@
                                     </th>
                                     <th>Module Name</th>
                                     <th>Description</th>
-                                    <th>Time Estimation</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
                                     <th style="width: 20%">Action</th>
                                 </tr>
                             </thead>
@@ -44,7 +45,8 @@
                                         </td>
                                         <td>{{$module->name}}</td>
                                         <td>{{$module->description}}</td>
-                                        <td>{{$module->time_estimation}} Hour</td>
+                                        <td>{{$module->start_date}}</td>
+                                        <td>{{$module->end_date}}</td>
                                         <td>
                                             <a data-detail="{{route('admin.modules.show', $module)}}" data-action="{{route('admin.modules.update', $module)}}" href="#" class="btn btn-info btn-edit" data-toggle="modal" data-target="#modal"><i class="fa fa-pencil-alt"></i></a>
                                             <a href="#" onclick="deleteConfirm('del{{$module->id}}')" class="btn btn-danger text-white">
@@ -96,11 +98,32 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label>Time Estimation (in Hour)</label>
-                        <input id="moduleEstimation" name="time_estimation" value="" type="number" class="form-control" placeholder="Input Time Estimation">
-                        @error('time_estimation')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                        <label>Start Date</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-calendar"></i>
+                                </div>
+                            </div>
+                            <input id="moduleStart" value="" name="start_date" type="date" class="form-control" data-date-format="dd-mm-yy">
+                            @error('start_date')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fas fa-calendar"></i>
+                                </div>
+                            </div>
+                            <input id="moduleEnd" value="" name="end_date" type="date" class="form-control" date-format="dd-mm-yy">
+                            @error('end_date')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
@@ -167,7 +190,8 @@
         $.get(detail, function (data) {
             $('#moduleName').val(data.name);
             $('#moduleDescription').val(data.description);
-            $('#moduleEstimation').val(data.time_estimation);
+            $('#moduleStart').val(data.start_date);
+            $('#moduleEnd').val(data.end_date);
         });
     });
 </script>

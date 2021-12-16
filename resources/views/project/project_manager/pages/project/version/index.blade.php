@@ -25,7 +25,7 @@
                         <a class="nav-link" href="{{ route('project_manager.projects.module.all', $project) }}">Modules</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active-tab" href="{{ route('project_manager.projects.versions', $project) }}">Version</a>
+                        <a class="nav-link active-tab" href="{{ route('project_manager.projects.version.all', $project) }}">Version</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Logs</a>
@@ -63,7 +63,7 @@
                                             {{ $version->description }}
                                         </td>
                                         <td>
-                                            <a href="{{ route('project_manager.projects.version', [$project, $version]) }}" class="btn btn-secondary btn-action mr-1" data-toggle="tooltip" title="Notes"><i class="fas fa-sticky-note"></i></a>
+                                            <a href="{{ route('project_manager.projects.version.detail', [$project, $version]) }}" class="btn btn-secondary btn-action mr-1" data-toggle="tooltip" title="Notes"><i class="fas fa-sticky-note"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

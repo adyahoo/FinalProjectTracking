@@ -20,7 +20,7 @@
                         <a class="nav-link" href="{{ route('project_manager.projects.module.all', $project) }}">Modules</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('project_manager.projects.versions', $project) }}">Version</a>
+                        <a class="nav-link" href="{{ route('project_manager.projects.version.all', $project) }}">Version</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Logs</a>
@@ -58,11 +58,11 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-left">
                             <h6 class="text-dark">Total Modules</h6>
-                            <h3 class="text-primary">10</h3>
+                            <h3 class="text-primary">{{ $latestVersion->project_details->count() }}</h3>
                         </div>
                         <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-center">
                             <h6 class="text-dark">Finished Modules</h6>
-                            <h3 class="text-primary">10</h3>
+                            <h3 class="text-primary">{{ $modulesDoneCount }}</h3>
                         </div>
                         <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-right">
                             <h6 class="text-dark">Gantt Chart</h6>
@@ -73,11 +73,11 @@
                 <div class="card-header d-block">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
-                            <h6 class="text-dark">Progress</h6>
+                            <h6 class="text-dark">Progress ({{ $progressPercentage }}%)</h6>
                             <div class="progress mt-3">
-                                <div class="progress-bar" role="progressbar" data-width="100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">100%</div>
+                                <div class="progress-bar" role="progressbar" data-width="{{ $progressPercentage }}%" aria-valuenow="{{ $progressPercentage }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $progressPercentage }}%;">{{ $progressPercentage }}%</div>
                             </div>
-                            <p class="mt-2 mb-0">Timeline : 02/12/2021 - 30/12/2021</p>
+                            <p class="mt-2 mb-0">Timeline : {{ $project->start_date->format('d F Y') }} - {{ $project->end_date->format('d F Y') }}</p>
                         </div>
                     </div>
                 </div>

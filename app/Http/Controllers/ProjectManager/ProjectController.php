@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\ProjectVersion;
+use App\Models\ProjectDetail;
 use Auth;
 
 class ProjectController extends Controller
@@ -65,8 +66,16 @@ class ProjectController extends Controller
 
     public function detail(Project $project)
     {
-        $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
-        return view('project.project_manager.pages.project.detail', compact('project', 'latestVersion'));
+        $latestVersion      = ProjectVersion::where('project_id', $project->id)->latest()->first();
+        $modulesDoneCount   = ProjectDetail::whereDone()->count();
+        $progressPercentage = ($modulesDoneCount / $latestVersion->project_details->count()) * 100;
+
+        return view('project.project_manager.pages.project.detail', compact(
+            'project',
+            'latestVersion',
+            'modulesDoneCount',
+            'progressPercentage'
+        ));
     }
 
     public function scope(Project $project)

@@ -10,6 +10,7 @@ use App\Models\ProjectDetail;
 use App\Models\Module;
 use App\Models\SpecialModule;
 use App\Http\Requests\ModuleRequest;
+use DateTime;
 
 class ProjectDetailController extends Controller
 {
@@ -31,7 +32,7 @@ class ProjectDetailController extends Controller
         $projectDetail->start_date         = $request->start_date;
         $projectDetail->end_date           = $request->end_date;
 
-        $module = Module::find($request->module_id);
+        $module = Module::find($request->moduleable_id);
 
         $module->project_detail()->save($projectDetail);
 
@@ -42,7 +43,13 @@ class ProjectDetailController extends Controller
     {
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
 
-        $specialModule = SpecialModule::create($request->all());
+        $startDate = new DateTime($request->start_date);
+        $endDate   = new DateTime($request->end_date);
+
+        $specialModule = $request->all();
+        $specialModule += ['time_estimation' => $startDate->diff($endDate)->d];
+
+        $specialModuleInserted = SpecialModule::create($specialModule);
 
         $projectDetail                     = new ProjectDetail();
         $projectDetail->project_version_id = $latestVersion->id;
@@ -50,13 +57,53 @@ class ProjectDetailController extends Controller
         $projectDetail->start_date         = $request->start_date;
         $projectDetail->end_date           = $request->end_date;
 
-        $specialModule->project_detail()->save($projectDetail);
+        $specialModuleInserted->project_detail()->save($projectDetail);
 
         return redirect()->back()->with('success', 'Module created successfully');
     }
 
-    public function show(Module $module)
+    public function show(ProjectDetail $projectDetail)
     {
-        return response()->json($module);
+        $projectDetail->setAttribute('moduleable', $projectDetail->moduleable);
+
+        return response()->json($projectDetail);
+    }
+
+    public function update(Request $request, ProjectDetail $projectDetail)
+    {
+        $projectDetail->update($request->all());
+
+        return redirect()->back()->with('success', 'Project module updated successfully');
+    }
+
+    public function updateSpecial(Request $request, ProjectDetail $projectDetail)
+    {
+        $projectDetail->update($request->all());
+
+        $startDate = new DateTime($request->start_date);
+        $endDate   = new DateTime($request->end_date);
+
+        $specialModule = $request->all();
+        $specialModule += ['time_estimation' => $startDate->diff($endDate)->d];
+
+        $projectDetail->moduleable->update($specialModule);
+
+        return redirect()->back()->with('success', 'Project special module updated successfully');
+    }
+
+    public function destroy(ProjectDetail $projectDetail)
+    {
+        $projectDetail->delete();
+
+        return redirect()->back()->with('success', 'Project module deleted successfully');
+    }
+
+    public function destroySpecial(ProjectDetail $projectDetail)
+    {
+        $projectDetail->delete();
+
+        $projectDetail->moduleable->delete();
+
+        return redirect()->back()->with('success', 'Project special module deleted successfully');
     }
 }

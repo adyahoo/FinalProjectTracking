@@ -25,7 +25,7 @@
                         <a class="nav-link" href="{{ route('project_manager.projects.module.all', $version->project) }}">Modules</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active-tab" href="{{ route('project_manager.projects.versions', $version->project) }}">Version</a>
+                        <a class="nav-link active-tab" href="{{ route('project_manager.projects.version.all', $version->project) }}">Version</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Logs</a>

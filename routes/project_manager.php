@@ -39,22 +39,43 @@ Route::group([
                     ->name('scope');
     Route::get('/{project}/credentials', 'ProjectController@credentials')
                     ->name('credentials');
-    Route::get('/{project}/versions', 'ProjectVersionController@index')
-                    ->name('versions');
-    Route::get('/{project}/version/{version}', 'ProjectVersionController@detail')
-                    ->name('version');
 
     Route::group([
-        'as'     => 'module.'
+        'as'     => 'version.',
+        'prefix' => 'version',
     ], function () {
-        Route::get('/{project}/modules', 'ProjectDetailController@index')
+        Route::get('/{project}', 'ProjectVersionController@index')
                     ->name('all');
-        Route::post('/{project}/detail/create', 'ProjectDetailController@create')
+        Route::get('/{project}/detail/{version}', 'ProjectVersionController@detail')
+                    ->name('detail');
+    });
+
+    Route::group([
+        'as'     => 'module.',
+        'prefix' => 'module',
+    ], function () {
+        Route::get('/{project}', 'ProjectDetailController@index')
+                    ->name('all');
+        Route::post('/{project}/create', 'ProjectDetailController@create')
                     ->name('create');
-        Route::post('/{project}/detail/create_special', 'ProjectDetailController@createSpecial')
-                    ->name('create_special');
-        Route::get('/{project}/module/{module}', 'ProjectDetailController@show')
+        Route::get('/detail/{project_detail}', 'ProjectDetailController@show')
                     ->name('show');
+        Route::put('/update/{project_detail}', 'ProjectDetailController@update')
+                    ->name('update');
+        Route::delete('/destroy/{project_detail}', 'ProjectDetailController@destroy')
+                    ->name('destroy');
+
+        Route::group([
+            'as'     => 'special.',
+            'prefix' => 'special',
+        ], function () {
+            Route::post('/{project}/create', 'ProjectDetailController@createSpecial')
+                        ->name('create');
+            Route::put('/update/{project_detail}', 'ProjectDetailController@updateSpecial')
+                        ->name('update');
+            Route::delete('/destroy/{project_detail}', 'ProjectDetailController@destroySpecial')
+                        ->name('destroy');
+        });
     });
 
 });
