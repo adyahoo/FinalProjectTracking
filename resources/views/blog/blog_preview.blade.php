@@ -8,13 +8,6 @@
 
 @section('content')
 <div class="container">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{route('blog')}}">Blog</a></li>
-            <li class="breadcrumb-item active" aria-current="page">12 Tips On Creating Content For Your New Website (A Complete Guide)</li>
-        </ol>
-    </nav>
     <div class="row no-gutters justify-content-center mt-5">
         <div class="col-10">
             <div class="section section-detail">
@@ -54,40 +47,6 @@
                     Adipisicing consectetur amet occaecat non excepteur consequat nulla laboris aute et nulla excepteur. Qui sit et ipsum labore voluptate ipsum enim sit. Aute duis ea dolore sunt fugiat et commodo eu amet culpa cillum. Do dolor deserunt dolor aliquip reprehenderit voluptate amet velit ullamco. Laboris anim aute commodo amet reprehenderit occaecat sint ipsum eiusmod laborum irure sunt ullamco.
                 </p>
             </div>                        
-        </div>
-    </div>
-    <div class="section section-related-blogs">
-        <h3 class="section-related__title">
-            Discover Related Blogs
-        </h3>
-        <div class="row">
-            @for($i = 0; $i < 4; $i++)
-            <div class="col-12 col-lg-6">
-                <x-content-horiz></x-content-horiz>
-            </div>
-            @endfor
-        </div>
-    </div>
-    <div class="section-btn-share fab-container">
-        <div class="fab shadow">
-            <div class="fab-content">
-                <span class="material-icons">share</span>
-            </div>
-        </div>
-        <div class="sub-button shadow">
-            <a href="#" target="_blank">
-                <i class="material-icons fa-facebook"></i>
-            </a>
-        </div>
-        <div class="sub-button shadow">
-            <a href="#" target="_blank">
-                <i class="material-icons fa-instagram"></i>
-            </a>
-        </div>
-        <div class="sub-button shadow">
-            <a href="#" target="_blank">
-                <i class="material-icons fa-linkedin"></i>
-            </a>
         </div>
     </div>
 </div>

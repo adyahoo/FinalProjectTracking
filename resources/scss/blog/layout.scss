@@ -36,36 +36,42 @@ body {
     color: map.get($color, "primary") !important;
 }
 
-.header {
-    height: 70px;
-    font-size: 16px;
-    
-    & .navbar {
-        width: 100%;
-        padding: 0px 50px;
-        left: 0px;
-        top: 0px;
-        background-color: white;
-    
-        & .form-inline{
-            & .form-control {
-                margin-right: 0px;
-                padding: 0px 16px;
-                border-color: black;
-                border-radius: 10px;
-            }
-        }
+.navbar {
+    position: relative;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    background-color: white;
+}
+
+.form-inline {
+    margin-bottom: 12px;
+    margin-left: 12px;
+
+    & .form-control {
+        display: inline-block;
+        width: auto;
+        margin-right: 5px;
+        padding: 0px 16px;
+        border-color: black;
+        border-radius: 10px;
     }
+}
 
-    & .navbar-brand {
-        width: 235px;
-        height: 70px;
+.navbar-brand {
+    width: 235px;
+    height: 70px;
 
-        & img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+    & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.navbar-nav {
+    @media (max-width: 991px) {
+        align-items: flex-start;
     }
 }
 
@@ -82,7 +88,7 @@ body {
     &::before {
         content: "";
         position: absolute;
-        bottom: -22px;
+        bottom: -16px;
         right: 0;
         left: 0;
         margin: 0 15px;
@@ -93,6 +99,12 @@ body {
             top: 0px;
             margin: 0 5px;
         }
+    }
+}
+
+.dropdown-item {
+    &:hover, &.active {
+        background-color: map.get($color, "primary") !important;
     }
 }
 
