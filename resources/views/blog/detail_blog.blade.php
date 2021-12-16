@@ -18,7 +18,7 @@
     <div class="row no-gutters justify-content-center mt-5">
         <div class="col-10">
             <div class="section section-detail">
-                <h2 class="text-dark text-center">12 Tips On Creating Content For Your New Website (A Complete Guide)</h2>
+                <h2 class="text-dark">12 Tips On Creating Content For Your New Website (A Complete Guide)</h2>
                 <div class="row no-gutters align-items-center">
                     <div class="col-3 col-lg-2">
                         <div class="rounded-circle section-detail__profile-container">

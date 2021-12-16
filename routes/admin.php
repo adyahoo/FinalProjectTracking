@@ -72,5 +72,7 @@ Route::group(['prefix'=>'blogs'], function () {
     Route::group(['prefix'=>'admin_blog','as'=>'blog.'],function () {
         Route::get('/index', 'BlogController@index')->name('index');
         Route::get('/create', 'BlogController@create')->name('create');
+        Route::post('/store','BlogController@store')->name('store');
+        Route::get('/preview/{slug}', 'BlogController@show')->name('preview');
     });
 });
