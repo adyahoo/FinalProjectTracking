@@ -18,8 +18,10 @@ Route::get('/', function () {
 });
 
 Route::get('/blog', function () {
-    return view('blog.blog');
+    return view('blog.blog_list');
 })->name("blog");
+
+Route::post('/blog/search', 'blog\ListBlogsController@returnSearch')->name("search");
 
 Route::get('/blog_detail', function () {
     return view('blog.detail_blog');

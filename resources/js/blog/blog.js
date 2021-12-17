@@ -14,9 +14,11 @@ $("#view_id").click(function() {
 
 (function($, document, window, viewport){      
     var sticky = function () {                    
-        if( viewport.is("lg") ) {
+        if( window.innerWidth > 768 ) {
             $('#sidebar').addClass('sticky-top')
             $('#collapseSidebar').addClass('show')
+        } else {
+            $('#collapseSidebar').removeClass("show")
         }
     }
     
@@ -30,3 +32,7 @@ $("#view_id").click(function() {
         })
     );
 })(jQuery, document, window, ResponsiveBootstrapToolkit);
+
+$('#cancelLabel').click(function () {
+    $('#label').tagsinput('remove');
+})

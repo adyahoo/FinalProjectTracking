@@ -42,14 +42,19 @@ body {
 .form-inline {
   margin-bottom: 12px;
   margin-left: 12px;
+  flex-flow: row nowrap;
 }
 .form-inline .form-control {
   display: inline-block;
-  width: auto;
+  width: 100%;
   margin-right: 5px;
   padding: 0px 16px;
   border-color: black;
   border-radius: 10px;
+}
+.form-inline button {
+  background-color: #6DDA5F;
+  color: white;
 }
 
 .navbar-brand {

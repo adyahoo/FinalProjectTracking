@@ -78,11 +78,27 @@
   font-size: 16px !important;
 }
 
+.bootstrap-tagsinput {
+  display: flex;
+  cursor: default;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+.bootstrap-tagsinput input {
+  display: none;
+}
+
 .section-blog__label {
-  width: 100%;
-  max-width: 100px;
-  padding: 5px 10px;
+  display: flex;
+  padding: 10px !important;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
   background-color: #6DDA5F;
+}
+.section-blog__label i {
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=blog.css.map*/

@@ -6,11 +6,29 @@
     font-size: 16px !important;
 }
 
+.bootstrap-tagsinput {
+    display: flex;
+    cursor: default;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+
+    & input {
+        display: none;
+    }
+}
+
 .section-blog {
     &__label {
-        width: 100%;
-        max-width: 100px;
-        padding: 5px 10px;
+        display: flex;
+        padding: 10px !important;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 16px;
         background-color: map.get($color, "primary");
+
+        & i {
+            cursor: pointer;
+        }
     }
 }
