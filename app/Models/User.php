@@ -19,12 +19,6 @@ class User extends Authenticatable
      * @var string[]
      */
 
-    protected $privilege = [
-        'admin'           => 'admin',
-        'project_manager' => 'project_manager',
-        'employee'        => 'employee'
-    ];
-
     protected $fillable = [
         'name',
         'email',
@@ -59,17 +53,17 @@ class User extends Authenticatable
 
     public function getIsAdminAttribute()
     {
-        return ($this->role->privilege == $this->privilege['admin']);
+        return ($this->role->privilege == $this->role->privileges['admin']);
     }
 
     public function getIsProjectManagerAttribute()
     {
-        return ($this->role->privilege == $this->privilege['project_manager']);
+        return ($this->role->privilege == $this->role->privileges['project_manager']);
     }
 
     public function getIsEmployeeAttribute()
     {
-        return ($this->role->privilege == $this->privilege['employee']);
+        return ($this->role->privilege == $this->role->privileges['employee']);
     }
 
     public function setPasswordAttribute($value)
@@ -90,5 +84,10 @@ class User extends Authenticatable
     public function projects()
     {
         return $this->hasMany(Project::class);
+    }
+
+    public function user_assignments()
+    {
+        return $this->hasMany(UserAssignment::class);
     }
 }

@@ -9,7 +9,12 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $dates    = ['start_date', 'end_date'];
+    protected $dates    = [
+        'start_date',
+        'end_date',
+        'launch_date'
+    ];
+
     protected $fillable = [
         'user_id',
         'name',
@@ -17,7 +22,8 @@ class Project extends Model
         'scope',
         'credentials',
         'start_date',
-        'end_date'
+        'end_date',
+        'launch_date'
     ];
 
     public function scopeWhereDueDate($query, $dueDate)
@@ -43,7 +49,7 @@ class Project extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function project_versions()
+    public function projectVersions()
     {
         return $this->hasMany(ProjectVersion::class);
     }

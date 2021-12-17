@@ -8,6 +8,7 @@ use App\Models\Project;
 use App\Models\ProjectVersion;
 use App\Models\ProjectDetail;
 use App\Models\Module;
+use App\Models\Role;
 use App\Models\SpecialModule;
 use App\Http\Requests\ModuleRequest;
 use DateTime;
@@ -17,12 +18,13 @@ class ProjectDetailController extends Controller
     public function index(Project $project)
     {
         $modules       = Module::get();
+        $employees     = Role::whereEmployee()->first()->user;
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
 
-        return view('project.project_manager.pages.project.module.list', compact('project', 'latestVersion', 'modules'));
+        return view('project.project_manager.pages.project.module.index', compact('project', 'latestVersion', 'modules', 'employees'));
     }
 
-    public function create(Request $request, Project $project)
+    public function store(Request $request, Project $project)
     {
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
 
@@ -39,7 +41,7 @@ class ProjectDetailController extends Controller
         return redirect()->back()->with('success', 'Module created successfully');
     }
 
-    public function createSpecial(Request $request, Project $project)
+    public function storeSpecial(Request $request, Project $project)
     {
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
 
@@ -57,12 +59,19 @@ class ProjectDetailController extends Controller
         $projectDetail->start_date         = $request->start_date;
         $projectDetail->end_date           = $request->end_date;
 
-        $specialModuleInserted->project_detail()->save($projectDetail);
+        $specialModuleInserted->projectDetail()->save($projectDetail);
 
         return redirect()->back()->with('success', 'Module created successfully');
     }
 
     public function show(ProjectDetail $projectDetail)
+    {
+        $employees = Role::whereEmployee()->first()->user;
+
+        return view('project.project_manager.pages.project.module.detail', compact('projectDetail', 'employees'));
+    }
+
+    public function edit(ProjectDetail $projectDetail)
     {
         $projectDetail->setAttribute('moduleable', $projectDetail->moduleable);
 

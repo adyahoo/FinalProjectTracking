@@ -51,8 +51,7 @@
                             <thead>
                                 <tr>
                                     <th>Title</th>
-                                    <th>Modules</th>
-                                    <th>Members</th>
+                                    <th>Start Date</th>
                                     <th>Due Date</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -69,16 +68,23 @@
                                             </div>
                                         </td>
                                         <td>
-                                            3
-                                        </td>
-                                        <td>
-                                            5
+                                            {{ $project->start_date->format('d-m-Y') }}
                                         </td>
                                         <td>
                                             {{ $project->end_date->format('d-m-Y') }}
                                         </td>
                                         <td>
-                                            <div class="badge badge-warning">In Progress</div>
+                                            @if(!empty($project->launch_date))
+                                                <div class="badge badge-success">Launch</div>
+                                            @else
+                                                @if($project->projectVersions->count() > 1)
+                                                    <div class="badge badge-info">Maintenance</div>
+                                                @elseif($project->start_date->isPast())
+                                                    <div class="badge badge-info">Development</div>
+                                                @else
+                                                    <div class="badge badge-info">Listed</div>
+                                                @endif
+                                            @endif
                                         </td>
                                         <td>
                                             <a href="{{ route('project_manager.projects.edit', $project->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>

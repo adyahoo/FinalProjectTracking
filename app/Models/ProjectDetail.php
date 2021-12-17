@@ -42,12 +42,14 @@ class ProjectDetail extends Model
     public function getStartDateAttribute()
     {
         $datetime = new DateTime($this->attributes['start_date']);
+
         return $datetime;
     }
 
     public function getEndDateAttribute()
     {
         $datetime = new DateTime($this->attributes['end_date']);
+
         return $datetime;
     }
 
@@ -61,7 +63,7 @@ class ProjectDetail extends Model
         return $this->morphTo();
     }
 
-    public function user_assigments()
+    public function userAssignments()
     {
         return $this->hasMany(UserAssignment::class);
     }

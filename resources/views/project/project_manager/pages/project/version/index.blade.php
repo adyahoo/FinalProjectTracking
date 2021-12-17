@@ -54,7 +54,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($project->project_versions as $version)
+                                @foreach($project->projectVersions as $version)
                                     <tr>
                                         <td>
                                             {{ $version->version_number }}

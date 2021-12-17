@@ -29,7 +29,7 @@ Route::group([
                     ->name('store');
     Route::get('/edit/{project}', 'ProjectController@edit')
                     ->name('edit');
-    Route::post('/update/{project}', 'ProjectController@update')
+    Route::put('/update/{project}', 'ProjectController@update')
                     ->name('update');
     Route::delete('/destroy/{project}', 'ProjectController@destroy')
                     ->name('destroy');
@@ -39,6 +39,8 @@ Route::group([
                     ->name('scope');
     Route::get('/{project}/credentials', 'ProjectController@credentials')
                     ->name('credentials');
+    Route::put('/launch_date/{project}', 'ProjectController@addLaunchDate')
+                    ->name('addLaunchDate');
 
     Route::group([
         'as'     => 'version.',
@@ -56,24 +58,36 @@ Route::group([
     ], function () {
         Route::get('/{project}', 'ProjectDetailController@index')
                     ->name('all');
-        Route::post('/{project}/create', 'ProjectDetailController@create')
-                    ->name('create');
-        Route::get('/detail/{project_detail}', 'ProjectDetailController@show')
-                    ->name('show');
+        Route::post('/{project}/store', 'ProjectDetailController@store')
+                    ->name('store');
+        Route::get('/edit/{project_detail}', 'ProjectDetailController@edit')
+                    ->name('edit');
         Route::put('/update/{project_detail}', 'ProjectDetailController@update')
                     ->name('update');
         Route::delete('/destroy/{project_detail}', 'ProjectDetailController@destroy')
                     ->name('destroy');
+        Route::get('/show/{project_detail}', 'ProjectDetailController@show')
+                    ->name('show');
 
         Route::group([
             'as'     => 'special.',
             'prefix' => 'special',
         ], function () {
-            Route::post('/{project}/create', 'ProjectDetailController@createSpecial')
-                        ->name('create');
+            Route::post('/{project}/store', 'ProjectDetailController@storeSpecial')
+                        ->name('store');
             Route::put('/update/{project_detail}', 'ProjectDetailController@updateSpecial')
                         ->name('update');
             Route::delete('/destroy/{project_detail}', 'ProjectDetailController@destroySpecial')
+                        ->name('destroy');
+        });
+
+        Route::group([
+            'as'     => 'member.',
+            'prefix' => 'member',
+        ], function () {
+            Route::post('/{project_detail}/store', 'UserAssignmentController@store')
+                        ->name('store');
+            Route::delete('/destroy/{user_assignment}', 'UserAssignmentController@destroy')
                         ->name('destroy');
         });
     });

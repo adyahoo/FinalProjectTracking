@@ -21,7 +21,7 @@ class ProjectVersion extends Model
         return $this->belongsTo(Project::class);
     }
 
-    public function project_details()
+    public function projectDetails()
     {
         return $this->hasMany(ProjectDetail::class);
     }

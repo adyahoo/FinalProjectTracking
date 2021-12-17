@@ -9,6 +9,7 @@
           <div class="card">
             <form action="{{ route('project_manager.projects.update', $project) }}" method="POST">
               @csrf
+              @method('PUT')
 
               <div class="card-header">
                 <h4>Edit Project</h4>

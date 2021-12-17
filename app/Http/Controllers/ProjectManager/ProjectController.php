@@ -5,6 +5,7 @@ namespace App\Http\Controllers\ProjectManager;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
+use App\Http\Requests\LaunchDateRequest;
 use App\Models\Project;
 use App\Models\Role;
 use App\Models\User;
@@ -16,11 +17,11 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $projects = Project::get();
+        $projects = Project::where('user_id', Auth::user()->id)->get();
         $roles    = Role::get();
         $users    = User::get();
 
-        return view('project.project_manager.pages.project.list', compact('projects', 'roles', 'users', 'request'));
+        return view('project.project_manager.pages.project.index', compact('projects', 'roles', 'users', 'request'));
     }
 
     public function create()
@@ -40,7 +41,7 @@ class ProjectController extends Controller
         $project_version->note           = 'First version';
         $project_version->description    = 'First version';
 
-        $projectInserted->project_versions()->save($project_version);
+        $projectInserted->projectVersions()->save($project_version);
 
         return redirect()->route('project_manager.projects.all')->with('success', 'Project created successfully');
     }
@@ -68,7 +69,12 @@ class ProjectController extends Controller
     {
         $latestVersion      = ProjectVersion::where('project_id', $project->id)->latest()->first();
         $modulesDoneCount   = ProjectDetail::whereDone()->count();
-        $progressPercentage = ($modulesDoneCount / $latestVersion->project_details->count()) * 100;
+
+        if($latestVersion->projectDetails->count() == 0) {
+            $progressPercentage = 0;
+        } else {
+            $progressPercentage = ($modulesDoneCount / $latestVersion->projectDetails->count()) * 100;
+        }
 
         return view('project.project_manager.pages.project.detail', compact(
             'project',
@@ -92,5 +98,12 @@ class ProjectController extends Controller
         $text  = $project->credentials;
 
         return view('project.project_manager.pages.project.text_detail', compact('project', 'title', 'text'));
+    }
+
+    public function addLaunchDate(LaunchDateRequest $request, Project $project)
+    {
+        $project->update($request->all());
+
+        return redirect()->back()->with('success', 'Project updated successfully');
     }
 }

@@ -45,11 +45,11 @@
                 <div class="card-header">
                     <h4>Project Modules</h4>
                     <div class="card-header-action">
-                        <button data-action="{{ route('project_manager.projects.module.create', $project) }}" class="btn btn-primary btn-round ml-auto btn-add text-white" data-toggle="modal" data-target="#modal">
+                        <button data-action="{{ route('project_manager.projects.module.store', $project) }}" class="btn btn-primary btn-round ml-auto btn-add text-white" data-toggle="modal" data-target="#modal">
                             <i class="fa fa-plus"></i>
                             Add Module
                         </button>
-                        <button data-action="{{ route('project_manager.projects.module.special.create', $project) }}" class="btn btn-outline-primary btn-round ml-auto btn-special-module" data-toggle="modal" data-target="#modalSpecial">
+                        <button data-action="{{ route('project_manager.projects.module.special.store', $project) }}" class="btn btn-outline-primary btn-round ml-auto btn-special-module" data-toggle="modal" data-target="#modalSpecial">
                             <i class="fa fa-plus"></i>
                             Add Special Module
                         </button>
@@ -69,37 +69,48 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($project->project_versions as $version)
-                                    @foreach($version->project_details as $projectDetail)
+                                @foreach($project->projectVersions as $version)
+                                    @foreach($version->projectDetails as $projectDetail)
                                         <tr>
                                             <td>
                                                 <b>{{ $projectDetail->moduleable->name }}</b>
                                                 <div class="mt-1">
-                                                    <div class="bullet"></div>
                                                     <span>Added at : v{{ $version->version_number }}</span>
+                                                </div>
+                                                <div class="table-links">
+                                                    <div class="bullet"></div>
+                                                    <a href="{{ route('project_manager.projects.module.show', $projectDetail) }}">View</a>
                                                 </div>
                                             </td>
                                             <td>
                                                 {{ $projectDetail->status }}
                                             </td>
                                             <td>
-                                                @empty($projectDetail->user_assigments)
-                                                    @foreach($projectDetail->user_assigments as $user)
-                                                        {{ $user->name }} ({{ $user->role->name }})
-                                                    @endforeach
-                                                @else
+                                                @if($projectDetail->userAssignments->count() == 0)
                                                     no one assigned
-                                                @endempty
+                                                @else
+                                                    @foreach($projectDetail->userAssignments->take(3) as $userAssignment)
+                                                        <img alt="image" src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}" class="rounded-circle mb-2" width="35" data-toggle="tooltip" title="{{ $userAssignment->user->name }}">
+                                                    @endforeach
+                                                    @if($projectDetail->userAssignments->count() > 3)
+                                                        <br><a href="">+ {{ $projectDetail->userAssignments->count() - 3 }} members</a>
+                                                    @endif
+                                                @endif
                                             </td>
                                             <td>
-                                                {{ $projectDetail->start_date->format('d-m-Y') }} ({{ $projectDetail->start_date->format('H:i') }})
+                                                {{ $projectDetail->start_date->format('d-m-Y') }}<br>
+                                                ({{ $projectDetail->start_date->format('H:i') }})
                                             </td>
                                             <td>
-                                                {{ $projectDetail->end_date->format('d-m-Y') }} ({{ $projectDetail->end_date->format('H:i') }})
+                                                {{ $projectDetail->end_date->format('d-m-Y') }}<br>
+                                                ({{ $projectDetail->end_date->format('H:i') }})
                                             </td>
                                             <td>
+                                                <a data-action="{{ route('project_manager.projects.module.member.store', $projectDetail) }}" href="#" class="btn btn-primary btn-add-member" data-toggle="modal" data-target="#modalMember" title="Add Member"><i class="fa fa-user-plus"></i></a>
+
                                                 @if($projectDetail->moduleable_type == $projectDetail->moduleType['special_module'])
-                                                    <a data-detail="{{ route('project_manager.projects.module.show', $projectDetail) }}" data-action="{{ route('project_manager.projects.module.special.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit-special" data-toggle="modal" data-target="#modalSpecial"><i class="fa fa-pencil-alt"></i></a>
+                                                    <a data-detail="{{ route('project_manager.projects.module.edit', $projectDetail) }}" data-action="{{ route('project_manager.projects.module.special.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit-special" data-toggle="modal" data-target="#modalSpecial" title="Edit"><i class="fa fa-pencil-alt"></i></a>
+
                                                     <a href="#" onclick="deleteConfirm('del{{ $projectDetail->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
@@ -108,7 +119,8 @@
                                                         @csrf
                                                     </form>
                                                 @else
-                                                    <a data-detail="{{ route('project_manager.projects.module.show', $projectDetail) }}" data-action="{{ route('project_manager.projects.module.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#modal"><i class="fa fa-pencil-alt"></i></a>
+                                                    <a data-detail="{{ route('project_manager.projects.module.edit', $projectDetail) }}" data-action="{{ route('project_manager.projects.module.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#modal" title="Edit"><i class="fa fa-pencil-alt"></i></a>
+
                                                     <a href="#" onclick="deleteConfirm('del{{ $projectDetail->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
@@ -233,6 +245,40 @@
             </form>
         </div>
     </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalMember">
+        <div class="modal-dialog" role="document">
+            <form id="formMember" action="" method="" enctype="multipart/form-data">
+                @csrf
+                <input id="methodMember" type="hidden" name="_method" value=""/>
+                <div class="modal-content" style="margin-bottom: 50%">
+                    <div class="modal-header">
+                        <h5 id="titleMember" class="modal-title">Form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Member</label>
+                            <select id="member" name="user_id" class="form-control">
+                                @foreach($employees as $employee)
+                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('user_id')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
 
 @section('script')
@@ -315,6 +361,13 @@
                 $('#startSpecial').val(data.start_date.date);
                 $('#endSpecial').val(data.end_date.date);
             });
+        });
+
+        $(".btn-add-member").click(function(){
+            let action = $(this).data('action');
+            $('#titleMember').text('Add Member');
+            $('#formMember').attr('action', action);
+            $("#formMember").attr("method", "post");
         });
     </script>
 @endsection
