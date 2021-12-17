@@ -36,5 +36,5 @@
             <li><a class="nav-link" href="layout-default.html">Change Logo</a></li>
         </ul>
     </li>
-    <li class=""><a class="nav-link" href="#"><i class="fas fa-list"></i> <span>Logs Activity</span></a></li>
+    <li class="{{ Request::is('admin/logs/*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.logs.index')}}"><i class="fas fa-list"></i> <span>Logs Activity</span></a></li>
 </ul>

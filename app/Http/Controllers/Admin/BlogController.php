@@ -65,7 +65,13 @@ class BlogController extends Controller
 
     public function update(BlogRequest $request, Blog $blog)
     {
-        $blog->update($request->all());
+        $blogs = $request->all();
+        if ($request->status == 'Published') {
+            $blogs += [
+                'published_at' => Carbon::now(),
+            ];
+        }
+        $blog->update($blogs);
         return redirect()->route('admin.blog.index')->with('success', 'Blog updated successfully');
     }
 

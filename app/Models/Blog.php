@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\ImageTrait;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 use Str;
+use Auth;
 
 class Blog extends Model
 {
-    use HasFactory, ImageTrait;
+    use HasFactory, ImageTrait, LogsActivity;
 
     const IMAGE_PATH    = 'public/blog_images/';
     protected $fillable = [
@@ -25,6 +28,18 @@ class Blog extends Model
         'published_at',
         'status'
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+                        ->useLogName('blog')
+                        ->logOnly(['title','status']);
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return "Blog has been {$eventName} by ". Auth::user()->name;
+    }
 
     public function user()
     {

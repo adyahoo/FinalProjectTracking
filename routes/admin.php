@@ -78,4 +78,11 @@ Route::group(['prefix'=>'blogs'], function () {
         Route::put('/update/{blog}', 'BlogController@update')->name('update');
         Route::delete('/delete/{blog}', 'BlogController@destroy')->name('delete');
     });
+
+});
+
+Route::group(['prefix'=>'logs', 'as'=>'logs.'], function () {
+    #Logs
+    Route::get('/index', 'LogController@index')->name('index');
+    Route::get('/show/{log}', 'LogController@show')->name('show');
 });

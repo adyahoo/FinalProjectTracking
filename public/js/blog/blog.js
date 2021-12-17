@@ -18,9 +18,11 @@ $("#view_id").click(function () {
 
 (function ($, document, window, viewport) {
   var sticky = function sticky() {
-    if (viewport.is("lg")) {
+    if (window.innerWidth > 768) {
       $('#sidebar').addClass('sticky-top');
       $('#collapseSidebar').addClass('show');
+    } else {
+      $('#collapseSidebar').removeClass("show");
     }
   };
 
@@ -31,6 +33,10 @@ $("#view_id").click(function () {
     sticky();
   }));
 })(jQuery, document, window, ResponsiveBootstrapToolkit);
+
+$('#cancelLabel').click(function () {
+  $('#label').tagsinput('remove');
+});
 /******/ })()
 ;
 //# sourceMappingURL=blog.js.map
