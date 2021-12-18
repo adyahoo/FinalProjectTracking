@@ -21,21 +21,27 @@
                 <div class="card-body">
                     <form role="form" method="GET">
                         <div class="form-row">
-                            <div class="form-group col-md-4 col-lg-3">
-                                <label>Due Date</label>
-                                <input type="date" class="form-control" name="due_date" value="{{ $request->due_date }}">
+                            <div class="form-group col-md-3 col-lg-3">
+                                <label>Start Date</label>
+                                <input type="date" class="form-control" name="start_date" value="{{ $request->start_date }}">
                             </div>
-                            <div class="form-group col-md-4 col-lg-4">
+                            <div class="form-group col-md-3 col-lg-3">
+                                <label>End Date</label>
+                                <input type="date" class="form-control" name="end_date" value="{{ $request->end_date }}">
+                            </div>
+                            <div class="form-group col-md-3 col-lg-3">
                                 <label>User Assignee</label>
                                 <select class="form-control form-control-sm" name="user">
-                                    @foreach($users as $user)
+                                    <option value="no_filter">All</option>
+                                    @foreach($employees as $user)
                                         <option value="{{ $user->id }}" @if($user->id == $request->user) selected @endif>{{ $user->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group col-md-4 col-lg-4">
+                            <div class="form-group col-md-3 col-lg-2">
                                 <label>Role Assignee</label>
                                 <select class="form-control form-control-sm" name="role">
+                                    <option value="no_filter">All</option>
                                     @foreach($roles as $role)
                                         <option value="{{ $role->id }}" @if($role->id == $request->role) selected @endif>{{ $role->name }}</option>
                                     @endforeach
@@ -52,7 +58,7 @@
                                 <tr>
                                     <th>Title</th>
                                     <th>Start Date</th>
-                                    <th>Due Date</th>
+                                    <th>End Date</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -74,16 +80,14 @@
                                             {{ $project->end_date->format('d-m-Y') }}
                                         </td>
                                         <td>
-                                            @if(!empty($project->launch_date))
+                                            @if($project->projectVersions->count() > 1)
+                                                <div class="badge badge-info">Maintenance</div>
+                                            @elseif(!empty($project->launch_date))
                                                 <div class="badge badge-success">Launch</div>
+                                            @elseif($project->projectVersions->last()->projectDetails()->whereDoneOrOnProgress()->count() > 0)
+                                                <div class="badge badge-warning">Development</div>
                                             @else
-                                                @if($project->projectVersions->count() > 1)
-                                                    <div class="badge badge-info">Maintenance</div>
-                                                @elseif($project->start_date->isPast())
-                                                    <div class="badge badge-info">Development</div>
-                                                @else
-                                                    <div class="badge badge-info">Listed</div>
-                                                @endif
+                                                <div class="badge badge-danger">Listed</div>
                                             @endif
                                         </td>
                                         <td>

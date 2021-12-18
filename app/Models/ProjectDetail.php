@@ -13,9 +13,9 @@ class ProjectDetail extends Model
     use HasFactory, LogsActivity;
 
     public $statusOption = [
-        'done'        => 'done',
-        'not_yet'     => 'not yet',
-        'on_progress' => 'on progress'
+        'done'           => 'done',
+        'not_yet'        => 'not yet',
+        'on_progress'    => 'on progress'
     ];
 
     public $moduleType = [
@@ -50,7 +50,12 @@ class ProjectDetail extends Model
 
     public function scopeWhereDone($query)
     {
-        return $query->where('status', 'done');
+        return $query->where('status', $this->statusOption['done']);
+    }
+
+    public function scopeWhereDoneOrOnProgress($query)
+    {
+        return $query->where('status', $this->statusOption['done'])->orWhere('status', $this->statusOption['on_progress']);
     }
 
     public function getStartDateAttribute()

@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/dashboard', function () {
-    return view('project.project_manager.pages.dashboard.dashboard');
-})->middleware(['project_manager'])->name('dashboard');
+Route::get('/dashboard', 'DashboardController@index')->middleware(['project_manager'])->name('dashboard');
 
 Route::group([
     'as'     => 'projects.',
@@ -90,6 +88,14 @@ Route::group([
             Route::delete('/destroy/{user_assignment}', 'UserAssignmentController@destroy')
                         ->name('destroy');
         });
+    });
+
+    Route::group([
+        'as'     => 'logs.',
+        'prefix' => 'logs'
+    ], function () {
+        Route::get('/{project}', 'ProjectLogController@index')
+                ->name('all');
     });
 
 });

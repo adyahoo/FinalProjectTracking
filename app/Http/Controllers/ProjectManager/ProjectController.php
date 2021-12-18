@@ -17,11 +17,16 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $projects = Project::where('user_id', Auth::user()->id)->get();
-        $roles    = Role::get();
-        $users    = User::get();
+        $projects  = Project::whereMyProject()
+                            ->whereStartDate($request->start_date)
+                            ->whereEndDate($request->end_date)
+                            ->whereUserAssignee($request->user)
+                            ->whereRoleAssignee($request->role)
+                            ->get();
+        $roles     = Role::whereEmployee()->get();
+        $employees = Role::whereEmployee()->first()->user;
 
-        return view('project.project_manager.pages.project.index', compact('projects', 'roles', 'users', 'request'));
+        return view('project.project_manager.pages.project.index', compact('projects', 'roles', 'employees', 'request'));
     }
 
     public function create()

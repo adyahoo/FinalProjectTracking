@@ -23,7 +23,7 @@
                         <a class="nav-link" href="{{ route('project_manager.projects.version.all', $project) }}">Version</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Logs</a>
+                        <a class="nav-link" href="{{ route('project_manager.projects.logs.all', $project) }}">Logs</a>
                     </li>
                 </ul>
             </div>
@@ -159,18 +159,14 @@
                         </div>
                         <div class="card-body">
                             <ul class="list-unstyled user-progress list-unstyled-border list-unstyled-noborder">
-                                @foreach($project->projectVersions as $version)
-                                    @foreach($version->projectDetails as $module)
-                                        @foreach($module->userAssignments as $userAssignment)
-                                            <li class="media">
-                                                <img alt="image" class="mr-3 rounded-circle" width="50" src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}">
-                                                <div class="media-body">
-                                                    <div class="media-title">{{ $userAssignment->user->name }}</div>
-                                                    <div class="text-job text-muted">{{ $userAssignment->user->role->name }}</div>
-                                                </div>
-                                            </li>
-                                        @endforeach
-                                    @endforeach
+                                @foreach($project->userAssignments as $userAssignment)
+                                    <li class="media">
+                                        <img alt="image" class="mr-3 rounded-circle" width="50" src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}">
+                                        <div class="media-body">
+                                            <div class="media-title">{{ $userAssignment->user->name }}</div>
+                                            <div class="text-job text-muted">{{ $userAssignment->user->role->name }}</div>
+                                        </div>
+                                    </li>
                                 @endforeach
                             </ul>
                         </div>
