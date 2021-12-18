@@ -4,15 +4,29 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class UserAssignment extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     protected $fillable = [
         'user_id',
         'project_detail_id',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+                        ->useLogName('project')
+                        ->logOnly(['user_id','project_detail_id']);
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return "User Assignment has been {$eventName} by: :causer.name";
+    }
 
     public function user()
     {

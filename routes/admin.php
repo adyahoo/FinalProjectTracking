@@ -69,6 +69,8 @@ Route::group(['prefix'=>'blogs'], function () {
         Route::put('/update/{category}', 'BlogCategoriesController@update')->name('update');
         Route::delete('/delete/{category}', 'BlogCategoriesController@destroy')->name('delete');
     });
+
+    #Admin Personal Blog
     Route::group(['prefix'=>'admin_blog','as'=>'blog.'],function () {
         Route::get('/index', 'BlogController@index')->name('index');
         Route::get('/create', 'BlogController@create')->name('create');
@@ -77,6 +79,13 @@ Route::group(['prefix'=>'blogs'], function () {
         Route::get('/edit/{blog}', 'BlogController@edit')->name('edit');
         Route::put('/update/{blog}', 'BlogController@update')->name('update');
         Route::delete('/delete/{blog}', 'BlogController@destroy')->name('delete');
+    });
+
+    #Admin Approval
+    Route::group(['prefix'=>'review','as'=>'review.'],function () {
+        Route::get('/index', 'BlogReviewController@index')->name('index');
+        Route::post('/store/{blog}','BlogReviewController@store')->name('review');
+        Route::get('/detail/{review}', 'BlogReviewController@show')->name('show');
     });
 
 });

@@ -17,6 +17,7 @@ class CreateBlogReviews extends Migration
             $table->id();
             $table->unsignedBigInteger('blog_id');
             $table->unsignedBigInteger('user_id');
+            $table->enum('status', ['Published', 'Rejected']);
             $table->text('reviews');
             $table->timestamps();
         });

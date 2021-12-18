@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Project extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     protected $dates    = [
         'start_date',
@@ -25,6 +27,18 @@ class Project extends Model
         'end_date',
         'launch_date'
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+                        ->useLogName('project')
+                        ->logOnly(['name','description','scope','credentials','start_date','end_date']);
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return "Project :subject.name has been {$eventName} by: :causer.name";
+    }
 
     public function scopeWhereDueDate($query, $dueDate)
     {

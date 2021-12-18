@@ -8,10 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Hash;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -51,6 +53,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+                        ->useLogName('membership')
+                        ->logOnly(['name','email']);
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return "User with name :subject.name has been {$eventName} by: :causer.name";
+    }
+
     public function getIsAdminAttribute()
     {
         return ($this->role->privilege == $this->role->privileges['admin']);
@@ -89,5 +103,15 @@ class User extends Authenticatable
     public function user_assignments()
     {
         return $this->hasMany(UserAssignment::class);
+    }
+
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class);
+    }
+
+    public function review()
+    {
+        return $this->hasMany(BlogReview::class);
     }
 }

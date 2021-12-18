@@ -8,7 +8,6 @@ use App\Traits\ImageTrait;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Str;
-use Auth;
 
 class Blog extends Model
 {
@@ -38,7 +37,7 @@ class Blog extends Model
 
     public function getDescriptionForEvent(string $eventName): string
     {
-        return "Blog has been {$eventName} by ". Auth::user()->name;
+        return "Blog :subject.title has been {$eventName} by: :causer.name";
     }
 
     public function user()
@@ -62,5 +61,15 @@ class Blog extends Model
 
     public function setImageAttribute($value){
         $this->attributes['image'] = $this->uploadImage($value, self::IMAGE_PATH);
+    }
+
+    public function scopeGetReviews($query)
+    {
+        return $query->with('user', 'blogCategory')->where('status', 'Waiting for Review')->orderBy('updated_at', 'desc');
+    }
+
+    public function scopeGetWaitingForReview($query)
+    {
+        return $query->with('user', 'blogCategory')->where('status', 'Published')->orWhere('status', 'Rejected')->orderBy('updated_at', 'desc');
     }
 }

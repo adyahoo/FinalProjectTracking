@@ -7,64 +7,33 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\BlogReview;
 use App\Http\Requests\BlogReviewRequest;
+use Carbon\Carbon;
 
 class BlogReviewController extends Controller
 {
     public function index()
     {
-        $blogs = Blog::with('user', 'blogCategory')->orderBy('updated_at', 'desc')->get();
-        return view('project.admin.pages.blogs.blog_review.index', compact('blogs'));
+        $reviewBlogs = Blog::getReviews()->get();
+        $blogs       = Blog::getWaitingForReview()->get();
+        return view('project.admin.pages.blogs.blog_review.index', compact('blogs', 'reviewBlogs'));
     }
 
-    public function store(Request $request)
+    public function store(BlogReviewRequest $request, Blog $blog)
     {
         $blog_review = new BlogReview($request->all());
         $blog_review->save();
-        return redirect()->route('admin.blog.review.index')->with('success', 'Blog Review created successfully');
+
+        $blog->update([
+            'status' => $request->status,
+        ]);
+        return redirect()->route('admin.review.index')->with('success', 'Blog Review created successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show($review)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $reviews = BlogReview::with('blog')->where('blog_id', $review)->orderBy('created_at', 'desc')->get()->groupBy(function($date) {
+            return Carbon::parse($date->created_at)->format('F Y');
+        });
+        return view('project.admin.pages.blogs.blog_review.detail', compact('reviews'));
     }
 }

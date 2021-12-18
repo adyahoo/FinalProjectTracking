@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DateTime;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class ProjectDetail extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     public $statusOption = [
         'done'        => 'done',
@@ -33,6 +35,18 @@ class ProjectDetail extends Model
         'end_date_actual',
         'realization',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+                        ->useLogName('project')
+                        ->logOnly(['project_version_id','moduleable_type','moduleable_id','status','special_module','start_date','end_date','start_date_actual','end_date_actual','realization']);
+    }
+
+    public function getDescriptionForEvent(string $eventName): string
+    {
+        return "Project Detail has been {$eventName} by: :causer.name";
+    }
 
     public function scopeWhereDone($query)
     {

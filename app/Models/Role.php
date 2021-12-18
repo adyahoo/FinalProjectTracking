@@ -28,13 +28,13 @@ class Role extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-                        ->useLogName('role')
-                        ->logOnly(['name','privilege']);
+                        ->useLogName('membership')
+                        ->logOnly(['name', 'privilege']);
     }
 
     public function getDescriptionForEvent(string $eventName): string
     {
-        return "Role has been {$eventName} by ". Auth::user()->name;
+        return "Role :subject.name has been {$eventName} by: :causer.name";
     }
 
     public function user()

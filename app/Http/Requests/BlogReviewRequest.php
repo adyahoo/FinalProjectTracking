@@ -13,7 +13,7 @@ class BlogReviewRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,18 @@ class BlogReviewRequest extends FormRequest
      */
     public function rules()
     {
+        $rules = [
+            'status' => 'required',
+            'reviews' => 'required',
+        ];
+
+        return $rules;
+    }
+
+    public function messages()
+    {
         return [
-            //
+            'required' => 'This :attribute collumn is Required!',
         ];
     }
 }
