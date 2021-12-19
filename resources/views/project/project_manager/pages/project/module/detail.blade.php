@@ -166,6 +166,17 @@
                             @endempty
                         </div>
                     </div>
+                    <div class="row">
+                        <button data-action="{{ route('project_manager.projects.module.update', $projectDetail) }}" data-detail="{{ route('project_manager.projects.module.edit', $projectDetail) }}" title="Add Actual Date" class="btn btn-primary btn-round ml-auto btn-add-actual-date text-white" data-toggle="modal" data-target="#modalDateActual">
+                            @empty($projectDetail->start_date_actual)
+                                <i class="fa fa-plus"></i>
+                                Add Actual Date
+                            @else
+                                <i class="fa fa-edit"></i>
+                                Update Actual Date
+                            @endempty
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -206,6 +217,51 @@
             </form>
         </div>
     </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalDateActual">
+        <div class="modal-dialog" role="document">
+            <form id="formDateActual" action="" method="" enctype="multipart/form-data">
+                @csrf
+                <input id="methodDateActual" type="hidden" name="_method" value=""/>
+                <div class="modal-content" style="margin-bottom: 50%">
+                    <div class="modal-header">
+                        <h5 id="titleDateActual" class="modal-title">Form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Start Date Actual</label>
+                            <input value="{{ old('start_date_actual') }}" type="text" id="startActual" name="start_date_actual" class="form-control datetimepicker">
+                            @error('start_date_actual')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label>End Date Actual</label>
+                            <input value="{{ old('end_date_actual') }}" type="text" id="endActual" name="end_date_actual" class="form-control datetimepicker">
+                            @error('end_date_actual')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">
+                            @empty($projectDetail->start_date_actual)
+                                <i class="fa fa-plus"></i>
+                                Add
+                            @else
+                                <i class="fa fa-edit"></i>
+                                Update
+                            @endempty
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
 
 @section('script')
@@ -213,6 +269,8 @@
     <script src="{{ asset('templates/stisla/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('templates/stisla/node_modules/sweetalert/dist/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('templates/stisla/node_modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script src="{{ asset('templates/stisla/node_modules/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}"></script>
     @if (Session::has('success'))
         <script>
             swal("Success!", "{{ Session::get('success') }}", "success");
@@ -250,6 +308,19 @@
             $('#titleMember').text('Add Member');
             $('#formMember').attr('action', action);
             $("#formMember").attr("method", "post");
+        });
+
+        $(".btn-add-actual-date").click(function(){
+            let action = $(this).data('action');
+            let detail = $(this).data('detail');
+            $('#titleDateActual').text('Actual Date');
+            $('#formDateActual').attr('action', action);
+            $("#formDateActual").attr("method", "post");
+            $("#methodDateActual").attr("value", "put");
+            $.get(detail, function (data) {
+                $('#startActual').val(data.start_date_actual.date);
+                $('#endActual').val(data.end_date_actual.date);
+            });
         });
     </script>
 @endsection

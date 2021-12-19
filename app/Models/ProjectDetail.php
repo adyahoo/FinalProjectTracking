@@ -72,6 +72,28 @@ class ProjectDetail extends Model
         return $datetime;
     }
 
+    public function getStartDateActualAttribute()
+    {
+        if(empty($this->attributes['start_date_actual'])) {
+            $datetime = $this->attributes['start_date_actual'];
+        } else {
+            $datetime = new DateTime($this->attributes['start_date_actual']);
+        }
+
+        return $datetime;
+    }
+
+    public function getEndDateActualAttribute()
+    {
+        if(empty($this->attributes['end_date_actual'])) {
+            $datetime = $this->attributes['end_date_actual'];
+        } else {
+            $datetime = new DateTime($this->attributes['end_date_actual']);
+        }
+
+        return $datetime;
+    }
+
     public function projectVersion()
     {
         return $this->belongsTo(ProjectVersion::class);
