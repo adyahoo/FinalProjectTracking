@@ -17,6 +17,13 @@ Route::get('/dashboard', function () {
     return view('project.admin.pages.dashboard.dashboard');
 })->middleware(['admin'])->name('dashboard');
 
+Route::group(['prefix' => 'profile','as'=>'profile.'], function () {
+    Route::get('/', function () {
+        return view('project.admin.pages.dashboard.profile');
+    })->name('profile');
+    Route::put('/update/{user}', 'ProfileController@update')->middleware(['admin'])->name('profile.update');
+});
+
 Route::group(['prefix'=>'membership'], function () {
     #Roles
     Route::group(['prefix'=>'roles', 'as'=>'roles.'],function () {
@@ -101,6 +108,7 @@ Route::group(['prefix'=>'projects'], function () {
 
         Route::group(['as' => 'gantt_chart.', 'prefix' => 'gantt_chart'], function () {
             Route::get('/{project}', 'GanttChartController@retriveData')->name('index');
+            Route::put('/status/{id}', 'GanttChartController@changeStatus')->name('update');
         });
     
     });
