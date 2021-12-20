@@ -26,7 +26,7 @@
                         </div>
                     </li>
                 </ul>
-                <form class="form-inline justify-content-between" id="search" method="post" action="{{route('search')}}">
+                <form class="form-inline justify-content-between" id="formSearch" method="post" action="{{route('search')}}">
                     @csrf
                     <input id="searchInput" name="searchInput" class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
                     <button class="btn" type="submit"><i class="fas fa-search"></i></button>

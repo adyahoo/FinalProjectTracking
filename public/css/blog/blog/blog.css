@@ -100,5 +100,8 @@
 .section-blog__label i {
   cursor: pointer;
 }
+.section-blog__btn-sidebar {
+  background-color: #6DDA5F;
+}
 
 /*# sourceMappingURL=blog.css.map*/

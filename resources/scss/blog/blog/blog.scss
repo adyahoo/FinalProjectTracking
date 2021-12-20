@@ -31,4 +31,8 @@
             cursor: pointer;
         }
     }
+
+    &__btn-sidebar {
+        background-color: map.get($color, "primary");
+    }
 }
