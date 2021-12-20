@@ -19,17 +19,13 @@ class Role extends Model
     ];
 
     protected $fillable = ['name', 'privilege'];
+    
+    protected static $logName = 'membership';
+    protected static $logAttributes = ['name', 'privilege'];
 
     public function scopeWhereEmployee($query)
     {
         return $query->where('privilege', $this->privileges['employee']);
-    }
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-                        ->useLogName('membership')
-                        ->logOnly(['name', 'privilege']);
     }
 
     public function getDescriptionForEvent(string $eventName): string

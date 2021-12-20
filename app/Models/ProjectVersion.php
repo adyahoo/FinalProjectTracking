@@ -18,12 +18,8 @@ class ProjectVersion extends Model
         'description',
     ];
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-                        ->useLogName('project')
-                        ->logOnly(['project_id','version_number','note','description']);
-    }
+    protected static $logName       = 'project';
+    protected static $logAttributes = ['note', 'description'];
 
     public function getDescriptionForEvent(string $eventName): string
     {

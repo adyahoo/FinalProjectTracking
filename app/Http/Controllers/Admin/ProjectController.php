@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
+use App\Http\Requests\LaunchDateRequest;
 use App\Models\Project;
 use App\Models\Role;
 use App\Models\User;
@@ -16,16 +17,21 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $projects = Project::get();
-        $roles    = Role::get();
-        $users    = User::get();
+        $projects  = Project::whereMyProject()
+                            ->whereStartDate($request->start_date)
+                            ->whereEndDate($request->end_date)
+                            ->whereUserAssignee($request->user)
+                            ->whereRoleAssignee($request->role)
+                            ->get();
+        $roles     = Role::whereEmployee()->get();
+        $employees = Role::whereEmployee()->first()->user;
 
-        return view('project.project_manager.pages.project.list', compact('projects', 'roles', 'users', 'request'));
+        return view('project.admin.pages.projects.index', compact('projects', 'roles', 'employees', 'request'));
     }
 
     public function create()
     {
-        return view('project.project_manager.pages.project.create');
+        return view('project.admin.pages.projects.create');
     }
 
     public function store(ProjectRequest $request)
@@ -40,21 +46,21 @@ class ProjectController extends Controller
         $project_version->note           = 'First version';
         $project_version->description    = 'First version';
 
-        $projectInserted->project_versions()->save($project_version);
+        $projectInserted->projectVersions()->save($project_version);
 
-        return redirect()->route('project_manager.projects.all')->with('success', 'Project created successfully');
+        return redirect()->route('admin.admin_projects.index')->with('success', 'Project created successfully');
     }
 
     public function edit(Project $project)
     {
-        return view('project.project_manager.pages.project.edit', compact('project'));
+        return view('project.admin.pages.projects.edit', compact('project'));
     }
 
     public function update(ProjectRequest $request, Project $project)
     {
         $project->update($request->all());
 
-        return redirect()->route('project_manager.projects.all')->with('success', 'Project updated successfully');
+        return redirect()->route('admin.admin_projects.index')->with('success', 'Project updated successfully');
     }
 
     public function destroy(Project $project)
@@ -68,9 +74,14 @@ class ProjectController extends Controller
     {
         $latestVersion      = ProjectVersion::where('project_id', $project->id)->latest()->first();
         $modulesDoneCount   = ProjectDetail::whereDone()->count();
-        $progressPercentage = ($modulesDoneCount / $latestVersion->project_details->count()) * 100;
 
-        return view('project.project_manager.pages.project.detail', compact(
+        if($latestVersion->projectDetails->count() == 0) {
+            $progressPercentage = 0;
+        } else {
+            $progressPercentage = ($modulesDoneCount / $latestVersion->projectDetails->count()) * 100;
+        }
+
+        return view('project.admin.pages.projects.detail', compact(
             'project',
             'latestVersion',
             'modulesDoneCount',
@@ -83,7 +94,7 @@ class ProjectController extends Controller
         $title = 'Scope';
         $text  = $project->scope;
 
-        return view('project.project_manager.pages.project.text_detail', compact('project', 'title', 'text'));
+        return view('project.admin.pages.projects.text_detail', compact('project', 'title', 'text'));
     }
 
     public function credentials(Project $project)
@@ -91,6 +102,13 @@ class ProjectController extends Controller
         $title = 'Credentials';
         $text  = $project->credentials;
 
-        return view('project.project_manager.pages.project.text_detail', compact('project', 'title', 'text'));
+        return view('project.admin.pages.projects.text_detail', compact('project', 'title', 'text'));
+    }
+
+    public function addLaunchDate(LaunchDateRequest $request, Project $project)
+    {
+        $project->update($request->all());
+
+        return redirect()->back()->with('success', 'Project updated successfully');
     }
 }

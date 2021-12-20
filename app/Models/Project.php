@@ -34,12 +34,8 @@ class Project extends Model
         'launch_date'
     ];
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-                        ->useLogName('project')
-                        ->logOnly(['name', 'description', 'scope', 'credentials', 'start_date', 'end_date']);
-    }
+    protected static $logName       = 'project';
+    protected static $logAttributes = ['name', 'description', 'scope', 'credentials'];
 
     public function getDescriptionForEvent(string $eventName): string
     {

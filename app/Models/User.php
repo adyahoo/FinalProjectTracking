@@ -53,12 +53,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-                        ->useLogName('membership')
-                        ->logOnly(['name','email']);
-    }
+    protected static $logName       = 'user';
+    protected static $logAttributes = ['name', 'email'];
 
     public function getDescriptionForEvent(string $eventName): string
     {

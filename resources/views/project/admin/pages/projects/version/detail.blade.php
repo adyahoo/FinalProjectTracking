@@ -1,6 +1,6 @@
-@extends('layouts.project_manager')
+@extends('layouts.admin')
 
-@section('style')
+@section('css')
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
 @endsection
@@ -19,13 +19,13 @@
             <div class="col-lg-8 col-md-8 col-12 col-sm-12">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('project_manager.projects.detail', $version->project) }}">Detail</a>
+                        <a class="nav-link" href="{{ route('admin.admin_projects.detail', $version->project) }}">Detail</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('project_manager.projects.module.all', $version->project) }}">Modules</a>
+                        <a class="nav-link" href="{{ route('admin.admin_projects.project_module.index', $version->project) }}">Modules</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active-tab" href="{{ route('project_manager.projects.version.all', $version->project) }}">Version</a>
+                        <a class="nav-link active-tab" href="{{ route('admin.admin_projects.version.index', $version->project) }}">Version</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Logs</a>
@@ -51,7 +51,7 @@
     </div>
 @endsection
 
-@section('script')
+@section('js')
     <script src="{{ asset('templates/stisla/node_modules/datatables/media/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('templates/stisla/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>

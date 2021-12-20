@@ -59,7 +59,7 @@ class ProjectDetailController extends Controller
         $projectDetail->start_date         = $request->start_date;
         $projectDetail->end_date           = $request->end_date;
 
-        $specialModuleInserted->projectDetail()->save($projectDetail);
+        $specialModuleInserted->project_detail()->save($projectDetail);
 
         return redirect()->back()->with('success', 'Module created successfully');
     }

@@ -17,12 +17,8 @@ class Module extends Model
         'time_estimation'
     ];
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-                        ->useLogName('project')
-                        ->logOnly(['name','description','time_estimation']);
-    }
+    protected static $logName        = 'project';
+    protected static $logAttributes = ['name'];
 
     public function getDescriptionForEvent(string $eventName): string
     {

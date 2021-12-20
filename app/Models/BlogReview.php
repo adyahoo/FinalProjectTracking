@@ -19,12 +19,8 @@ class BlogReview extends Model
     ];
 
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-                        ->useLogName('blog')
-                        ->logOnly(['reviews']);
-    }
+    protected static $logName       = 'blog';
+    protected static $logAttributes = ['status', 'reviews'];
 
     public function getDescriptionForEvent(string $eventName): string
     {

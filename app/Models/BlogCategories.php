@@ -13,12 +13,8 @@ class BlogCategories extends Model
 
     protected $fillable = ['name'];
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-                        ->useLogName('blog')
-                        ->logOnly(['name']);
-    }
+    protected static $logName       = 'blog';
+    protected static $logAttributes = ['name'];
 
     public function getDescriptionForEvent(string $eventName): string
     {
