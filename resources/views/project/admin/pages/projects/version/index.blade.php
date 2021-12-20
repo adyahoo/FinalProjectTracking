@@ -1,6 +1,6 @@
-@extends('layouts.project_manager')
+@extends('layouts.admin')
 
-@section('style')
+@section('css')
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
 @endsection
@@ -19,13 +19,13 @@
             <div class="col-lg-8 col-md-8 col-12 col-sm-12">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('project_manager.projects.detail', $project) }}">Detail</a>
+                        <a class="nav-link" href="{{ route('admin.admin_projects.detail', $project) }}">Detail</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('project_manager.projects.module.all', $project) }}">Modules</a>
+                        <a class="nav-link" href="{{ route('admin.admin_projects.project_module.index', $project) }}">Modules</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active-tab" href="{{ route('project_manager.projects.version.all', $project) }}">Version</a>
+                        <a class="nav-link active-tab" href="{{ route('admin.admin_projects.version.index', $project) }}">Version</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Logs</a>
@@ -54,7 +54,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($project->project_versions as $version)
+                                @foreach($project->projectVersions as $version)
                                     <tr>
                                         <td>
                                             {{ $version->version_number }}
@@ -63,7 +63,7 @@
                                             {{ $version->description }}
                                         </td>
                                         <td>
-                                            <a href="{{ route('project_manager.projects.version.detail', [$project, $version]) }}" class="btn btn-secondary btn-action mr-1" data-toggle="tooltip" title="Notes"><i class="fas fa-sticky-note"></i></a>
+                                            <a href="{{ route('admin.admin_projects.version.detail', [$project, $version]) }}" class="btn btn-secondary btn-action mr-1" data-toggle="tooltip" title="Notes"><i class="fas fa-sticky-note"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -76,7 +76,7 @@
     </div>
 @endsection
 
-@section('script')
+@section('js')
     <script src="{{ asset('templates/stisla/node_modules/datatables/media/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('templates/stisla/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>

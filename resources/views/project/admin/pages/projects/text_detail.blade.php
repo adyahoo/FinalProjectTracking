@@ -41,7 +41,7 @@
                             <h4>{{ $title }}</h4>
                         </div>
                         <div class="col-1 text-right">
-                            <a href="{{ route('project_manager.projects.detail', $project) }}" class="h5 text-dark"><i class="fa fa-times"></i></a>
+                            <a href="{{ route('admin.admin_projects.detail', $project) }}" class="h5 text-dark"><i class="fa fa-times"></i></a>
                         </div>
                     </div>
                 </div>

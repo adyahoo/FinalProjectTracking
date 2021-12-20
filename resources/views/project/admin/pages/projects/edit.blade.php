@@ -7,8 +7,9 @@
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
           <div class="card">
-            <form action="{{ route('project_manager.projects.update', $project) }}" method="POST">
+            <form action="{{ route('admin.admin_projects.update', $project) }}" method="POST">
               @csrf
+              @method('PUT')
 
               <div class="card-header">
                 <h4>Edit Project</h4>

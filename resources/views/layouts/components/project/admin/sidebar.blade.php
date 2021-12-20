@@ -10,7 +10,7 @@
     <li class="nav-item dropdown {{ Request::is('admin/projects/*') ? 'active' : '' }}">
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-project-diagram"></i> <span>Projects</span></a>
         <ul class="dropdown-menu">
-            <li ><a class="nav-link" href="">Project List</a></li>
+            <li class="{{ Request::is('admin/projects/admin_projects/*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.admin_projects.index')}}">Project List</a></li>
             <li class="{{ Request::is('admin/projects/modules/*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.modules.index')}}">Modules</a></li>
         </ul>
     </li>

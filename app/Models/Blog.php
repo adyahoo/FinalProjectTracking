@@ -28,12 +28,8 @@ class Blog extends Model
         'status'
     ];
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-                        ->useLogName('blog')
-                        ->logOnly(['title','status']);
-    }
+    protected static $logName       = 'blog';
+    protected static $logAttributes = ['title'];
 
     public function getDescriptionForEvent(string $eventName): string
     {

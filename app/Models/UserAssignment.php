@@ -16,12 +16,8 @@ class UserAssignment extends Model
         'project_detail_id',
     ];
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-                        ->useLogName('project')
-                        ->logOnly(['user_id','project_detail_id']);
-    }
+    protected static $logName       = 'project';
+    protected static $logAttributes = ['user_id', 'project_detail_id'];
 
     public function getDescriptionForEvent(string $eventName): string
     {

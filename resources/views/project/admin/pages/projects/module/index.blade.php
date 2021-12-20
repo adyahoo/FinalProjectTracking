@@ -1,6 +1,6 @@
-@extends('layouts.project_manager')
+@extends('layouts.admin')
 
-@section('style')
+@section('css')
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/bootstrap-daterangepicker/daterangepicker.css') }}"/>
@@ -21,13 +21,13 @@
             <div class="col-lg-8 col-md-8 col-12 col-sm-12">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('project_manager.projects.detail', $project) }}">Detail</a>
+                        <a class="nav-link" href="{{ route('admin.admin_projects.detail', $project) }}">Detail</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active-tab" href="{{ route('project_manager.projects.module.all', $project) }}">Modules</a>
+                        <a class="nav-link active-tab" href="{{ route('admin.admin_projects.project_module.index', $project) }}">Modules</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('project_manager.projects.version.all', $project) }}">Version</a>
+                        <a class="nav-link" href="{{ route('admin.admin_projects.version.index', $project) }}">Version</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Logs</a>
@@ -45,11 +45,11 @@
                 <div class="card-header">
                     <h4>Project Modules</h4>
                     <div class="card-header-action">
-                        <button data-action="{{ route('project_manager.projects.module.store', $project) }}" class="btn btn-primary btn-round ml-auto btn-add text-white" data-toggle="modal" data-target="#modal">
+                        <button data-action="{{ route('admin.admin_projects.project_module.store', $project) }}" class="btn btn-primary btn-round ml-auto btn-add text-white" data-toggle="modal" data-target="#modal">
                             <i class="fa fa-plus"></i>
                             Add Module
                         </button>
-                        <button data-action="{{ route('project_manager.projects.module.special.store', $project) }}" class="btn btn-outline-primary btn-round ml-auto btn-special-module" data-toggle="modal" data-target="#modalSpecial">
+                        <button data-action="{{ route('admin.admin_projects.project_module.special.store', $project) }}" class="btn btn-outline-primary btn-round ml-auto btn-special-module" data-toggle="modal" data-target="#modalSpecial">
                             <i class="fa fa-plus"></i>
                             Add Special Module
                         </button>
@@ -79,7 +79,7 @@
                                                 </div>
                                                 <div class="table-links">
                                                     <div class="bullet"></div>
-                                                    <a href="{{ route('project_manager.projects.module.show', $projectDetail) }}">View</a>
+                                                    <a href="{{ route('admin.admin_projects.project_module.show', $projectDetail) }}">View</a>
                                                 </div>
                                             </td>
                                             <td>
@@ -106,25 +106,25 @@
                                                 ({{ $projectDetail->end_date->format('H:i') }})
                                             </td>
                                             <td>
-                                                <a data-action="{{ route('project_manager.projects.module.member.store', $projectDetail) }}" href="#" class="btn btn-primary btn-add-member" data-toggle="modal" data-target="#modalMember" title="Add Member"><i class="fa fa-user-plus"></i></a>
+                                                <a data-action="{{ route('admin.admin_projects.project_module.member.store', $projectDetail) }}" href="#" class="btn btn-primary btn-add-member" data-toggle="modal" data-target="#modalMember" title="Add Member"><i class="fa fa-user-plus"></i></a>
 
                                                 @if($projectDetail->moduleable_type == $projectDetail->moduleType['special_module'])
-                                                    <a data-detail="{{ route('project_manager.projects.module.edit', $projectDetail) }}" data-action="{{ route('project_manager.projects.module.special.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit-special" data-toggle="modal" data-target="#modalSpecial" title="Edit"><i class="fa fa-pencil-alt"></i></a>
+                                                    <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.special.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit-special" data-toggle="modal" data-target="#modalSpecial" title="Edit"><i class="fa fa-pencil-alt"></i></a>
 
                                                     <a href="#" onclick="deleteConfirm('del{{ $projectDetail->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
-                                                    <form id="del{{ $projectDetail->id }}" action="{{ route('project_manager.projects.module.special.destroy', $projectDetail) }}" method="POST">
+                                                    <form id="del{{ $projectDetail->id }}" action="{{ route('admin.admin_projects.project_module.special.destroy', $projectDetail) }}" method="POST">
                                                         @method('delete')
                                                         @csrf
                                                     </form>
                                                 @else
-                                                    <a data-detail="{{ route('project_manager.projects.module.edit', $projectDetail) }}" data-action="{{ route('project_manager.projects.module.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#modal" title="Edit"><i class="fa fa-pencil-alt"></i></a>
+                                                    <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#modal" title="Edit"><i class="fa fa-pencil-alt"></i></a>
 
                                                     <a href="#" onclick="deleteConfirm('del{{ $projectDetail->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
-                                                    <form id="del{{ $projectDetail->id }}" action="{{ route('project_manager.projects.module.destroy', $projectDetail) }}" method="POST">
+                                                    <form id="del{{ $projectDetail->id }}" action="{{ route('admin.admin_projects.project_module.destroy', $projectDetail) }}" method="POST">
                                                         @method('delete')
                                                         @csrf
                                                     </form>
@@ -281,7 +281,7 @@
     </div>
 @endsection
 
-@section('script')
+@section('js')
     <script src="{{ asset('templates/stisla/node_modules/datatables/media/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('templates/stisla/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>

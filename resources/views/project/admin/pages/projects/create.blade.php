@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
           <div class="card">
-            <form action="{{ route('project_manager.projects.store') }}" method="POST">
+            <form action="{{ route('admin.admin_projects.store') }}" method="POST">
               @csrf
 
               <div class="card-header">

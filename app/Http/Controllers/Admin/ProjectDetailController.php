@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\ProjectManager;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -21,7 +21,7 @@ class ProjectDetailController extends Controller
         $employees     = Role::whereEmployee()->first()->user;
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
 
-        return view('project.project_manager.pages.project.module.index', compact('project', 'latestVersion', 'modules', 'employees'));
+        return view('project.admin.pages.projects.module.index', compact('project', 'latestVersion', 'modules', 'employees'));
     }
 
     public function store(Request $request, Project $project)
@@ -68,7 +68,7 @@ class ProjectDetailController extends Controller
     {
         $employees = Role::whereEmployee()->first()->user;
 
-        return view('project.project_manager.pages.project.module.detail', compact('projectDetail', 'employees'));
+        return view('project.admin.pages.projects.module.detail', compact('projectDetail', 'employees'));
     }
 
     public function edit(ProjectDetail $projectDetail)

@@ -36,12 +36,8 @@ class ProjectDetail extends Model
         'realization',
     ];
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-                        ->useLogName('project')
-                        ->logOnly(['project_version_id','moduleable_type','moduleable_id','status','special_module','start_date','end_date','start_date_actual','end_date_actual','realization']);
-    }
+    protected static $logName       = 'project';
+    protected static $logAttributes = ['status'];
 
     public function getDescriptionForEvent(string $eventName): string
     {

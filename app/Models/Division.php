@@ -12,12 +12,8 @@ class Division extends Model
     use HasFactory, LogsActivity;
     protected $fillable = ['name'];
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-                        ->useLogName('membership')
-                        ->logOnly(['name']);
-    }
+    protected static $logName       = 'membership';
+    protected static $logAttributes = ['name'];
 
     public function getDescriptionForEvent(string $eventName): string
     {

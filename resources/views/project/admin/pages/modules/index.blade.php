@@ -98,32 +98,11 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label>Start Date</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <i class="fas fa-calendar"></i>
-                                </div>
-                            </div>
-                            <input id="moduleStart" value="" name="start_date" type="date" class="form-control" data-date-format="dd-mm-yy">
-                            @error('start_date')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>End Date</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <i class="fas fa-calendar"></i>
-                                </div>
-                            </div>
-                            <input id="moduleEnd" value="" name="end_date" type="date" class="form-control" date-format="dd-mm-yy">
-                            @error('end_date')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
+                        <label>Time Estimation (in hour)</label>
+                        <input id="moduleTime" name="time_estimation" value="" type="number" class="form-control" placeholder="Input Module Time Estimation">
+                        @error('time_estimation')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
                 </div>
                 <div class="modal-footer bg-whitesmoke br">

@@ -1,6 +1,6 @@
-@extends('layouts.project_manager')
+@extends('layouts.admin')
 
-@section('style')
+@section('css')
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
 @endsection
@@ -15,7 +15,7 @@
                 <div class="card-header">
                     <h4>Project List</h4>
                     <div class="card-header-action">
-                        <a href="{{ route('project_manager.projects.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
+                        <a href="{{ route('admin.admin_projects.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -70,7 +70,7 @@
                                             {{ $project->name }}
                                             <div class="table-links">
                                                 <div class="bullet"></div>
-                                                <a href="{{ route('project_manager.projects.detail', $project) }}">View</a>
+                                                <a href="{{ route('admin.admin_projects.detail', $project) }}">View</a>
                                             </div>
                                         </td>
                                         <td>
@@ -91,11 +91,11 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('project_manager.projects.edit', $project->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                            <a href="{{ route('admin.admin_projects.edit', $project->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                             <a href="#" onclick="deleteConfirm('del{{ $project->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
                                                 <i class="fa fa-trash"></i>
                                             </a>
-                                            <form id="del{{ $project->id }}" action="{{ route('project_manager.projects.destroy', $project) }}" method="POST">
+                                            <form id="del{{ $project->id }}" action="{{ route('admin.admin_projects.destroy', $project) }}" method="POST">
                                                 @method('delete')
                                                 @csrf
                                             </form>
@@ -111,7 +111,7 @@
     </div>
 @endsection
 
-@section('script')
+@section('js')
     <script src="{{ asset('templates/stisla/node_modules/datatables/media/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('templates/stisla/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>

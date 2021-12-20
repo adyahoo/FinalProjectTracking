@@ -16,12 +16,8 @@ class PageSetting extends Model
         'title',
     ];
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-                        ->useLogName('setting')
-                        ->logOnly(['logo','title']);
-    }
+    protected static $logName       = 'setting';
+    protected static $logAttributes = ['title','logo'];
 
     public function getDescriptionForEvent(string $eventName): string
     {
