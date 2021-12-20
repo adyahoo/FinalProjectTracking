@@ -10,9 +10,15 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $projects      = Project::latest()->get()->take(3);
-        $totalProjects = Project::count();
+        $latestProjects = Project::latest()->get()->take(3);
+        $totalProjects  = Project::count();
+        $projects       = Project::get();
 
-        return view('project.project_manager.pages.dashboard.dashboard', compact('projects', 'totalProjects'));
+        $finishedProjects = 0;
+        foreach($projects as $project) {
+            $finishedProjects += $project->projectDetails->count();
+        }
+
+        return view('project.project_manager.pages.dashboard.dashboard', compact('finishedProjects', 'totalProjects', 'latestProjects'));
     }
 }

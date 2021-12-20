@@ -30,7 +30,7 @@
                         <h4>Finished Projects</h4>
                     </div>
                     <div class="card-body">
-                        42
+                        {{ $finishedProjects }}
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($projects as $project)
+                                @foreach($latestProjects as $project)
                                     <tr>
                                         <td>
                                             {{ $project->name }}
