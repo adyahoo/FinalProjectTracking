@@ -19,39 +19,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form role="form" method="GET">
-                        <div class="form-row">
-                            <div class="form-group col-md-3 col-lg-3">
-                                <label>Start Date</label>
-                                <input type="date" class="form-control" name="start_date" value="{{ $request->start_date }}">
-                            </div>
-                            <div class="form-group col-md-3 col-lg-3">
-                                <label>End Date</label>
-                                <input type="date" class="form-control" name="end_date" value="{{ $request->end_date }}">
-                            </div>
-                            <div class="form-group col-md-3 col-lg-3">
-                                <label>User Assignee</label>
-                                <select class="form-control form-control-sm" name="user">
-                                    <option value="no_filter">All</option>
-                                    @foreach($employees as $user)
-                                        <option value="{{ $user->id }}" @if($user->id == $request->user) selected @endif>{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-md-3 col-lg-2">
-                                <label>Role Assignee</label>
-                                <select class="form-control form-control-sm" name="role">
-                                    <option value="no_filter">All</option>
-                                    @foreach($roles as $role)
-                                        <option value="{{ $role->id }}" @if($role->id == $request->role) selected @endif>{{ $role->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group col-md-4 col-lg-1">
-                                <button type="submit" class="btn btn-lg btn-primary position-absolute" style="bottom: 0"><i class="fa fa-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
                     <div class="table-responsive">
                         <table class="table table-striped" id="table-1">
                             <thead>
@@ -64,38 +31,38 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($projects as $project)
+                                @foreach($userAssignments as $userAssignment)
                                     <tr>
                                         <td>
-                                            {{ $project->name }}
+                                            {{ $userAssignment->projectDetail->projectVersion->project->name }}
                                             <div class="table-links">
                                                 <div class="bullet"></div>
-                                                <a href="{{ route('employee.projects.detail', $project) }}">View</a>
+                                                <a href="{{ route('employee.projects.detail', $userAssignment->projectDetail->projectVersion->project) }}">View</a>
                                             </div>
                                         </td>
                                         <td>
-                                            {{ $project->start_date->format('d-m-Y') }}
+                                            {{ $userAssignment->projectDetail->projectVersion->project->start_date->format('d-m-Y') }}
                                         </td>
                                         <td>
-                                            {{ $project->end_date->format('d-m-Y') }}
+                                            {{ $userAssignment->projectDetail->projectVersion->project->end_date->format('d-m-Y') }}
                                         </td>
                                         <td>
-                                            @if($project->projectVersions->count() > 1)
+                                            @if($userAssignment->projectDetail->projectVersion->project->projectVersions->count() > 1)
                                                 <div class="badge badge-info">Maintenance</div>
-                                            @elseif(!empty($project->launch_date))
+                                            @elseif(!empty($userAssignment->projectDetail->projectVersion->project->launch_date))
                                                 <div class="badge badge-success">Launch</div>
-                                            @elseif($project->projectVersions->last()->projectDetails()->whereDoneOrOnProgress()->count() > 0)
+                                            @elseif($userAssignment->projectDetail->projectVersion->project->projectVersions->last()->projectDetails()->whereDoneOrOnProgress()->count() > 0)
                                                 <div class="badge badge-warning">Development</div>
                                             @else
                                                 <div class="badge badge-danger">Listed</div>
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('employee.projects.edit', $project->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                            <a href="#" onclick="deleteConfirm('del{{ $project->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
+                                            <a href="{{ route('employee.projects.edit', $userAssignment->projectDetail->projectVersion->project->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                            <a href="#" onclick="deleteConfirm('del{{ $userAssignment->projectDetail->projectVersion->project->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
                                                 <i class="fa fa-trash"></i>
                                             </a>
-                                            <form id="del{{ $project->id }}" action="{{ route('employee.projects.destroy', $project) }}" method="POST">
+                                            <form id="del{{ $userAssignment->projectDetail->projectVersion->project->id }}" action="{{ route('employee.projects.destroy', $userAssignment->projectDetail->projectVersion->project) }}" method="POST">
                                                 @method('delete')
                                                 @csrf
                                             </form>

@@ -13,10 +13,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $latestProjects = UserAssignment::where('user_id', Auth::user()->id)->get()->projects;
-        $totalProjects  = Project::count();
-        $projects       = Project::get();
-        $totalBlogs     = Blog::myBlogs()->count();
+        $userAssignments = UserAssignment::where('user_id', Auth::user()->id)->get();
+        $totalProjects   = Project::count();
+        $projects        = Project::get();
+        $totalBlogs      = Blog::myBlogs()->count();
 
         $finishedProjects = 0;
 
@@ -26,7 +26,7 @@ class DashboardController extends Controller
         return view('project.employee.pages.dashboard.dashboard', compact(
             'finishedProjects',
             'totalProjects',
-            'latestProjects',
+            'userAssignments',
             'totalBlogs'
         ));
     }
