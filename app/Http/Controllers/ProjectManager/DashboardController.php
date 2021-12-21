@@ -16,7 +16,7 @@ class DashboardController extends Controller
 
         $finishedProjects = 0;
         foreach($projects as $project) {
-            $finishedProjects += $project->projectDetails->count();
+            $finishedProjects += $project->projectDetails->where('status', 'done')->count();
         }
 
         return view('project.project_manager.pages.dashboard.dashboard', compact('finishedProjects', 'totalProjects', 'latestProjects'));

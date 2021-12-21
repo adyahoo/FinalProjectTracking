@@ -102,6 +102,6 @@ class Project extends Model
 
     public function projectDetails()
     {
-        return $this->hasManyDeep(ProjectDetail::class, [ProjectVersion::class])->where('status', 'done');
+        return $this->hasManyDeep(ProjectDetail::class, [ProjectVersion::class]);
     }
 }

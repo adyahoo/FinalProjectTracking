@@ -1,37 +1,10 @@
 @extends('layouts.project_manager')
 
 @section('content')
-    <div class="section-header" style="display: block">
-        <div class="row">
-            <div class="col-lg-8 col-md-8 col-12 col-sm-12">
-                <h1>{{ $project->name }}</h1>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-right">
-                <p>Latest Version v{{ $latestVersion->version_number }}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-8 col-md-8 col-12 col-sm-12">
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link active-tab" href="{{ route('project_manager.projects.detail', $project) }}">Detail</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('project_manager.projects.module.all', $project) }}">Modules</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('project_manager.projects.version.all', $project) }}">Version</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('project_manager.projects.logs.all', $project) }}">Logs</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-right">
-                <a href="#" class="btn btn-icon btn-primary"><i class="fa fa-cog"></i></a>
-            </div>
-        </div>
-    </div>
+    @include('project.project_manager.include.project_page_tab', [
+        'project'             => $project,
+        'latestVersionNumber' => $latestVersion->version_number
+    ])
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
             <div class="card">
@@ -73,9 +46,9 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <h6 class="text-primary">Progress</h6>
                                     <div class="progress mt-3">
-                                        <div class="progress-bar" role="progressbar" data-width="{{ $progressPercentage }}%" aria-valuenow="{{ $progressPercentage }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $progressPercentage }}%;">{{ $progressPercentage }}%</div>
+                                        <div class="progress-bar" role="progressbar" data-width="{{ $progressPercentage }}%" aria-valuenow="{{ $progressPercentage }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $progressPercentage }}%;">{{ round($progressPercentage) }}%</div>
                                     </div>
-                                    <p class="mt-2 mb-0 text-dark">Module done : <span class="text-primary">{{ $modulesDoneCount }}</span> / {{ $latestVersion->projectDetails->count() }}</p>
+                                    <p class="mt-2 mb-0 text-dark">Module done on latest version : <b><span class="text-primary">{{ $latestVersion->projectDetails()->whereDone()->count() }}</span> / {{ $latestVersion->projectDetails->count() }}</b></p>
                                 </div>
                             </div>
                         </div>
@@ -122,6 +95,40 @@
                     </div>
                 </div>
             </div>
+            <div class="section-body">
+                <h2 class="section-title">Latest Activities</h2>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="activities">
+                            @php
+                                $logCount = 0;
+                            @endphp
+                            @foreach($logs as $log)
+                                @if($log->subject->projectVersion->project_id == $project->id && $logCount < 4)
+                                    <div class="activity">
+                                        <div class="activity-icon bg-primary text-white shadow-primary">
+                                            <i class="fas fa-history"></i>
+                                        </div>
+                                        <div class="activity-detail">
+                                            <div class="mb-2">
+                                                <span class="text-job text-primary">{{ $log->created_at->format('d F Y') }} ({{ $log->created_at->format('H:i') }})</span>
+                                                <span class="bullet"></span>
+                                                <a class="text-job" href="{{ route('project_manager.projects.logs.all', $project) }}">View</a>
+                                            </div>
+                                            <p>
+                                                {{ $log->description }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    @php
+                                        $logCount += 1;
+                                    @endphp
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-12">
             <div class="row">
@@ -152,7 +159,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Members</h4>
+                            <h4>Members <span class="badge badge-secondary">{{ $project->userAssignments->count() }}</span></h4>
                             <div class="card-header-action">
                                 <a href="{{ route('project_manager.projects.module.all', $project) }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                             </div>
@@ -161,7 +168,13 @@
                             <ul class="list-unstyled user-progress list-unstyled-border list-unstyled-noborder">
                                 @foreach($project->userAssignments as $userAssignment)
                                     <li class="media">
-                                        <img alt="image" class="mr-3 rounded-circle" width="50" src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}">
+                                        <img alt="image" class="mr-3 rounded-circle" width="50"
+                                            @empty($userAssignment->user->profile_image)
+                                                src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}"
+                                            @else
+                                                src="{{ asset('storage/profile_image/' . $userAssignment->user->profile_image) }}"
+                                            @endempty
+                                        >
                                         <div class="media-body">
                                             <div class="media-title">{{ $userAssignment->user->name }}</div>
                                             <div class="text-job text-muted">{{ $userAssignment->user->role->name }}</div>

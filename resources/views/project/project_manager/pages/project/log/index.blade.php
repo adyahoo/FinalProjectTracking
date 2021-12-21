@@ -8,37 +8,10 @@
 @endsection
 
 @section('content')
-    <div class="section-header" style="display: block">
-        <div class="row">
-            <div class="col-lg-8 col-md-8 col-12 col-sm-12">
-                <h1>{{ $project->name }}</h1>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-right">
-                <p>Latest Version v{{ $project->projectVersions->last()->version_number }}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-8 col-md-8 col-12 col-sm-12">
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('project_manager.projects.detail', $project) }}">Detail</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('project_manager.projects.module.all', $project) }}">Modules</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('project_manager.projects.version.all', $project) }}">Version</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active-tab" href="{{ route('project_manager.projects.logs.all', $project) }}">Logs</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-right">
-                <a href="#" class="btn btn-icon btn-primary"><i class="fa fa-cog"></i></a>
-            </div>
-        </div>
-    </div>
+    @include('project.project_manager.include.project_page_tab', [
+        'project'             => $project,
+        'latestVersionNumber' => $project->projectVersions->last()->version_number
+    ])
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
             <div class="card">

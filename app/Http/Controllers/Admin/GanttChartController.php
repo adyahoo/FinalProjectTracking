@@ -25,8 +25,8 @@ class GanttChartController extends Controller
                     array_push($temp, [
                         'id'         => $detail->id,
                         'text'       => $detail->moduleable->name,
-                        'start_date' => Carbon::parse($detail->start_date)->format('d-m-Y'),
-                        'end_date'   => Carbon::parse($detail->end_date)->format('d-m-Y'),
+                        'start_date' => Carbon::parse($detail->start_date)->format('d-m-Y H:i:s'),
+                        'end_date'   => Carbon::parse($detail->end_date)->format('d-m-Y H:i:s'),
                         'assignee'   => $name,
                         'status'     => $detail->status,
                     ]);

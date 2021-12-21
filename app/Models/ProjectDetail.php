@@ -13,9 +13,9 @@ class ProjectDetail extends Model
     use HasFactory, LogsActivity;
 
     public $statusOption = [
-        'done'           => 'done',
-        'not_yet'        => 'not yet',
-        'on_progress'    => 'on progress'
+        'done'        => 'done',
+        'not_yet'     => 'not yet',
+        'on_progress' => 'on progress'
     ];
 
     public $moduleType = [
@@ -35,9 +35,6 @@ class ProjectDetail extends Model
         'end_date_actual',
         'realization',
     ];
-
-    protected static $logName       = 'project';
-    protected static $logAttributes = ['status'];
 
     public function getDescriptionForEvent(string $eventName): string
     {

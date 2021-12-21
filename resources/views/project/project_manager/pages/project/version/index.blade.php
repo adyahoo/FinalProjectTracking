@@ -6,42 +6,18 @@
 @endsection
 
 @section('content')
-    <div class="section-header" style="display: block">
-        <div class="row">
-            <div class="col-lg-8 col-md-8 col-12 col-sm-12">
-                <h1>{{ $project->name }}</h1>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-right">
-                <p>Latest Version v{{ $latestVersion->version_number }}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-8 col-md-8 col-12 col-sm-12">
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('project_manager.projects.detail', $project) }}">Detail</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('project_manager.projects.module.all', $project) }}">Modules</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active-tab" href="{{ route('project_manager.projects.version.all', $project) }}">Version</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Logs</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-right">
-                <a href="#" class="btn btn-icon btn-primary"><i class="fa fa-cog"></i></a>
-            </div>
-        </div>
-    </div>
+    @include('project.project_manager.include.project_page_tab', [
+        'project'             => $project,
+        'latestVersionNumber' => $latestVersion->version_number
+    ])
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Project Versions</h4>
+                    <h4>Project Versions <span class="badge badge-secondary">{{ $project->projectVersions->count() }}</span></h4>
+                    <div class="card-header-action">
+                        <a href="{{ route('project_manager.projects.version.create', $project) }}" class="btn btn-primary"><i class="fas fa-plus"></i> Add Version</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -64,6 +40,14 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('project_manager.projects.version.detail', [$project, $version]) }}" class="btn btn-secondary btn-action mr-1" data-toggle="tooltip" title="Notes"><i class="fas fa-sticky-note"></i></a>
+                                            <a href="{{ route('project_manager.projects.version.edit', $version) }}" class="btn btn-primary btn-edit" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil-alt"></i></a>
+                                            <a href="#" onclick="deleteConfirm('del{{ $version->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                            <form id="del{{ $version->id }}" action="{{ route('project_manager.projects.version.destroy', $version) }}" method="POST">
+                                                @method('delete')
+                                                @csrf
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -110,27 +94,6 @@
     <script>
         $("#table-1").dataTable({
             
-        });
-    </script>
-    <script>
-        $(".btn-add").click(function(){
-            let action = $(this).data('action');
-            $('#title').text('Add Role')
-            $('#form').attr('action', action);
-            $("#form").attr("method", "post");
-        });
-
-        $(".btn-edit").click(function(){
-            let action = $(this).data('action');
-            let detail = $(this).data('detail');
-            $('#title').text('Edit Role')
-            $('#form').attr('action', action);
-            $("#form").attr("method", "post");
-            $("#method").attr("value", "put");
-            $.get(detail, function (data) {
-                $('#roleName').val(data.name);
-                $('#privilege').val(data.privilege);
-            });
         });
     </script>
 @endsection

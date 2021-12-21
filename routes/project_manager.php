@@ -31,13 +31,13 @@ Route::group([
                     ->name('update');
     Route::delete('/destroy/{project}', 'ProjectController@destroy')
                     ->name('destroy');
-    Route::get('/{project}', 'ProjectController@detail')
+    Route::get('/detail/{project}', 'ProjectController@detail')
                     ->name('detail');
-    Route::get('/{project}/scope', 'ProjectController@scope')
+    Route::get('/detail/{project}/scope', 'ProjectController@scope')
                     ->name('scope');
-    Route::get('/{project}/credentials', 'ProjectController@credentials')
+    Route::get('/detail/{project}/credentials', 'ProjectController@credentials')
                     ->name('credentials');
-    Route::put('/launch_date/{project}', 'ProjectController@addLaunchDate')
+    Route::put('/detail/launch_date/{project}', 'ProjectController@addLaunchDate')
                     ->name('addLaunchDate');
 
     Route::group([
@@ -46,8 +46,18 @@ Route::group([
     ], function () {
         Route::get('/{project}', 'ProjectVersionController@index')
                     ->name('all');
-        Route::get('/{project}/detail/{version}', 'ProjectVersionController@detail')
+        Route::get('/{project}/detail/{project_version}', 'ProjectVersionController@detail')
                     ->name('detail');
+        Route::get('/{project}/create', 'ProjectVersionController@create')
+                    ->name('create');
+        Route::post('/{project}/store', 'ProjectVersionController@store')
+                    ->name('store');
+        Route::get('/edit/{project_version}', 'ProjectVersionController@edit')
+                    ->name('edit');
+        Route::put('/update/{project_version}', 'ProjectVersionController@update')
+                    ->name('update');
+        Route::delete('/destroy/{project_version}', 'ProjectVersionController@destroy')
+                    ->name('destroy');
     });
 
     Route::group([

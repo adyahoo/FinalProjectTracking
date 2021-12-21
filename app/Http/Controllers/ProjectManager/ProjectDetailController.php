@@ -15,13 +15,28 @@ use DateTime;
 
 class ProjectDetailController extends Controller
 {
-    public function index(Project $project)
+    public function index(Project $project, Request $request)
     {
-        $modules       = Module::get();
-        $employees     = Role::whereEmployee()->first()->user;
-        $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
+        $modules        = Module::get();
+        $employees      = Role::whereEmployee()->first()->user;
+        $latestVersion  = ProjectVersion::where('project_id', $project->id)->latest()->first();
+        $versions       = ProjectVersion::where('project_id', $project->id)->get();
+        $projectModules = $project->projectDetails;
+        $statusOptions  = (new ProjectDetail())->statusOption;
 
-        return view('project.project_manager.pages.project.module.index', compact('project', 'latestVersion', 'modules', 'employees'));
+        if(!empty($request->version))
+            $projectModules = ProjectDetail::where('project_version_id', $request->version)->get();
+
+        return view('project.project_manager.pages.project.module.index', compact(
+            'project',
+            'projectModules',
+            'latestVersion',
+            'modules',
+            'employees',
+            'versions',
+            'request',
+            'statusOptions'
+        ));
     }
 
     public function store(Request $request, Project $project)
