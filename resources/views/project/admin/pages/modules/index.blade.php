@@ -32,8 +32,7 @@
                                     </th>
                                     <th>Module Name</th>
                                     <th>Description</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
+                                    <th>Time Estimation</th>
                                     <th style="width: 20%">Action</th>
                                 </tr>
                             </thead>
@@ -45,8 +44,7 @@
                                         </td>
                                         <td>{{$module->name}}</td>
                                         <td>{{$module->description}}</td>
-                                        <td>{{$module->start_date}}</td>
-                                        <td>{{$module->end_date}}</td>
+                                        <td>{{$module->time_estimation}}</td>
                                         <td>
                                             <a data-detail="{{route('admin.modules.show', $module)}}" data-action="{{route('admin.modules.update', $module)}}" href="#" class="btn btn-info btn-edit" data-toggle="modal" data-target="#modal"><i class="fa fa-pencil-alt"></i></a>
                                             <a href="#" onclick="deleteConfirm('del{{$module->id}}')" class="btn btn-danger text-white">
@@ -171,8 +169,7 @@
         $.get(detail, function (data) {
             $('#moduleName').val(data.name);
             $('#moduleDescription').val(data.description);
-            $('#moduleStart').val(data.start_date);
-            $('#moduleEnd').val(data.end_date);
+            $('#moduleTime').val(data.time_estimation);
         });
     });
 </script>

@@ -18,10 +18,10 @@ Route::get('/dashboard', function () {
 })->middleware(['admin'])->name('dashboard');
 
 Route::group(['prefix' => 'profile','as'=>'profile.'], function () {
-    Route::get('/', function () {
-        return view('project.admin.pages.dashboard.profile');
-    })->name('profile');
-    Route::put('/update/{user}', 'ProfileController@update')->middleware(['admin'])->name('profile.update');
+    Route::get('/', 'ProfileController@index')->name('profile');
+    Route::put('/update/{user}', 'ProfileController@editProfile')->name('update');
+    Route::get('/change-password', 'ProfileController@changePasswordPages')->name('change-password');
+    Route::put('/change-password', 'ProfileController@changePassword')->name('change-password.submit');
 });
 
 Route::group(['prefix'=>'membership'], function () {

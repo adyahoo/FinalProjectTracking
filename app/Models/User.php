@@ -87,7 +87,7 @@ class User extends Authenticatable
         $this->attributes['password'] = !$value ?  null : Hash::make($value);
     }
 
-    public function setImageAttribute($value){
+    public function setProfileImageAttribute($value){
         $this->attributes['profile_image'] = $this->uploadImage($value, self::IMAGE_PATH);
     }
 

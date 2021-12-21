@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.project_manager')
 @section('title','Profile')
 @section('content')
 <div class="section-header">
@@ -45,7 +45,7 @@
         </div>
         <div class="col-12 col-md-12 col-lg-7">
             <div class="card">
-                <form method="post" action="{{route('admin.profile.update', Auth::user()->id)}}" enctype="multipart/form-data">
+                <form method="post" action="{{route('project_manager.profile.update', Auth::user()->id)}}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="card-header">
@@ -129,7 +129,7 @@
     </div>
 </div>
 @endsection
-@section('js')
+@section('script')
 <script src="{{ asset('templates/stisla/node_modules/sweetalert/dist/sweetalert.min.js') }}"></script>
 @if (Session::has('success'))
     <script>

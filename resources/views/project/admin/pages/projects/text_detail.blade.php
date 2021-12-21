@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('title','Detail')
 @section('content')
     <div class="section-header" style="display: block">
         <div class="row">

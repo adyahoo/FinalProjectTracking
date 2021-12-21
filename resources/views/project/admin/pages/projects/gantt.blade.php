@@ -1,5 +1,5 @@
 @extends('layouts.gantt')
-@section('title','Gantt Chart')
+@section('title','Project Gantt Chart')
 @section('css')
 <script src="{{asset('templates/gantt/codebase/dhtmlxgantt.js')}}"></script>
 <link rel="stylesheet" href="{{asset('templates/gantt/codebase/dhtmlxgantt.css')}}">
@@ -192,8 +192,6 @@
             }
     };
     
-    gantt.parse({!! json_encode($data) !!});
-    
     gantt.attachEvent("onTaskClick", function(id,e){
         if(e.target.id.includes("btn-edit"+id)){
             var task   = gantt.getTask(id);
@@ -205,5 +203,9 @@
             $('#status').val(status);
         }
     });
+
+    gantt.parse({!! json_encode($data) !!});
+    
+    
 </script>
 @endsection
