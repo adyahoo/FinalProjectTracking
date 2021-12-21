@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\ProjectManager;
+namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\UserAssignment;
 use App\Models\Blog;
+use Auth;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $latestProjects = Project::latest()->get()->take(3);
+        $latestProjects = UserAssignment::where('user_id', Auth::user()->id)->get()->projects;
         $totalProjects  = Project::count();
         $projects       = Project::get();
         $totalBlogs     = Blog::myBlogs()->count();
@@ -21,7 +23,7 @@ class DashboardController extends Controller
         foreach($projects as $project)
             $finishedProjects += $project->projectDetails->where('status', 'done')->count();
 
-        return view('project.project_manager.pages.dashboard.dashboard', compact(
+        return view('project.employee.pages.dashboard.dashboard', compact(
             'finishedProjects',
             'totalProjects',
             'latestProjects',

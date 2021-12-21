@@ -27,25 +27,25 @@ Route::group([
     'prefix' => 'projects',
 ], function () {
     Route::get('/', 'ProjectController@index')
-                    ->name('all');
+                ->name('all');
     Route::get('/create', 'ProjectController@create')
-                    ->name('create');
+                ->name('create');
     Route::post('/store', 'ProjectController@store')
-                    ->name('store');
+                ->name('store');
     Route::get('/edit/{project}', 'ProjectController@edit')
-                    ->name('edit');
+                ->name('edit');
     Route::put('/update/{project}', 'ProjectController@update')
-                    ->name('update');
+                ->name('update');
     Route::delete('/destroy/{project}', 'ProjectController@destroy')
-                    ->name('destroy');
+                ->name('destroy');
     Route::get('/detail/{project}', 'ProjectController@detail')
-                    ->name('detail');
+                ->name('detail');
     Route::get('/detail/{project}/scope', 'ProjectController@scope')
-                    ->name('scope');
+                ->name('scope');
     Route::get('/detail/{project}/credentials', 'ProjectController@credentials')
-                    ->name('credentials');
+                ->name('credentials');
     Route::put('/detail/launch_date/{project}', 'ProjectController@addLaunchDate')
-                    ->name('addLaunchDate');
+                ->name('addLaunchDate');
 
     Route::group([
         'as'     => 'version.',
@@ -114,5 +114,40 @@ Route::group([
         Route::get('/{project}', 'ProjectLogController@index')
                 ->name('all');
     });
+});
 
+Route::group([
+    'prefix' => 'modules',
+    'as'     => 'modules.'
+],function () {
+    Route::get('/index', 'ModuleController@index')
+                ->name('index');
+    Route::post('/store', 'ModuleController@store')
+                ->name('store');
+    Route::get('/show/{module}', 'ModuleController@show')
+                ->name('show');
+    Route::put('/update/{module}', 'ModuleController@update')
+                ->name('update');
+    Route::delete('/delete/{module}', 'ModuleController@destroy')
+                ->name('delete');
+});
+
+Route::group([
+    'as'     => 'blogs.',
+    'prefix' => 'blogs'
+], function () {
+    Route::get('/', 'BlogController@index')
+                ->name('all');
+    Route::get('/create', 'BlogController@create')
+                ->name('create');
+    Route::post('/store', 'BlogController@store')
+                ->name('store');
+    Route::get('/edit/{blog}', 'BlogController@edit')
+                ->name('edit');
+    Route::put('/update/{blog}', 'BlogController@update')
+                ->name('update');
+    Route::delete('/destroy/{blog}', 'BlogController@destroy')
+                ->name('destroy');
+    Route::get('/preview/{slug}', 'BlogController@show')
+                ->name('preview');
 });

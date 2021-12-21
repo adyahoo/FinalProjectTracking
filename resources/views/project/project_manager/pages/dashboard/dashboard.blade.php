@@ -42,10 +42,10 @@
                 </div>
                 <div class="card-wrap">
                     <div class="card-header">
-                        <h4>Blogs</h4>
+                        <h4>Blog Post</h4>
                     </div>
                     <div class="card-body">
-                        42
+                        {{ $totalBlogs }}
                     </div>
                 </div>
             </div>

@@ -50,7 +50,7 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web', 'employee')
                 ->as('employee.')
                 ->prefix('employee')
-                ->namespace($this->namespace)
+                ->namespace($this->namespace . '\Employee')
                 ->group(base_path('routes/employee.php'));
 
             Route::middleware('web', 'project_manager')

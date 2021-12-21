@@ -8,12 +8,21 @@ use App\Traits\ImageTrait;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Str;
+use Auth;
 
 class Blog extends Model
 {
     use HasFactory, ImageTrait, LogsActivity;
 
     const IMAGE_PATH    = 'public/blog_images/';
+
+    public $statusOption = [
+        'draft'              => 'Draft',
+        'published'          => 'Published',
+        'rejected'           => 'Rejected',
+        'waiting_for_review' => 'Waiting for Review'
+    ];
+
     protected $fillable = [
         'user_id', 
         'blog_category_id',
@@ -67,5 +76,10 @@ class Blog extends Model
     public function scopeGetWaitingForReview($query)
     {
         return $query->with('user', 'blogCategory')->where('status', 'Published')->orWhere('status', 'Rejected')->orderBy('updated_at', 'desc');
+    }
+
+    public function scopeMyBlogs($query)
+    {
+        return $query->where('user_id', Auth::user()->id);
     }
 }
