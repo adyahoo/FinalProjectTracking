@@ -32,16 +32,6 @@
                             </div>
                         </form>
                     </div>
-                    <div class="card-header-action">
-                        <button data-action="{{ route('employee.projects.module.store', $project) }}" class="btn btn-primary btn-round ml-auto btn-add text-white" data-toggle="modal" data-target="#modal">
-                            <i class="fa fa-plus"></i>
-                            Add Module
-                        </button>
-                        <button data-action="{{ route('employee.projects.module.special.store', $project) }}" class="btn btn-outline-primary btn-round ml-auto btn-special-module" data-toggle="modal" data-target="#modalSpecial">
-                            <i class="fa fa-plus"></i>
-                            Add Special Module
-                        </button>
-                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -107,30 +97,12 @@
                                                 ({{ $projectDetail->end_date->format('H:i') }})
                                             </td>
                                             <td>
-                                                <a data-action="{{ route('employee.projects.module.member.store', $projectDetail) }}" title="Add Member" href="#" class="btn btn-primary btn-add-member" data-toggle="modal" data-target="#modalMember" title="Add Member"><i class="fa fa-user-plus"></i></a>
-
-                                                @if($projectDetail->moduleable_type == $projectDetail->moduleType['special_module'])
-                                                    <a data-detail="{{ route('employee.projects.module.edit', $projectDetail) }}" data-action="{{ route('employee.projects.module.special.update', $projectDetail) }}" href="#" class="btn btn-success btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status"><i class="fa fa-check"></i></a>
-                                                    <a data-detail="{{ route('employee.projects.module.edit', $projectDetail) }}" data-action="{{ route('employee.projects.module.special.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit-special" data-toggle="modal" data-target="#modalSpecial" title="Edit"><i class="fa fa-pencil-alt"></i></a>
-
-                                                    <a href="#" onclick="deleteConfirm('del{{ $projectDetail->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
-                                                        <i class="fa fa-trash"></i>
-                                                    </a>
-                                                    <form id="del{{ $projectDetail->id }}" action="{{ route('employee.projects.module.special.destroy', $projectDetail) }}" method="POST">
-                                                        @method('delete')
-                                                        @csrf
-                                                    </form>
-                                                @else
-                                                    <a data-detail="{{ route('employee.projects.module.edit', $projectDetail) }}" data-action="{{ route('employee.projects.module.update', $projectDetail) }}" href="#" class="btn btn-success btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status"><i class="fa fa-check"></i></a>
-                                                    <a data-detail="{{ route('employee.projects.module.edit', $projectDetail) }}" data-action="{{ route('employee.projects.module.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#modal" title="Edit"><i class="fa fa-pencil-alt"></i></a>
-
-                                                    <a href="#" onclick="deleteConfirm('del{{ $projectDetail->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
-                                                        <i class="fa fa-trash"></i>
-                                                    </a>
-                                                    <form id="del{{ $projectDetail->id }}" action="{{ route('employee.projects.module.destroy', $projectDetail) }}" method="POST">
-                                                        @method('delete')
-                                                        @csrf
-                                                    </form>
+                                                @if($projectDetail->userAssignments->where('user_id', Auth::user()->id)->count() != 0)
+                                                    @if($projectDetail->moduleable_type == $projectDetail->moduleType['special_module'])
+                                                        <a data-detail="{{ route('employee.projects.module.edit', $projectDetail) }}" data-action="{{ route('employee.projects.module.special.update', $projectDetail) }}" href="#" class="btn btn-success btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status"><i class="fa fa-check"></i></a>
+                                                    @else
+                                                        <a data-detail="{{ route('employee.projects.module.edit', $projectDetail) }}" data-action="{{ route('employee.projects.module.update', $projectDetail) }}" href="#" class="btn btn-success btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status"><i class="fa fa-check"></i></a>
+                                                    @endif
                                                 @endif
                                             </td>
                                         </tr>
@@ -145,143 +117,6 @@
 @endsection
 
 @section('modal')
-    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
-        <div class="modal-dialog" role="document">
-            <form id="form" action="" method="" enctype="multipart/form-data">
-                @csrf
-                <input id="method" type="hidden" name="_method" value=""/>
-                <div class="modal-content" style="margin-bottom: 50%">
-                    <div class="modal-header">
-                        <h5 id="title" class="modal-title">Form</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Module</label>
-                            <select id="module" name="moduleable_id" class="form-control">
-                                @foreach($modules as $module)
-                                    <option value="{{ $module->id }}">{{ $module->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('module')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6 col-lg-6">
-                                <label>Start Date</label>
-                                <input value="{{ old('start_date') }}" id="start" type="text" name="start_date" class="form-control datetimepicker">
-                                @error('start_date')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-6 col-lg-6">
-                                <label>End Date</label>
-                                <input value="{{ old('end_date') }}" id="end" type="text" name="end_date" class="form-control datetimepicker">
-                                @error('end_date')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer bg-whitesmoke br">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div class="modal fade" tabindex="-1" role="dialog" id="modalSpecial">
-        <div class="modal-dialog" role="document">
-            <form id="formSpecial" action="" method="" enctype="multipart/form-data">
-                @csrf
-                <input id="methodSpecial" type="hidden" name="_method" value=""/>
-                <div class="modal-content" style="margin-bottom: 50%">
-                    <div class="modal-header">
-                        <h5 id="titleSpecial" class="modal-title">Form</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Module / Bugfix Name</label>
-                            <input type="text" value="{{ old('name') }}" id="nameSpecial" name="name" class="form-control">
-                            @error('name')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea class="form-control" rows="10" id="descriptionSpecial" name="description">{{ old('description') }}</textarea>
-                            @error('description')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6 col-lg-6">
-                                <label>Start Date</label>
-                                <input value="{{ old('start_date') }}" type="text" id="startSpecial" name="start_date" class="form-control datetimepicker">
-                                @error('start_date')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-6 col-lg-6">
-                                <label>End Date</label>
-                                <input value="{{ old('end_date') }}" type="text" id="endSpecial" name="end_date" class="form-control datetimepicker">
-                                @error('end_date')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer bg-whitesmoke br">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div class="modal fade" tabindex="-1" role="dialog" id="modalMember">
-        <div class="modal-dialog" role="document">
-            <form id="formMember" action="" method="" enctype="multipart/form-data">
-                @csrf
-                <input id="methodMember" type="hidden" name="_method" value=""/>
-                <div class="modal-content" style="margin-bottom: 50%">
-                    <div class="modal-header">
-                        <h5 id="titleMember" class="modal-title">Form</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Member</label>
-                            <select id="member" name="user_id" class="form-control">
-                                @foreach($employees as $employee)
-                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('user_id')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="modal-footer bg-whitesmoke br">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <div class="modal fade" tabindex="-1" role="dialog" id="modalChangeStatus">
         <div class="modal-dialog" role="document">
             <form id="formChangeStatus" action="" method="" enctype="multipart/form-data">
@@ -358,56 +193,6 @@
         });
     </script>
     <script>
-        $(".btn-add").click(function(){
-            let action = $(this).data('action');
-            $('#title').text('Add Module')
-            $('#form').attr('action', action);
-            $("#form").attr("method", "post");
-        });
-
-        $(".btn-edit").click(function(){
-            let action = $(this).data('action');
-            let detail = $(this).data('detail');
-            $('#title').text('Edit Module')
-            $('#form').attr('action', action);
-            $("#form").attr("method", "post");
-            $("#method").attr("value", "put");
-            $.get(detail, function (data) {
-                $('#module').val(data.moduleable.id);
-                $('#start').val(data.start_date.date);
-                $('#end').val(data.end_date.date);
-            });
-        });
-
-        $(".btn-special-module").click(function(){
-            let action = $(this).data('action');
-            $('#titleSpecial').text('Add Special Module')
-            $('#formSpecial').attr('action', action);
-            $("#formSpecial").attr("method", "post");
-        });
-
-        $(".btn-edit-special").click(function(){
-            let action = $(this).data('action');
-            let detail = $(this).data('detail');
-            $('#titleSpecial').text('Edit Special Module')
-            $('#formSpecial').attr('action', action);
-            $("#formSpecial").attr("method", "post");
-            $("#methodSpecial").attr("value", "put");
-            $.get(detail, function (data) {
-                $('#nameSpecial').val(data.moduleable.name);
-                $('#descriptionSpecial').val(data.moduleable.description);
-                $('#startSpecial').val(data.start_date.date);
-                $('#endSpecial').val(data.end_date.date);
-            });
-        });
-
-        $(".btn-add-member").click(function(){
-            let action = $(this).data('action');
-            $('#titleMember').text('Add Member');
-            $('#formMember').attr('action', action);
-            $("#formMember").attr("method", "post");
-        });
-
         $(".btn-change-status").click(function(){
             let action = $(this).data('action');
             let detail = $(this).data('detail');

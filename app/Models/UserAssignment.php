@@ -29,13 +29,8 @@ class UserAssignment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function project_detail()
+    public function projectDetail()
     {
         return $this->belongsTo(ProjectDetail::class);
-    }
-
-    public function projects()
-    {
-        return $this->hasManyDeep(Project::class, [ProjectDetail::class, ProjectVersion::class]);
     }
 }
