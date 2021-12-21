@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Create Project')
+@section('title','Project Create')
 @section('content')
     <div class="section-header">
         <h1>Projects</h1>

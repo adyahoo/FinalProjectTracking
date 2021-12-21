@@ -1,50 +1,23 @@
 @extends('layouts.admin')
-@section('title','Version Detail')
+@section('title','Project Version')
 @section('css')
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
 @endsection
 
 @section('content')
-    <div class="section-header" style="display: block">
-        <div class="row">
-            <div class="col-lg-8 col-md-8 col-12 col-sm-12">
-                <h1>{{ $version->project->name }}</h1>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-right">
-                <p>Latest Version v{{ $latestVersion->version_number }}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-8 col-md-8 col-12 col-sm-12">
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.admin_projects.detail', $version->project) }}">Detail</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.admin_projects.project_module.index', $version->project) }}">Modules</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active-tab" href="{{ route('admin.admin_projects.version.index', $version->project) }}">Version</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Logs</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-right">
-                <a href="#" class="btn btn-icon btn-primary"><i class="fa fa-cog"></i></a>
-            </div>
-        </div>
-    </div>
+    @include('project.admin.include.project_page_tab', [
+        'project'             => $projectVersion->project,
+        'latestVersionNumber' => $latestVersion->version_number
+    ])
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="text-dark">{{ $version->version_number }}</h2>
-                    <p>{{ $version->description }}</p>
+                    <h2 class="text-dark">{{ $projectVersion->version_number }}</h2>
+                    <p>{{ $projectVersion->description }}</p>
                     <hr>
-                    <p>{{ $version->note }}</p>
+                    <p>{!! $projectVersion->note !!}</p>
                 </div>
             </div>
         </div>

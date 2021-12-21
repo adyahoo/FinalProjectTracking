@@ -1,5 +1,5 @@
 @extends('layouts.project_manager')
-
+@section('title','Project Create')
 @section('content')
     <div class="section-header">
         <h1>Projects</h1>

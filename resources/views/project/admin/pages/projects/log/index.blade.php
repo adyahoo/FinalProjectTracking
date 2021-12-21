@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Logs')
+@section('title','Project Logs')
 @section('css')
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
@@ -8,37 +8,10 @@
 @endsection
 
 @section('content')
-    <div class="section-header" style="display: block">
-        <div class="row">
-            <div class="col-lg-8 col-md-8 col-12 col-sm-12">
-                <h1>{{ $project->name }}</h1>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-right">
-                <p>Latest Version v{{ $project->projectVersions->last()->version_number }}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-8 col-md-8 col-12 col-sm-12">
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.admin_projects.detail', $project) }}">Detail</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.admin_projects.project_module.index', $project) }}">Modules</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.admin_projects.version.index', $project) }}">Version</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active-tab" href="{{ route('admin.admin_projects.logs.index', $project) }}">Logs</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-right">
-                <a href="#" class="btn btn-icon btn-primary"><i class="fa fa-cog"></i></a>
-            </div>
-        </div>
-    </div>
+    @include('project.admin.include.project_page_tab', [
+        'project'             => $project,
+        'latestVersionNumber' => $project->projectVersions->last()->version_number
+    ])
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
             <div class="card">
@@ -80,16 +53,12 @@
         </div>
     </div>
 @endsection
-
-@section('modal')
-@endsection
-
 @section('js')
-    <script src="{{ asset('templates/stisla/node_modules/datatables/media/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('templates/stisla/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script>
-        $("#table-1").dataTable({
-            
-        });
-    </script>
+<script src="{{ asset('templates/stisla/node_modules/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('templates/stisla/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script>
+    $("#table-1").dataTable({
+        
+    });
+</script>
 @endsection

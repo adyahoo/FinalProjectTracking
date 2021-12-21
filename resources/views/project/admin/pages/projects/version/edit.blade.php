@@ -1,14 +1,14 @@
-@extends('layouts.project_manager')
+@extends('layouts.admin')
 @section('title','Project Version')
 @section('content')
-    @include('project.project_manager.include.project_page_tab', [
+    @include('project.admin.include.project_page_tab', [
         'project'             => $projectVersion->project,
         'latestVersionNumber' => $latestVersion->version_number
     ])
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
           <div class="card">
-            <form action="{{ route('project_manager.projects.version.update', $projectVersion) }}" method="POST">
+            <form action="{{ route('admin.admin_projects.version.update', $projectVersion) }}" method="POST">
               @csrf
               @method('PUT')
 
@@ -46,7 +46,7 @@
     </div>
 @endsection
 
-@section('script')
+@section('js')
     <script src="{{ asset('templates/stisla/node_modules/sweetalert/dist/sweetalert.min.js') }}"></script>
     @if (Session::has('success'))
         <script>

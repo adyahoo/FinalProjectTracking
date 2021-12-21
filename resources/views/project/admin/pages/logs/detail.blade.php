@@ -7,6 +7,9 @@
 
 @section('content')
 <div class="section-header">
+    <div class="section-header-back">
+        <a href="{{route('admin.logs.index')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+    </div>
     <h1>{{ucfirst($log)}} Logs</h1>
 </div>
 
@@ -27,6 +30,7 @@
                                         No.
                                     </th>
                                     <th>Log Name</th>
+                                    <th>Causer</th>
                                     <th>Log Time</th>
                                     <th>Activity Description</th>
                                 </tr>
@@ -38,6 +42,7 @@
                                             {{$loop->iteration}}
                                         </td>
                                         <td>{{$log->log_name}}</td>
+                                        <td>{{$log->causer->name}}</td>
                                         <td>{{$log->created_at->diffForHumans()}}</td>
                                         <td>{{$log->description}}</td>
                                     </tr>

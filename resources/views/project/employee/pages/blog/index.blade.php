@@ -5,6 +5,15 @@
 @section('style')
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
+    <style>
+        .editable {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #ccc;
+            padding: 5px;
+            overflow: auto;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -41,7 +50,19 @@
                                     @foreach($blogs as $blog)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $blog->title }}</td>
+                                            <td>
+                                                {{ $blog->title }}
+                                                @if($blog->status == 'Rejected')
+                                                    @foreach($blog->blogReviews as $revision)
+                                                        @if($loop->last)
+                                                            <div class="table-links">
+                                                                <div class="bullet"></div>
+                                                                <a href="#" class="btn-detail" data-detail="{{$revision->reviews}}" data-reviewer="{{$revision->user->name}}" data-toggle="modal" data-target="#modal">Revision</a>
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            </td>
                                             <td>
                                                 <span class="badge 
                                                     @if($blog->status == $blog->statusOption['waiting_for_review'])
@@ -64,7 +85,7 @@
                                                     {{ $blog->published_at }}
                                                 @endempty
                                             </td>
-                                            <td>{{ $blog->view_count }}</td>
+                                            <td>{{ number_format($blog->view_count,0,',','.') }}</td>
                                             <td>
                                                 <a href="{{ route('employee.blogs.preview', $blog->slug) }}" class="btn btn-primary btn-edit"><i class="fa fa-eye"></i></a>
                                                 <a href="{{ route('employee.blogs.edit', $blog) }}" class="btn btn-info btn-edit"><i class="fa fa-pencil-alt"></i></a>
@@ -87,7 +108,33 @@
         </div>
     </div>
 @endsection
-
+@section('modal')
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="title" class="modal-title">Blog Revision</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Reviewer Name</label>
+                    <input id="reviewerName" name="name" value="" type="text" class="form-control" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Review Description</label>
+                    <div class="editable" id="revision"></div>
+                </div>
+            </div>
+            <div class="modal-footer bg-whitesmoke br">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
 @section('script')
     <script src="{{ asset('templates/stisla/node_modules/datatables/media/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('templates/stisla/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -123,6 +170,14 @@
     </script>
     <script>
         $("#table-1").dataTable({
+        });
+    </script>
+    <script>
+        $(".btn-detail").click(function(){
+            let reviewer = $(this).data('reviewer');
+            let detail = $(this).data('detail');
+            $('#reviewerName').val(reviewer);
+            $('#revision').html(detail);
         });
     </script>
 @endsection
