@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\ProjectDetail;
 use Carbon\Carbon;
 
 class GanttChartController extends Controller
@@ -37,12 +38,20 @@ class GanttChartController extends Controller
             ];
             $data = json_encode($datas);
             // dd($data);
-            return view('project.admin.pages.projects.gantt', compact('data'));
+            return view('project.admin.pages.projects.gantt', compact('data', 'project'));
         }
         $datas = [
             'data' => ''
         ];
         $data = json_encode($datas);
-        return view('project.admin.pages.projects.gantt', compact('data'));
+        return view('project.admin.pages.projects.gantt', compact('data','project'));
+    }
+
+    public function changeStatus(Request $request, $id){
+        $detail = ProjectDetail::find($id);
+        $detail->update([
+            'status' => $request->status
+        ]);
+        return redirect()->back()->with('success', 'Status has been changed');
     }
 }

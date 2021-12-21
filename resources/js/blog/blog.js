@@ -33,6 +33,16 @@ $("#view_id").click(function() {
     );
 })(jQuery, document, window, ResponsiveBootstrapToolkit);
 
-$('#cancelLabel').click(function () {
-    $('#label').tagsinput('remove');
+$(document).ready(function () {
+    var index = $('#filterIndex').val()
+
+    $('#cancelLabelSearch').click(function() {
+        $('#labelSearch').hide()
+    });
+
+    for(let i = 1; i <= index; i++) {
+        $('#cancelLabelFilter-' + i).click(function() {
+            $('#labelFilter-' + i).hide()
+        });
+    }
 })

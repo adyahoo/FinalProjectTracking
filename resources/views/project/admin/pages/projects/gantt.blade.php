@@ -1,5 +1,5 @@
 @extends('layouts.gantt')
-@section('title','Gantt Chart')
+@section('title','Project Gantt Chart')
 @section('css')
 <script src="{{asset('templates/gantt/codebase/dhtmlxgantt.js')}}"></script>
 <link rel="stylesheet" href="{{asset('templates/gantt/codebase/dhtmlxgantt.css')}}">
@@ -44,17 +44,17 @@
 @section('content')
 <div class="section-header">
     <div class="section-header-back">
-        <a href="{{route('admin.blog.index')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+        <a href="{{route('admin.admin_projects.index')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
     </div>
     <h1>Gantt Chart</h1>
 </div>
 
 <div class="section-body">
-    <h2 class="section-title">Project</h2>
-    <p class="section-lead">Description</p>
+    <h2 class="section-title">Project {{$project->name}}</h2>
+    <p class="section-lead">Description: {{$project->description}}</p>
     <div class="card">
     <div class="card-header">
-        <h4>Project</h4>
+        <h4>Project Version: {{$project->projectVersions()->where('project_id', $project->id)->orderBy('created_at', 'desc')->first()->version_number}}</h4>
     </div>
     <div class="card-body">
         <div id="gantt_here" style='width:100%; height:500px;'></div>
@@ -78,7 +78,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Status</label>
-                        <select id="module" name="moduleable_id" class="form-control">
+                        <select id="status" name="status" class="form-control">
                             <option value="not yet">Not Yet</option>
                             <option value="on progress">On Progress</option>
                             <option value="done">Done</option>
@@ -99,8 +99,20 @@
 @endsection
 @section('js')
 <script src="{{ asset('templates/stisla/node_modules/sweetalert/dist/sweetalert.min.js') }}"></script>
+@if (Session::has('success'))
+    <script>
+        swal("Success!", "{{ Session::get('success') }}", "success").then(function(){
+            window.location.reload(window.location.href)
+        });
+    </script>
+@endif
+@if($errors->any())
+    <script>
+        var msg = "{{ implode(' \n', $errors->all(':message')) }}";
+        swal("Error!", msg , "error");
+    </script>
+@endif
 <script>
-    let today = new Date();
     var colHeader = 'Status';
     gantt.config.columns = [
         { name: "text", label: "Module name", width:150},
@@ -108,7 +120,7 @@
         { name: "end_date", label: "End Date", align: "center", width:90},
         {name: "buttons", align:"center", label: colHeader,width: 75,template: function (task) {
 			return (
-                '<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal" data-id="'+task.id+'"><i class="fa fa-eye"></i></button>'
+                    '<button id="btn-edit'+task.id+'" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal"><i class="fa fa-eye"></i></button>'
 				);
 		}}
     ];
@@ -180,8 +192,20 @@
             }
     };
     
-    gantt.parse({!! json_encode($data) !!});
+    gantt.attachEvent("onTaskClick", function(id,e){
+        if(e.target.id.includes("btn-edit"+id)){
+            var task   = gantt.getTask(id);
+            var status = gantt.getTask(id).status;
+            $('#method').val('PUT');
+            $("#form").attr("method", "post");
+            $('#form').attr('action', '{{route("admin.admin_projects.gantt_chart.update", ":id")}}'.replace(':id', task.id));
+            $('#title').html('Change Status');
+            $('#status').val(status);
+        }
+    });
 
+    gantt.parse({!! json_encode($data) !!});
+    
     
 </script>
 @endsection

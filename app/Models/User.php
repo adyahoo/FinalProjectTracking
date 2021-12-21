@@ -10,17 +10,18 @@ use Laravel\Sanctum\HasApiTokens;
 use Hash;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use App\Traits\ImageTrait;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, LogsActivity;
+    use HasApiTokens, HasFactory, Notifiable, LogsActivity, ImageTrait;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
-
+    const IMAGE_PATH    = 'public/profile_images/';
     protected $fillable = [
         'name',
         'email',
@@ -56,6 +57,11 @@ class User extends Authenticatable
     protected static $logName       = 'user';
     protected static $logAttributes = ['name', 'email'];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         return "User with name :subject.name has been {$eventName} by: :causer.name";
@@ -79,6 +85,10 @@ class User extends Authenticatable
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = !$value ?  null : Hash::make($value);
+    }
+
+    public function setProfileImageAttribute($value){
+        $this->attributes['profile_image'] = $this->uploadImage($value, self::IMAGE_PATH);
     }
 
     public function role()

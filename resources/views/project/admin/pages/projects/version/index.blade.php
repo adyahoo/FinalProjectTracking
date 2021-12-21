@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-
+@section('title','Project Version')
 @section('css')
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
@@ -83,7 +83,9 @@
     <script src="{{ asset('templates/stisla/node_modules/sweetalert/dist/sweetalert.min.js') }}"></script>
     @if (Session::has('success'))
         <script>
-            swal("Success!", "{{ Session::get('success') }}", "success");
+            swal("Success!", "{{ Session::get('success') }}", "success").then(function(){
+                window.location.reload(window.location.href)
+            });
         </script>
     @endif
     @if($errors->any())

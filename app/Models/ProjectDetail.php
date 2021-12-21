@@ -38,7 +38,7 @@ class ProjectDetail extends Model
 
     public function getDescriptionForEvent(string $eventName): string
     {
-        return "Project Detail has been {$eventName} by: :causer.name";
+        return "Module has been {$eventName} on this project by: :causer.name";
     }
 
     public function scopeWhereDone($query)

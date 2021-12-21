@@ -164,7 +164,9 @@
 </script>
 @if (Session::has('success'))
     <script>
-        swal("Success!", "{{ Session::get('success') }}", "success");
+        swal("Success!", "{{ Session::get('success') }}", "success").then(function(){
+            window.location.reload(window.location.href)
+        });
     </script>
 @endif
 

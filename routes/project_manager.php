@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/dashboard', 'DashboardController@index')->middleware(['project_manager'])->name('dashboard');
 
+Route::group(['prefix' => 'profile','as'=>'profile.'], function () {
+    Route::get('/', 'ProfileController@index')->name('profile');
+    Route::put('/update/{user}', 'ProfileController@editProfile')->name('update');
+    Route::get('/change-password', 'ProfileController@changePasswordPages')->name('change-password');
+    Route::put('/change-password', 'ProfileController@changePassword')->name('change-password.submit');
+});
+
 Route::group([
     'as'     => 'projects.',
     'prefix' => 'projects',

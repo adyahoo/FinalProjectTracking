@@ -36,7 +36,6 @@ trait ImageTrait
                     $fileNameFinal       = $fileNameContentRand.'.'.$mimetype;
                     $filepath            = ("../public/storage/blog_images/".$fileNameFinal);
                     $image               = Image::make($src)
-                                                ->resize(1200,1200)
                                                 ->encode($mimetype,100)
                                                 ->save($filepath);
                     $img->removeAttribute('src');
