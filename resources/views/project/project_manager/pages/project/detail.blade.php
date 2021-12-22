@@ -161,25 +161,25 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Members <span class="badge badge-secondary">{{ $project->userAssignments->count() }}</span></h4>
+                            <h4>Members <span class="badge badge-secondary">{{ $project->userAssignments->groupBy('user_id')->count() }}</span></h4>
                             <div class="card-header-action">
                                 <a href="{{ route('project_manager.projects.module.all', $project) }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
                         <div class="card-body">
                             <ul class="list-unstyled user-progress list-unstyled-border list-unstyled-noborder">
-                                @foreach($project->userAssignments as $userAssignment)
+                                @foreach($project->userAssignments->groupBy('user_id') as $userAssignment)
                                     <li class="media">
                                         <img alt="image" class="mr-3 rounded-circle" width="50"
-                                            @empty($userAssignment->user->profile_image)
+                                            @empty($userAssignment[0]->user->profile_image)
                                                 src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}"
                                             @else
-                                                src="{{ asset('storage/profile_images/' . $userAssignment->user->profile_image) }}"
+                                                src="{{ asset('storage/profile_images/' . $userAssignment[0]->user->profile_image) }}"
                                             @endempty
                                         >
                                         <div class="media-body">
-                                            <div class="media-title">{{ $userAssignment->user->name }}</div>
-                                            <div class="text-job text-muted">{{ $userAssignment->user->role->name }}</div>
+                                            <div class="media-title">{{ $userAssignment[0]->user->name }}</div>
+                                            <div class="text-job text-muted">{{ $userAssignment[0]->user->role->name }}</div>
                                         </div>
                                     </li>
                                 @endforeach
