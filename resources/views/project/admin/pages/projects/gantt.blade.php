@@ -1,7 +1,6 @@
 @extends('layouts.gantt')
 @section('title','Project Gantt Chart')
 @section('css')
-<script src="{{asset('templates/gantt/codebase/dhtmlxgantt.js')}}"></script>
 <link rel="stylesheet" href="{{asset('templates/gantt/codebase/dhtmlxgantt.css')}}">
 <style>
     /* common styles for overriding borders/progress color */
@@ -98,6 +97,7 @@
 </div>
 @endsection
 @section('js')
+<script src="{{asset('templates/gantt/codebase/dhtmlxgantt.js')}}"></script>
 <script src="{{ asset('templates/stisla/node_modules/sweetalert/dist/sweetalert.min.js') }}"></script>
 @if (Session::has('success'))
     <script>
@@ -119,10 +119,10 @@
         { name: "start_date", label: "Start Date", align: "center", width:90},
         { name: "end_date", label: "End Date", align: "center", width:90},
         {name: "buttons", align:"center", label: colHeader,width: 75,template: function (task) {
-return (
-                    '<button id="btn-edit'+task.id+'" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal"><i class="fa fa-eye"></i></button>'
-    );
-}}
+            return (
+                        '<button id="btn-edit'+task.id+'" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal">Edit</button>'
+                    );
+        }}
     ];
 
     gantt.config.layout = {
@@ -201,6 +201,7 @@ return (
             $('#form').attr('action', '{{route("admin.admin_projects.gantt_chart.update", ":id")}}'.replace(':id', task.id));
             $('#title').html('Change Status');
             $('#status').val(status);
+            console.log(status);
         }
     });
 

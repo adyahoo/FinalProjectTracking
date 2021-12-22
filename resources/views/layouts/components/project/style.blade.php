@@ -1,6 +1,6 @@
 <!-- General CSS Files -->
 <link rel="stylesheet" href="{{asset ('templates/stisla/assets/css/bootstrap/bootstrap.min.css')}}">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="{{asset ('templates/stisla/assets/css/fa/fontawesome-free-5.15.4-web/css/all.min.css')}}">
 <!-- CSS Libraries -->
 <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/jqvmap/dist/jqvmap.min.css') }}">
 <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/weathericons/css/weather-icons.min.css') }}">

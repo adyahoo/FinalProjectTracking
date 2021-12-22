@@ -130,9 +130,9 @@
                 <table class="table table-striped mb-0">
                     <thead>
                         <tr>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th class="text-center">Published At</th>
+                            <th style="width: 40%">Title</th>
+                            <th style="width: 50%">Author</th>
+                            <th style="width: 10%" class="text-center">Published At</th>
                         </tr>
                     </thead>
                     <tbody>

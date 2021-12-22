@@ -243,6 +243,7 @@
             $('#title').text('Add Launch Date')
             $('#form').attr('action', action);
             $("#form").attr("method", "post");
+            $("#method").attr("value", "put");
         });
 
         $(".btn-edit").click(function(){
