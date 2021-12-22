@@ -87,9 +87,4 @@ class Blog extends Model
     {
         return $query->where('user_id', Auth::user()->id);
     }
-
-    public function blogReviews()
-    {
-        return $this->hasMany(BlogReview::class);
-    }
 }
