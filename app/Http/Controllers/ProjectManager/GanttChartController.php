@@ -49,22 +49,4 @@ class GanttChartController extends Controller
         $data = json_encode($datas);
         return view('project.project_manager.pages.project.gantt', compact('data','project', 'employees'));
     }
-
-    public function changeStatus(Request $request, $id){
-        $detail = ProjectDetail::find($id);
-        $detail->update([
-            'status' => $request->status
-        ]);
-        return redirect()->back()->with('success', 'Status has been changed');
-    }
-
-    public function assignEmployee(Request $request, $id){
-        $check = UserAssignment::where('project_detail_id',$id)->where('user_id', $request->user_id)->first();
-        if(!$check){
-            $assignment = new UserAssignment($request->all());
-            $assignment->save();
-            return redirect()->back()->with('success', 'Assignment has been created');
-        }
-        return redirect()->back()->with('error', 'Assignment on this member already created');
-    }
 }

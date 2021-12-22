@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\ProjectDetail;
 use Carbon\Carbon;
+use App\Models\Role;
 
 class GanttChartController extends Controller
 {
     public function retriveData(Project $project) {
-        $temp    = array();
+        $temp      = array();
+        $employees = Role::whereEmployee()->first()->user;
         if(isset($project->projectVersions)) {
             foreach($project->projectVersions as $version) {
                 foreach($version->projectDetails as $detail) {
@@ -38,20 +40,12 @@ class GanttChartController extends Controller
             ];
             $data = json_encode($datas);
             // dd($data);
-            return view('project.admin.pages.projects.gantt', compact('data', 'project'));
+            return view('project.admin.pages.projects.gantt', compact('data', 'project', 'employees'));
         }
         $datas = [
             'data' => ''
         ];
         $data = json_encode($datas);
-        return view('project.admin.pages.projects.gantt', compact('data','project'));
-    }
-
-    public function changeStatus(Request $request, $id){
-        $detail = ProjectDetail::find($id);
-        $detail->update([
-            'status' => $request->status
-        ]);
-        return redirect()->back()->with('success', 'Status has been changed');
+        return view('project.admin.pages.projects.gantt', compact('data','project', 'employees'));
     }
 }

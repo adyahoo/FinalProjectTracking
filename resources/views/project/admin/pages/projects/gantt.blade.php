@@ -35,8 +35,13 @@
         color: #fff;
     }
 
-    .weekend{ background: #f4f7f4 !important;}
-    .today{ background: #5bc0de !important;}
+    .weekend{ 
+        background: #f4f7f4 !important;
+    }
+    
+    .today{ 
+        background: #5bc0de !important;
+    }
 </style>
 @endsection
 
@@ -56,6 +61,12 @@
         <h4>Project Version: {{$project->projectVersions()->where('project_id', $project->id)->orderBy('created_at', 'desc')->first()->version_number}}</h4>
     </div>
     <div class="card-body">
+        <div class="mb-2">
+            <span>Info: </span>
+            <span class="badge badge-pill badge-success mr-1">Done</span>
+            <span class="badge badge-pill badge-warning mr-1">On Progress</span>
+            <span class="badge badge-pill badge-danger">Not Yet</span>
+        </div>
         <div id="gantt_here" style='width:100%; height:500px;'></div>
     </div>
     </div>
@@ -95,6 +106,40 @@
         </form>
     </div>
 </div>
+<div class="modal fade" tabindex="-1" role="dialog" id="modal2">
+    <div class="modal-dialog" role="document">
+        <form id="forms" action="" method="" enctype="multipart/form-data">
+            @csrf
+            <input id="methods" type="hidden" name="_method" value=""/>
+            <input id="projects" type="hidden" name="project_detail_id" value=""/>
+            <div class="modal-content" style="margin-bottom: 50%">
+                <div class="modal-header">
+                    <h5 id="titles" class="modal-title">Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Member</label>
+                        <select id="member" name="user_id" class="form-control">
+                            @foreach($employees as $employee)
+                                <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('user_id')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Assign Member</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection
 @section('js')
 <script src="{{asset('templates/gantt/codebase/dhtmlxgantt.js')}}"></script>
@@ -106,6 +151,13 @@
         });
     </script>
 @endif
+@if (Session::has('error'))
+    <script>
+        swal("Error!", "{{ Session::get('error') }}", "error").then(function(){
+            window.location.reload(window.location.href)
+        });
+    </script>
+@endif
 @if($errors->any())
     <script>
         var msg = "{{ implode(' \n', $errors->all(':message')) }}";
@@ -113,7 +165,8 @@
     </script>
 @endif
 <script>
-    var colHeader = 'Status';
+    var colHeader  = 'Status';
+    var colHeader2 = 'Assign To';
     gantt.config.columns = [
         { name: "text", label: "Module name", width:150},
         { name: "start_date", label: "Start Date", align: "center", width:90},
@@ -121,6 +174,11 @@
         {name: "buttons", align:"center", label: colHeader,width: 75,template: function (task) {
             return (
                         '<button id="btn-edit'+task.id+'" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal">Edit</button>'
+                    );
+        }},
+        {name: "buttons", align:"center", label: colHeader2, width: 75,template: function (task) {
+            return (
+                        '<button id="btn-assign'+task.id+'" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal2">Assign</button>'
                     );
         }}
     ];
@@ -152,10 +210,6 @@
     gantt.config.drag_resize   = false;
     gantt.config.drag_progress = false;
     gantt.showDate(new Date());
-
-    gantt.attachEvent("onTaskDblClick", function(){
-        return false;
-    });
 
     gantt.templates.scale_cell_class = function(date){
         if(date.getDay()==0||date.getDay()==6){
@@ -192,16 +246,33 @@
             }
     };
     
+    gantt.attachEvent("onTaskDblClick", function(id, e){
+        var task             = gantt.getTask(id);
+        window.location.href = '{{ route("admin.admin_projects.project_module.show", ":id") }}'.replace(':id', task.id);
+    });
+
     gantt.attachEvent("onTaskClick", function(id,e){
         if(e.target.id.includes("btn-edit"+id)){
             var task   = gantt.getTask(id);
             var status = gantt.getTask(id).status;
             $('#method').val('PUT');
             $("#form").attr("method", "post");
-            $('#form').attr('action', '{{route("admin.admin_projects.gantt_chart.update", ":id")}}'.replace(':id', task.id));
+            $('#form').attr('action', '{{ route("admin.admin_projects.project_module.update", ":id") }}'.replace(':id', task.id));
             $('#title').html('Change Status');
             $('#status').val(status);
             console.log(status);
+        }
+    });
+
+    gantt.attachEvent("onTaskClick", function(id,e){
+        if(e.target.id.includes("btn-assign"+id)){
+            var task   = gantt.getTask(id);
+            var status = gantt.getTask(id).status;
+            $('#methods').val('post');
+            $('#projects').val(id);
+            $("#forms").attr("method", "post");
+            $('#forms').attr('action', '{{ route("admin.admin_projects.project_module.member.store", ":id") }}'.replace(':id', task.id));
+            $('#titles').html('Assign Member');
         }
     });
 
