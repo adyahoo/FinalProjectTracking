@@ -6,7 +6,7 @@
 </div>
 <ul class="sidebar-menu">
     <li class="menu-header">Menu</li>
-    <li class="{{ Request::is('employee/dashboard*') ? 'active' : '' }} nav-item dropdown"><a class="nav-link" href="{{ route('employee.dashboard') }}"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
+    <li class="{{ Request::is('employee/dashboard*') ? 'active' : '' }} nav-item"><a class="nav-link" href="{{ route('employee.dashboard') }}"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
     <li class="{{ Request::is('employee/projects*') ? 'active' : '' }} nav-item dropdown">
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-project-diagram"></i> <span>Projects</span></a>
         <ul class="dropdown-menu">

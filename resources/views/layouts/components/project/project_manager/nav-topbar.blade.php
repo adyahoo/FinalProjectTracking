@@ -9,18 +9,18 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('project_manager.projects.create') }}">Create Project</a></li>
                 </ul>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown {{ Request::is('project_manager/modules*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-th"></i> <span>Modules</span></a>
                 <ul class="dropdown-menu">
-                    <li class="nav-item"><a class="nav-link" href="layout-default.html">Module List</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('project_manager.modules.index') }}">Module List</a></li>
                     <li class="nav-item"><a class="nav-link" href="layout-default.html">Add Module</a></li>
                 </ul>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown {{ Request::is('project_manager/blogs*') ? 'active' : '' }}">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-blog"></i> <span>Blogs</span></a>
                 <ul class="dropdown-menu">
-                    <li class="nav-item"><a class="nav-link" href="layout-default.html">Blog List</a></li>
-                    <li class="nav-item"><a class="nav-link" href="layout-default.html">Add Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('project_manager.blogs.all') }}">Blog List</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('project_manager.blogs.create') }}">Add Blog</a></li>
                 </ul>
             </li>
         </ul>

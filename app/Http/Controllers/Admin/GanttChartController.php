@@ -14,17 +14,20 @@ class GanttChartController extends Controller
     public function retriveData(Project $project) {
         $temp      = array();
         $employees = Role::whereEmployee()->first()->user;
+        
         if(isset($project->projectVersions)) {
             foreach($project->projectVersions as $version) {
                 foreach($version->projectDetails as $detail) {
                     $names    = array();
                     $assignee = $detail->userAssignments()->with('user')->get();
+                    
                     if($assignee) {
                         foreach($assignee as $assign) {
                             $names[] = $assign->user->name;
                         }
                         $name = implode(',', $names);
                     }
+
                     array_push($temp, [
                         'id'         => $detail->id,
                         'text'       => $detail->moduleable->name,
@@ -35,17 +38,22 @@ class GanttChartController extends Controller
                     ]);
                 }
             }
+
             $datas = [
                 'data' => $temp
             ];
+
             $data = json_encode($datas);
-            // dd($data);
+            
             return view('project.admin.pages.projects.gantt', compact('data', 'project', 'employees'));
         }
+
         $datas = [
             'data' => ''
         ];
+        
         $data = json_encode($datas);
+        
         return view('project.admin.pages.projects.gantt', compact('data','project', 'employees'));
     }
 }

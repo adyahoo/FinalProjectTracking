@@ -58,6 +58,12 @@
             <h4>Project Version: {{$project->projectVersions()->where('project_id', $project->id)->orderBy('created_at', 'desc')->first()->version_number}}</h4>
         </div>
         <div class="card-body">
+            <div class="mb-2">
+                <span>Info: </span>
+                <span class="badge badge-pill badge-success mr-1">Done</span>
+                <span class="badge badge-pill badge-warning mr-1">On Progress</span>
+                <span class="badge badge-pill badge-danger">Not Yet</span>
+            </div>
             <div id="gantt_here" style='width:100%; height:500px;'></div>
         </div>
         </div>
