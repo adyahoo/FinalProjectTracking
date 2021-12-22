@@ -45,7 +45,7 @@
 @section('content')
     <div class="section-header">
         <div class="section-header-back">
-            <a href="{{route('project_manager.projects.all')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{route('employee.projects.all')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
         <h1>Gantt Chart</h1>
     </div>
@@ -193,7 +193,7 @@
                     break;
                 }
         };
-        
+
         gantt.attachEvent("onTaskClick", function(id,e){
             if(e.target.id.includes("btn-edit"+id)){
                 var task   = gantt.getTask(id);
@@ -208,7 +208,5 @@
         });
 
         gantt.parse({!! json_encode($data) !!});
-        
-        
     </script>
 @endsection

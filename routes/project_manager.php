@@ -115,15 +115,14 @@ Route::group([
                 ->name('all');
     });
 
-    #Gantt Chart
     Route::group([
-        'as' => 'gantt_chart.', 
+        'as'     => 'gantt_chart.', 
         'prefix' => 'gantt_chart'
     ], function () {
         Route::get('/{project}', 'GanttChartController@retriveData')
-                ->name('index');
+                    ->name('index');
         Route::put('/status/{id}', 'GanttChartController@changeStatus')
-                ->name('update');
+                    ->name('update');
     });
 });
 
