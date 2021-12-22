@@ -35,7 +35,13 @@
                                     @if($log->subject->projectVersion->project_id == $project->id)
                                         <tr>
                                             <td>
-                                                <img alt="image" src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}" class="rounded-circle mb-2 mr-2" width="35" data-toggle="tooltip" title="{{ $log->causer->name }}">
+                                                <img alt="image" 
+                                                @empty($log->causer->profile_image)
+                                                    src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}"
+                                                @else
+                                                    src="{{ asset('storage/profile_images/' . $log->causer->profile_image) }}"
+                                                @endempty
+                                                class="rounded-circle mb-2 mr-2" width="35" data-toggle="tooltip" title="{{ $log->causer->name }}">
                                                 {{ $log->causer->name }}
                                             </td>
                                             <td>

@@ -66,10 +66,6 @@
                                                 <div class="mt-1">
                                                     <span>Added at : v{{ $projectDetail->projectVersion->version_number }}</span>
                                                 </div>
-                                                <div class="table-links">
-                                                    <div class="bullet"></div>
-                                                    <a href="{{ route('project_manager.projects.module.show', $projectDetail) }}">View</a>
-                                                </div>
                                             </td>
                                             <td>
                                                 <div class="badge 
@@ -91,7 +87,7 @@
                                                             @empty($userAssignment->user->profile_image)
                                                                 src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}"
                                                             @else
-                                                                src="{{ asset('storage/profile_image/' . $userAssignment->user->profile_image) }}"
+                                                                src="{{ asset('storage/profile_images/' . $userAssignment->user->profile_image) }}"
                                                             @endempty
                                                         >
                                                     @endforeach
@@ -109,6 +105,7 @@
                                                 ({{ $projectDetail->end_date->format('H:i') }})
                                             </td>
                                             <td>
+                                                <a href="{{ route('project_manager.projects.module.show', $projectDetail) }}" class="btn btn-light" data-toggle="tooltip" title="View"><i class="fas fa-eye"></i></a>
                                                 <a data-action="{{ route('project_manager.projects.module.member.store', $projectDetail) }}" title="Add Member" href="#" class="btn btn-primary btn-add-member" data-toggle="modal" data-target="#modalMember" title="Add Member"><i class="fa fa-user-plus"></i></a>
 
                                                 @if($projectDetail->moduleable_type == $projectDetail->moduleType['special_module'])
@@ -123,7 +120,6 @@
                                                     </form>
                                                 @else
                                                     <a data-detail="{{ route('project_manager.projects.module.edit', $projectDetail) }}" data-action="{{ route('project_manager.projects.module.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#modal" title="Edit"><i class="fa fa-pencil-alt"></i></a>
-
                                                     <a href="#" onclick="deleteConfirm('del{{ $projectDetail->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
                                                         <i class="fa fa-trash"></i>
                                                     </a>

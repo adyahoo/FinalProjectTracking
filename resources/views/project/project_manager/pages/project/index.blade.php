@@ -70,10 +70,6 @@
                                     <tr>
                                         <td>
                                             {{ $project->name }}
-                                            <div class="table-links">
-                                                <div class="bullet"></div>
-                                                <a href="{{ route('project_manager.projects.detail', $project) }}">View</a>
-                                            </div>
                                         </td>
                                         <td>
                                             {{ $project->start_date->format('d-m-Y') }}
@@ -93,6 +89,7 @@
                                             @endif
                                         </td>
                                         <td>
+                                            <a href="{{ route('project_manager.projects.detail', $project) }}" class="btn btn-light mr-1" data-toggle="tooltip" title="View"><i class="fas fa-eye"></i></a>
                                             <a href="{{ route('project_manager.projects.edit', $project->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                             <a href="#" onclick="deleteConfirm('del{{ $project->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
                                                 <i class="fa fa-trash"></i>

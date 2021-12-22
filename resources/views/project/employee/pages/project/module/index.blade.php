@@ -81,7 +81,7 @@
                                                             @empty($userAssignment->user->profile_image)
                                                                 src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}"
                                                             @else
-                                                                src="{{ asset('storage/profile_image/' . $userAssignment->user->profile_image) }}"
+                                                                src="{{ asset('storage/profile_images/' . $userAssignment->user->profile_image) }}"
                                                             @endempty
                                                         >
                                                     @endforeach
@@ -101,11 +101,7 @@
                                             <td>
                                                 <a href="{{ route('employee.projects.module.show', $projectDetail) }}" class="btn btn-light mr-1" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a>
                                                 @if($projectDetail->userAssignments->where('user_id', Auth::user()->id)->count() != 0)
-                                                    @if($projectDetail->moduleable_type == $projectDetail->moduleType['special_module'])
-                                                        <a data-detail="{{ route('employee.projects.module.edit', $projectDetail) }}" data-action="{{ route('employee.projects.module.special.update', $projectDetail) }}" href="#" class="btn btn-primary btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status">Change Status</a>
-                                                    @else
-                                                        <a data-detail="{{ route('employee.projects.module.edit', $projectDetail) }}" data-action="{{ route('employee.projects.module.update', $projectDetail) }}" href="#" class="btn btn-primary btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status">Change Status</a>
-                                                    @endif
+                                                    <a data-detail="{{ route('employee.projects.module.edit', $projectDetail) }}" data-action="{{ route('employee.projects.module.update', $projectDetail) }}" href="#" class="btn btn-primary btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status">Change Status</a>
                                                 @endif
                                             </td>
                                         </tr>

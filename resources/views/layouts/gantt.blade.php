@@ -10,7 +10,7 @@
 
 <body class="layout-3">
     <div id="app">
-    <div class="main-wrapper container">
+    <div class="main-wrapper mx-4">
         @include('layouts.components.project.navbar-top')
 
         <!-- Main Content -->

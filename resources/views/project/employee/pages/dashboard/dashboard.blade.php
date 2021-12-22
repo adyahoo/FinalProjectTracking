@@ -71,6 +71,7 @@
                                     <th>Start Date</th>
                                     <th>End Date</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -78,10 +79,6 @@
                                     <tr>
                                         <td>
                                             {{ $project->name }}
-                                            <div class="table-links">
-                                                <div class="bullet"></div>
-                                                <a href="{{ route('employee.projects.detail', $project) }}">View</a>
-                                            </div>
                                         </td>
                                         <td>
                                             {{ $project->start_date->format('d-m-Y') }}
@@ -99,6 +96,9 @@
                                             @else
                                                 <div class="badge badge-danger">Listed</div>
                                             @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('employee.projects.detail', $project) }}" class="btn btn-light mr-1" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

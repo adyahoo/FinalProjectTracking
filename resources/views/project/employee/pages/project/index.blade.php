@@ -67,10 +67,6 @@
                                     <tr>
                                         <td>
                                             {{ $project->name }}
-                                            <div class="table-links">
-                                                <div class="bullet"></div>
-                                                <a href="{{ route('employee.projects.detail', $project) }}">View</a>
-                                            </div>
                                         </td>
                                         <td>
                                             {{ $project->start_date->format('d-m-Y') }}

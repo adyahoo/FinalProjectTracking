@@ -64,10 +64,6 @@
                                                 <div class="mt-1">
                                                     <span>Added at : v{{ $projectDetail->projectVersion->version_number }}</span>
                                                 </div>
-                                                <div class="table-links">
-                                                    <div class="bullet"></div>
-                                                    <a href="{{ route('admin.admin_projects.project_module.show', $projectDetail) }}">View</a>
-                                                </div>
                                             </td>
                                             <td>
                                                 <div class="badge 
@@ -89,7 +85,7 @@
                                                             @empty($userAssignment->user->profile_image)
                                                                 src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}"
                                                             @else
-                                                                src="{{ asset('storage/profile_image/' . $userAssignment->user->profile_image) }}"
+                                                                src="{{ asset('storage/profile_images/' . $userAssignment->user->profile_image) }}"
                                                             @endempty
                                                         >
                                                     @endforeach
@@ -107,10 +103,11 @@
                                                 ({{ $projectDetail->end_date->format('H:i') }})
                                             </td>
                                             <td>
+                                                <a href="{{ route('admin.admin_projects.project_module.show', $projectDetail) }}" class="btn btn-light" data-toggle="tooltip" title="View"><i class="fas fa-eye"></i></a>
                                                 <a data-action="{{ route('admin.admin_projects.project_module.member.store', $projectDetail) }}" title="Add Member" href="#" class="btn btn-primary btn-add-member" data-toggle="modal" data-target="#modalMember" title="Add Member"><i class="fa fa-user-plus"></i></a>
 
                                                 @if($projectDetail->moduleable_type == $projectDetail->moduleType['special_module'])
-                                                    <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.special.update', $projectDetail) }}" href="#" class="btn btn-success btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status"><i class="fa fa-check"></i></a>
+                                                    <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.special.update', $projectDetail) }}" href="#" class="btn btn-success btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status"><i class="fa fa-exchange-alt"></i></a>
                                                     <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.special.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit-special" data-toggle="modal" data-target="#modalSpecial" title="Edit"><i class="fa fa-pencil-alt"></i></a>
 
                                                     <a href="#" onclick="deleteConfirm('del{{ $projectDetail->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
@@ -121,7 +118,7 @@
                                                         @csrf
                                                     </form>
                                                 @else
-                                                    <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.update', $projectDetail) }}" href="#" class="btn btn-success btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status"><i class="fa fa-check"></i></a>
+                                                    <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.update', $projectDetail) }}" href="#" class="btn btn-success btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status"><i class="fa fa-exchange-alt"></i></a>
                                                     <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#modal" title="Edit"><i class="fa fa-pencil-alt"></i></a>
 
                                                     <a href="#" onclick="deleteConfirm('del{{ $projectDetail->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">

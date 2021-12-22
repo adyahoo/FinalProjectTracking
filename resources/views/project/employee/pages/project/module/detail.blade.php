@@ -35,7 +35,7 @@
                                                 @empty($userAssignment->user->profile_image)
                                                     src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}"
                                                 @else
-                                                    src="{{ asset('storage/profile_image/' . $userAssignment->user->profile_image) }}"
+                                                    src="{{ asset('storage/profile_images/' . $userAssignment->user->profile_image) }}"
                                                 @endempty
                                             >
                                             {{ $userAssignment->user->name }}

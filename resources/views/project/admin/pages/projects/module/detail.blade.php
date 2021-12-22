@@ -42,14 +42,10 @@
                                                 @empty($userAssignment->user->profile_image)
                                                     src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}"
                                                 @else
-                                                    src="{{ asset('storage/profile_image/' . $userAssignment->user->profile_image) }}"
+                                                    src="{{ asset('storage/profile_images/' . $userAssignment->user->profile_image) }}"
                                                 @endempty
                                             >
                                             {{ $userAssignment->user->name }}
-                                            <div class="table-links">
-                                                <div class="bullet"></div>
-                                                <a href="{{ route('admin.admin_projects.detail', $userAssignment->user) }}">View</a>
-                                            </div>
                                         </td>
                                         <td>
                                             {{ $userAssignment->user->email }}

@@ -10,7 +10,7 @@
     Change information about yourself on this page.
     </p>
 
-    <div class="row mt-sm-4">employee
+    <div class="row mt-sm-4">
         <div class="col-12 col-md-12 col-lg-5">
             <div class="card profile-widget">
                 <div class="profile-widget-header">
