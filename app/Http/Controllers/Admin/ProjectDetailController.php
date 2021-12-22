@@ -15,8 +15,7 @@ use DateTime;
 
 class ProjectDetailController extends Controller
 {
-    public function index(Project $project, Request $request)
-    {
+    public function index(Project $project, Request $request) {
         $modules        = Module::get();
         $employees      = Role::whereEmployee()->first()->user;
         $latestVersion  = ProjectVersion::where('project_id', $project->id)->latest()->first();
@@ -39,8 +38,7 @@ class ProjectDetailController extends Controller
         ));
     }
 
-    public function store(Request $request, Project $project)
-    {
+    public function store(Request $request, Project $project) {
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
 
         $projectDetail                     = new ProjectDetail();
@@ -56,8 +54,7 @@ class ProjectDetailController extends Controller
         return redirect()->back()->with('success', 'Module created successfully');
     }
 
-    public function storeSpecial(Request $request, Project $project)
-    {
+    public function storeSpecial(Request $request, Project $project) {
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
 
         $startDate = new DateTime($request->start_date);
@@ -79,29 +76,25 @@ class ProjectDetailController extends Controller
         return redirect()->back()->with('success', 'Module created successfully');
     }
 
-    public function show(ProjectDetail $projectDetail)
-    {
+    public function show(ProjectDetail $projectDetail) {
         $employees = Role::whereEmployee()->first()->user;
 
         return view('project.admin.pages.projects.module.detail', compact('projectDetail', 'employees'));
     }
 
-    public function edit(ProjectDetail $projectDetail)
-    {
+    public function edit(ProjectDetail $projectDetail) {
         $projectDetail->setAttribute('moduleable', $projectDetail->moduleable);
 
         return response()->json($projectDetail);
     }
 
-    public function update(Request $request, ProjectDetail $projectDetail)
-    {
+    public function update(Request $request, ProjectDetail $projectDetail) {
         $projectDetail->update($request->all());
 
         return redirect()->back()->with('success', 'Project module updated successfully');
     }
 
-    public function updateSpecial(Request $request, ProjectDetail $projectDetail)
-    {
+    public function updateSpecial(Request $request, ProjectDetail $projectDetail) {
         $projectDetail->update($request->all());
 
         $startDate = new DateTime($request->start_date);
@@ -115,15 +108,13 @@ class ProjectDetailController extends Controller
         return redirect()->back()->with('success', 'Project special module updated successfully');
     }
 
-    public function destroy(ProjectDetail $projectDetail)
-    {
+    public function destroy(ProjectDetail $projectDetail) {
         $projectDetail->delete();
 
         return redirect()->back()->with('success', 'Project module deleted successfully');
     }
 
-    public function destroySpecial(ProjectDetail $projectDetail)
-    {
+    public function destroySpecial(ProjectDetail $projectDetail) {
         $projectDetail->delete();
 
         $projectDetail->moduleable->delete();

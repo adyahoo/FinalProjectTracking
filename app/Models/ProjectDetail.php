@@ -36,6 +36,9 @@ class ProjectDetail extends Model
         'realization',
     ];
 
+    protected static $logName       = 'project';
+    protected static $logAttributes = ['status', 'start_date', 'end_date', 'start_date_actual', 'end_date_actual', 'realization'];
+
     public function getDescriptionForEvent(string $eventName): string
     {
         return "Module has been {$eventName} on this project by: :causer.name";

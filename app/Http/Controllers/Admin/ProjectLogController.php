@@ -10,8 +10,7 @@ use App\Models\ProjectDetail;
 
 class ProjectLogController extends Controller
 {
-    public function index(Project $project)
-    {
+    public function index(Project $project) {
         $projectDetail = new ProjectDetail();
         $logs          = Activity::where('subject_type', get_class($projectDetail))->get();
 

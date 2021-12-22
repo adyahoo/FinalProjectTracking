@@ -9,14 +9,15 @@ use App\Models\User;
 
 class LogController extends Controller
 {
-    public function index(){
+    public function index() {
         return view('project.admin.pages.logs.index');
     }
 
-    public function show($log){
+    public function show($log) {
         $logs = Activity::where('log_name', $log)
                     ->orderBy('created_at','desc')
                     ->get();
+                
         return view('project.admin.pages.logs.detail', compact('logs','log'));
     }
 }
