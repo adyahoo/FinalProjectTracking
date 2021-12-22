@@ -58,9 +58,10 @@
                             <div class="card-body">
                                 <div class="form-group text-center">
                                     <div class="col-sm-12">
-                                        <div id="image-preview" class="image-preview w-50 mx-auto">
-                                            <label for="image-upload" id="image-label">Choose File</label>
-                                            <input value="{{ old('image') }}" type="file" name="image" id="image-upload" />
+                                        <label for="image-upload">Choose Thumbnail</label>
+                                        <div class="col-md-6 col-lg-6 mx-auto">
+                                            <input name="image" class="form-control" value="{{ old('image') }}" type="file" onchange="showPreview(event);" accept="image/jpg, image/jpeg, image/gif"/>
+                                            <img id="thumbnail" class="img-fluid" id="propic" src="https://via.placeholder.com/1920x1080" alt="">
                                         </div>
                                     </div>
                                     @error('image')
@@ -146,15 +147,14 @@
     <script src="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('templates/stisla/node_modules/sweetalert/dist/sweetalert.min.js') }}"></script>
     <script>
-        $.uploadPreview({
-            input_field: "#image-upload",   // Default: .image-upload
-            preview_box: "#image-preview",  // Default: .image-preview
-            label_field: "#image-label",    // Default: .image-label
-            label_default: "Choose File",   // Default: Choose File
-            label_selected: "Change File",  // Default: Change File
-            no_label: false,                // Default: false
-            success_callback: null          // Default: null
-        });
+        function showPreview(event){
+            if(event.target.files.length > 0){
+                var src = URL.createObjectURL(event.target.files[0]);
+                var preview = document.getElementById("thumbnail");
+                preview.src = src;
+                preview.style.display = "block";
+            }
+        }
     </script>
     <script>
         $(".summernotes").summernote({

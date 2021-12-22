@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="col-lg-4 col-md-3 col-sm-12 text-right">
                                     <h6 class="text-primary">Gantt Chart</h6>
-                                    <a href="" class="btn btn-outline-primary" style="border-radius:.25rem">View Gantt Chart <i class="fa fa-external-link-alt"></i></a>
+                                    <a href="{{route('project_manager.projects.gantt_chart.index', $project)}}" class="btn btn-outline-primary" style="border-radius:.25rem">View Gantt Chart <i class="fa fa-external-link-alt"></i></a>
                                 </div>
                             </div>
                         </div>

@@ -20,12 +20,16 @@ class BlogReviewController extends Controller
 
     public function store(BlogReviewRequest $request, Blog $blog)
     {
-        $blog_review = new BlogReview($request->all());
+        $blogReview  = $request->all();
+        $blog_review = new BlogReview($blogReview);
+        
         $blog_review->save();
 
-        $blog->update([
-            'status' => $request->status,
-        ]);
+        if($request->status == 'Published') {
+            $blogReview += ['published_at' => Carbon::now()];
+        }
+
+        $blog->update($blogReview);
         return redirect()->route('admin.review.index')->with('success', 'Blog Review created successfully');
     }
 

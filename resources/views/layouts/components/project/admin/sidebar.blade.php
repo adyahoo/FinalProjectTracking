@@ -1,8 +1,8 @@
 <div class="sidebar-brand">
-    <a href="index.html">Project Tracker</a>
+    <a href="{{route('admin.dashboard')}}">Project Tracker</a>
 </div>
 <div class="sidebar-brand sidebar-brand-sm">
-    <a href="index.html">Pt</a>
+    <a href="{{route('admin.dashboard')}}">Pt</a>
 </div>
 <ul class="sidebar-menu">
     <li class="menu-header">Menu</li>
@@ -33,7 +33,7 @@
     <li class="nav-item dropdown">
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-tools"></i> <span>System Setting</span></a>
         <ul class="dropdown-menu">
-            <li><a class="nav-link" href="layout-default.html">Change Logo</a></li>
+            <li><a class="nav-link" href="layout-default.html">Change Page Setting</a></li>
         </ul>
     </li>
     <li class="{{ Request::is('admin/logs/*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.logs.index')}}"><i class="fas fa-list"></i> <span>Logs Activity</span></a></li>

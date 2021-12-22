@@ -8,42 +8,30 @@
 @endsection
 
 @section('content')
-    <div class="section-header" style="display: block">
-        <div class="row">
-            <div class="col-lg-8 col-md-8 col-12 col-sm-12">
-                <h1>{{ $project->name }}</h1>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-right">
-                <p>Latest Version v{{ $latestVersion->version_number }}</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-8 col-md-8 col-12 col-sm-12">
-                <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.admin_projects.detail', $project) }}">Detail</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active-tab" href="{{ route('admin.admin_projects.project_module.index', $project) }}">Modules</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin.admin_projects.version.index', $project) }}">Version</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Logs</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-right">
-                <a href="#" class="btn btn-icon btn-primary"><i class="fa fa-cog"></i></a>
-            </div>
-        </div>
-    </div>
+    @include('project.admin.include.project_page_tab', [
+        'project'             => $project,
+        'latestVersionNumber' => $latestVersion->version_number
+    ])
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Project Modules</h4>
+                    <h4>Project Modules <span class="badge badge-secondary">{{ $project->projectDetails->count() }}</span></h4>
+                    <div class="card-header-form mr-4">
+                        <form action="{{ route('admin.admin_projects.project_module.index', $project) }}">
+                            <div class="input-group">
+                                <select name="version" class="form-control form-control-sm py-1" style="height: 32px;">
+                                    <option value="">All Version</option>
+                                    @foreach($versions as $version)
+                                        <option value="{{ $version->id }}" @if($request->version == $version->id) selected @endif>{{ $version->version_number }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-primary py-1" title="Search" type="submit" style="height: 32px; margin-top: 0;"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                     <div class="card-header-action">
                         <button data-action="{{ route('admin.admin_projects.project_module.store', $project) }}" class="btn btn-primary btn-round ml-auto btn-add text-white" data-toggle="modal" data-target="#modal">
                             <i class="fa fa-plus"></i>
@@ -69,13 +57,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($project->projectVersions as $version)
-                                    @foreach($version->projectDetails as $projectDetail)
+                                    @foreach($projectModules as $projectDetail)
                                         <tr>
                                             <td>
                                                 <b>{{ $projectDetail->moduleable->name }}</b>
                                                 <div class="mt-1">
-                                                    <span>Added at : v{{ $version->version_number }}</span>
+                                                    <span>Added at : v{{ $projectDetail->projectVersion->version_number }}</span>
                                                 </div>
                                                 <div class="table-links">
                                                     <div class="bullet"></div>
@@ -83,17 +70,31 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                {{ $projectDetail->status }}
+                                                <div class="badge 
+                                                    @if($projectDetail->status == $projectDetail->statusOption['not_yet'])
+                                                        badge-danger
+                                                    @elseif($projectDetail->status == $projectDetail->statusOption['on_progress'])
+                                                        badge-warning
+                                                    @elseif($projectDetail->status == $projectDetail->statusOption['done'])
+                                                        badge-success
+                                                    @endif
+                                                ">{{ $projectDetail->status }}</div>
                                             </td>
                                             <td>
                                                 @if($projectDetail->userAssignments->count() == 0)
                                                     no one assigned
                                                 @else
                                                     @foreach($projectDetail->userAssignments->take(3) as $userAssignment)
-                                                        <img alt="image" src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}" class="rounded-circle mb-2" width="35" data-toggle="tooltip" title="{{ $userAssignment->user->name }}">
+                                                        <img alt="image" class="rounded-circle mb-2" width="35" data-toggle="tooltip" title="{{ $userAssignment->user->name }}"
+                                                            @empty($userAssignment->user->profile_image)
+                                                                src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}"
+                                                            @else
+                                                                src="{{ asset('storage/profile_image/' . $userAssignment->user->profile_image) }}"
+                                                            @endempty
+                                                        >
                                                     @endforeach
                                                     @if($projectDetail->userAssignments->count() > 3)
-                                                        <br><a href="">+ {{ $projectDetail->userAssignments->count() - 3 }} members</a>
+                                                        <br><a href="{{ route('admin.admin_projects.project_module.show', $projectDetail) }}">+ {{ $projectDetail->userAssignments->count() - 3 }} members</a>
                                                     @endif
                                                 @endif
                                             </td>
@@ -106,9 +107,10 @@
                                                 ({{ $projectDetail->end_date->format('H:i') }})
                                             </td>
                                             <td>
-                                                <a data-action="{{ route('admin.admin_projects.project_module.member.store', $projectDetail) }}" href="#" class="btn btn-primary btn-add-member" data-toggle="modal" data-target="#modalMember" title="Add Member"><i class="fa fa-user-plus"></i></a>
+                                                <a data-action="{{ route('admin.admin_projects.project_module.member.store', $projectDetail) }}" title="Add Member" href="#" class="btn btn-primary btn-add-member" data-toggle="modal" data-target="#modalMember" title="Add Member"><i class="fa fa-user-plus"></i></a>
 
                                                 @if($projectDetail->moduleable_type == $projectDetail->moduleType['special_module'])
+                                                    <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.special.update', $projectDetail) }}" href="#" class="btn btn-success btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status"><i class="fa fa-check"></i></a>
                                                     <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.special.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit-special" data-toggle="modal" data-target="#modalSpecial" title="Edit"><i class="fa fa-pencil-alt"></i></a>
 
                                                     <a href="#" onclick="deleteConfirm('del{{ $projectDetail->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
@@ -119,6 +121,7 @@
                                                         @csrf
                                                     </form>
                                                 @else
+                                                    <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.update', $projectDetail) }}" href="#" class="btn btn-success btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status"><i class="fa fa-check"></i></a>
                                                     <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#modal" title="Edit"><i class="fa fa-pencil-alt"></i></a>
 
                                                     <a href="#" onclick="deleteConfirm('del{{ $projectDetail->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
@@ -132,7 +135,6 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -279,6 +281,40 @@
             </form>
         </div>
     </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalChangeStatus">
+        <div class="modal-dialog" role="document">
+            <form id="formChangeStatus" action="" method="" enctype="multipart/form-data">
+                @csrf
+                <input id="methodChangeStatus" type="hidden" name="_method" value=""/>
+                <div class="modal-content" style="margin-bottom: 50%">
+                    <div class="modal-header">
+                        <h5 id="titleChangeStatus" class="modal-title">Form</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select id="status" name="status" class="form-control">
+                                @foreach($statusOptions as $statusOption)
+                                    <option value="{{ $statusOption }}">{{ $statusOption }}</option>
+                                @endforeach
+                            </select>
+                            @error('status')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-whitesmoke br">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
 
 @section('js')
@@ -370,6 +406,19 @@
             $('#titleMember').text('Add Member');
             $('#formMember').attr('action', action);
             $("#formMember").attr("method", "post");
+        });
+
+        $(".btn-change-status").click(function(){
+            let action = $(this).data('action');
+            let detail = $(this).data('detail');
+            $('#titleChangeStatus').text('Change Module Status')
+            $('#formChangeStatus').attr('action', action);
+            $("#formChangeStatus").attr("method", "post");
+            $("#methodChangeStatus").attr("value", "put");
+            $.get(detail, function (data) {
+                $('#module').val(data.moduleable.id);
+                $('#status').val(data.status);
+            });
         });
     </script>
 @endsection

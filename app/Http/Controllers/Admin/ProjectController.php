@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
 use App\Http\Requests\LaunchDateRequest;
+use Spatie\Activitylog\Models\Activity;
 use App\Models\Project;
 use App\Models\Role;
 use App\Models\User;
@@ -17,12 +18,7 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $projects  = Project::whereMyProject()
-                            ->whereStartDate($request->start_date)
-                            ->whereEndDate($request->end_date)
-                            ->whereUserAssignee($request->user)
-                            ->whereRoleAssignee($request->role)
-                            ->get();
+        $projects  = Project::get();
         $roles     = Role::whereEmployee()->get();
         $employees = Role::whereEmployee()->first()->user;
 
@@ -72,37 +68,40 @@ class ProjectController extends Controller
 
     public function detail(Project $project)
     {
-        $latestVersion      = ProjectVersion::where('project_id', $project->id)->latest()->first();
-        $modulesDoneCount   = ProjectDetail::whereDone()->count();
+        $latestVersion    = ProjectVersion::where('project_id', $project->id)->latest()->first();
+        $projectDetail    = new ProjectDetail();
+        $logs             = Activity::where('subject_type', get_class($projectDetail))->latest()->get();
 
         if($latestVersion->projectDetails->count() == 0) {
             $progressPercentage = 0;
         } else {
-            $progressPercentage = ($modulesDoneCount / $latestVersion->projectDetails->count()) * 100;
+            $progressPercentage = ($latestVersion->projectDetails()->whereDone()->count() / $latestVersion->projectDetails->count()) * 100;
         }
 
         return view('project.admin.pages.projects.detail', compact(
             'project',
             'latestVersion',
-            'modulesDoneCount',
-            'progressPercentage'
+            'progressPercentage',
+            'logs'
         ));
     }
 
     public function scope(Project $project)
     {
-        $title = 'Scope';
-        $text  = $project->scope;
+        $title         = 'Scope';
+        $text          = $project->scope;
+        $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
 
-        return view('project.admin.pages.projects.text_detail', compact('project', 'title', 'text'));
+        return view('project.admin.pages.projects.text_detail', compact('project', 'title', 'text', 'latestVersion'));
     }
 
     public function credentials(Project $project)
     {
-        $title = 'Credentials';
-        $text  = $project->credentials;
+        $title         = 'Credentials';
+        $text          = $project->credentials;
+        $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
 
-        return view('project.admin.pages.projects.text_detail', compact('project', 'title', 'text'));
+        return view('project.admin.pages.projects.text_detail', compact('project', 'title', 'text', 'latestVersion'));
     }
 
     public function addLaunchDate(LaunchDateRequest $request, Project $project)
