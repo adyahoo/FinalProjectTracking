@@ -20,6 +20,11 @@ class SpecialModule extends Model
     protected static $logName       = 'project';
     protected static $logAttributes = ['name', 'description', 'time_estimation'];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         return "Special Module :subject.name has been {$eventName} by: :causer.name";

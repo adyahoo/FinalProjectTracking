@@ -6,7 +6,7 @@
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button>            
+            </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item nav-item--custom">
@@ -20,17 +20,22 @@
                             Category
                         </a>
                         <div class="dropdown-menu mb-3" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Technology</a>
-                            <a class="dropdown-item" href="#">Mobile</a>
-                            <a class="dropdown-item" href="#">Website</a>
+                            @foreach($categories as $category)
+                            <a class="dropdown-item" href="#" onclick="searchCategory('{{$category->id}}')">{{$category->name}}</a>
+                            <form id="formSearch{{$category->id}}" action="{{ route('kategori') }}" method="post">
+                                @csrf
+                                <input type="hidden" name="categoryName" value="{{$category->name}}">
+                                <input type="hidden" name="categoryId" value="{{$category->id}}">
+                            </form>
+                            @endforeach                            
                         </div>
                     </li>
                 </ul>
                 <form class="form-inline justify-content-between" id="formSearch" method="post" action="{{route('search')}}">
                     @csrf
-                    <input id="searchInput" name="searchInput" class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250">
+                    <input id="searchInput" name="searchInput" class="form-control" type="search" placeholder="Search Author" aria-label="Search" data-width="250">
                     <button class="btn" type="submit"><i class="fas fa-search"></i></button>
-                </form> 
+                </form>
             </div>
         </div>
     </nav>

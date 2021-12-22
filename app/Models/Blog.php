@@ -40,6 +40,11 @@ class Blog extends Model
     protected static $logName       = 'blog';
     protected static $logAttributes = ['title'];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         return "Blog :subject.title has been {$eventName} by: :causer.name";

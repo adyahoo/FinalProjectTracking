@@ -21,6 +21,11 @@ class BlogReview extends Model
     protected static $logName       = 'blog';
     protected static $logAttributes = ['status', 'reviews'];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         return "Blog Review has been {$eventName} by: :causer.name";

@@ -37,6 +37,11 @@ class Project extends Model
     protected static $logName       = 'project';
     protected static $logAttributes = ['name', 'description', 'scope', 'credentials'];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         return "Project :subject.name has been {$eventName} by: :causer.name";

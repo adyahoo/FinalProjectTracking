@@ -14,15 +14,15 @@
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item"><a href="{{route('blog')}}">Blog</a></li>
             <li class="breadcrumb-item">Author</li>
-            <li class="breadcrumb-item active" aria-current="page">Jessica Jones</li>
+            <li class="breadcrumb-item active" aria-current="page">{{$user->name}}</li>
         </ol>
     </nav>
     <div class="section section-author bg-white rounded text-center">
-        <div class="rounded-circle section-author__profile-container">
-            <img class="section-author__profile-img" src="{{asset('images/img-profile.png')}}">
+        <div class="section-author__profile-container">
+            <img class="section-author__profile-img rounded-circle" src="{{asset(Storage::url('blog_images/'.$user->profile_image))}}">
         </div>
-        <h2 class="text-dark">Jessica Jones</h2>
-        <p>Voluptate labore esse laborum aute ipsum aute. Incididunt magna adipisicing consectetur aute amet dolor officia ex occaecat enim incididunt do esse. Ipsum officia in ut ad duis magna aliqua aliquip amet tempor do. Excepteur mollit in quis cillum fugiat ea eu enim dolore labore quis velit. Mollit do aute eiusmod aliquip est.</p>
+        <h2 class="text-dark">{{$user->name}}</h2>
+        <p>{{$user->bio}}</p>
     </div>
     <div class="row no-gutters mb-4 justify-content-end align-items-center">
         <p class="m-0 mr-2">Sort By : </p>
@@ -45,22 +45,26 @@
     </div>
     <div class="section row no-gutters justify-content-between">
         <div class="col-12 col-md-8 order-1 order-md-0" id="list-view">
-            @for($i = 0; $i < 5; $i++)
-            <x-content-horiz></x-content-horiz>
-            @endfor
-        </div>
-        
+            @if($blogs->count() < 1)
+                <h2>No Data Found</h2>
+            @else
+                <x-content-horiz :blogs="$blogs"></x-content-horiz>
+            @endif
+        </div>        
         <div class="col-12 col-md-8 order-1 order-md-0" id="grid-view">
             <div class="row no-gutters justify-content-between">
-                @for($i = 0; $i < 5; $i++)
-                <x-content-vert></x-content-vert>
-                @endfor
+                @if($blogs->count() < 1)
+                    <h2>No Data Found</h2>
+                @else
+                    <x-content-vert :blogs="$blogs"></x-content-vert>
+                @endif
             </div>
         </div>
         
         <div class="col-12 col-md-3 mb-4 collapse" id="collapseSidebar">
             <div class="border rounded p-2 bg-white" id="sidebar">
-                <x-blog-sidebar></x-blog-sidebar>                
+                <x-blog-sidebar>
+                </x-blog-sidebar>                
             </div>
         </div>
     </div>

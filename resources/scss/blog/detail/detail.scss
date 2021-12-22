@@ -14,6 +14,7 @@
     
     &__profile-name {
         color: map.get($color, "primary");
+        font-size: 24px;
     }
 }
 
@@ -24,6 +25,6 @@
     
     &__img {
         @include imgToFillSpace();
-        object-fit: cover;
+        object-fit: contain;
     }
 }

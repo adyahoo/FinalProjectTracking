@@ -23,6 +23,11 @@ class Role extends Model
     protected static $logName = 'membership';
     protected static $logAttributes = ['name', 'privilege'];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
+
     public function scopeWhereEmployee($query)
     {
         return $query->where('privilege', $this->privileges['employee']);

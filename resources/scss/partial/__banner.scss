@@ -32,6 +32,7 @@
     &__content-img {
         @include imgToFillSpace;
         object-fit: cover;
+        border-radius: 8px;
     }
     
     &__date-created {

@@ -39,6 +39,9 @@ $(document).ready(function () {
   $('#cancelLabelSearch').click(function () {
     $('#labelSearch').hide();
   });
+  $('#cancelLabelKategori').click(function () {
+    $('#labelKategori').hide();
+  });
 
   var _loop = function _loop(i) {
     $('#cancelLabelFilter-' + i).click(function () {
@@ -48,6 +51,13 @@ $(document).ready(function () {
 
   for (var i = 1; i <= index; i++) {
     _loop(i);
+  }
+});
+$('#yearSelect').change(function () {
+  var selected = $('#yearSelect').find(":selected").val();
+
+  if (selected != 0) {
+    $('#monthSelect').removeAttr('disabled');
   }
 });
 /******/ })()

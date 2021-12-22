@@ -19,6 +19,11 @@ class PageSetting extends Model
     protected static $logName       = 'setting';
     protected static $logAttributes = ['title','logo'];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         return "Page Setting has been {$eventName} by: :causer.name";

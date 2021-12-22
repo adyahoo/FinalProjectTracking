@@ -19,6 +19,11 @@ class UserAssignment extends Model
     protected static $logName       = 'project';
     protected static $logAttributes = ['user_id', 'project_detail_id'];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         return "User Assignment has been {$eventName} by: :causer.name";

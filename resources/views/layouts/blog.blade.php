@@ -30,6 +30,11 @@
         <script src="{{asset('js/blog/layout.js')}}"></script>
         <script src="{{asset('js/blog/swiper-js.js')}}"></script>
         <script src="{{asset('js/tagsinput.js')}}"></script>
+        <script>
+            function searchCategory(id) {
+                $("#formSearch" + id).submit();
+            }
+        </script>
         @stack('js')
     </body>
 </html>

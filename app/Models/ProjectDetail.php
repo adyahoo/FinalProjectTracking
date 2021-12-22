@@ -39,6 +39,11 @@ class ProjectDetail extends Model
     protected static $logName       = 'project';
     protected static $logAttributes = ['status', 'start_date', 'end_date', 'start_date_actual', 'end_date_actual', 'realization'];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         return "Module has been {$eventName} on this project by: :causer.name";

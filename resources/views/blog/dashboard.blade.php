@@ -6,17 +6,17 @@
 @endpush
 
 @section('content')
-<x-banner></x-banner>
+<x-banner :blogs="$newest"></x-banner>
 <div class="section container section-most-viewed">
     <h3 class="section-most-viewed__title">
         Most Viewed Blogs
     </h3>
     <div class="row">
-        @for($i = 0; $i < 4; $i++)
-        <div class="col-12 col-md-6">
-            <x-content-horiz></x-content-horiz>
-        </div>
-        @endfor
+        @if($mostViewed->count() < 1)
+            <h2>No Data Found</h2>
+        @else
+            <x-content-list-home :blogs="$mostViewed"></x-content-list-home>
+        @endif
     </div>
 </div>
 <div class="section container section-popular-author">
@@ -24,14 +24,18 @@
         From Popular Author
     </h3>
     <div class="row">
-        @for($i = 0; $i < 4; $i++)
-        <div class="col-12 col-md-6">
-            <x-content-horiz></x-content-horiz>
-        </div>
-        @endfor
+        @if($mostViewed->count() < 1)
+            <h2>No Data Found</h2>
+        @else
+            <x-content-list-home :blogs="$mostViewed"></x-content-list-home>
+        @endif
     </div>
 </div>
 @endsection
 
 @push('js')
+<!-- <script src="{{ asset('templates/stisla/node_modules/summernote/dist/summernote-bs4.js') }}"></script>
+<script>
+    alert($($('#bannerDesc').summernote('code')).text())
+</script> -->
 @endpush

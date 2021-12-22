@@ -40,9 +40,20 @@ $(document).ready(function () {
         $('#labelSearch').hide()
     });
 
+    $('#cancelLabelKategori').click(function() {
+        $('#labelKategori').hide()
+    });
+
     for(let i = 1; i <= index; i++) {
         $('#cancelLabelFilter-' + i).click(function() {
             $('#labelFilter-' + i).hide()
         });
+    }
+})
+
+$('#yearSelect').change(function() {
+    var selected = $('#yearSelect').find(":selected").val()
+    if (selected != 0) {
+        $('#monthSelect').removeAttr('disabled')
     }
 })

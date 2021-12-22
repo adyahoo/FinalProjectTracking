@@ -19,6 +19,7 @@
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+  border-radius: 8px;
 }
 .section-content__date-created {
   color: #6DDA5F;

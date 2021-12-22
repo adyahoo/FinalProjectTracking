@@ -21,6 +21,11 @@ class ProjectVersion extends Model
     protected static $logName       = 'project';
     protected static $logAttributes = ['note', 'description'];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults();
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         return "Project Version has been {$eventName} by: :causer.name";

@@ -12,47 +12,35 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item"><a href="{{route('blog')}}">Blog</a></li>
-            <li class="breadcrumb-item active" aria-current="page">12 Tips On Creating Content For Your New Website (A Complete Guide)</li>
+            <li class="breadcrumb-item active" aria-current="page">{{$blog->title}}</li>
         </ol>
     </nav>
     <div class="row no-gutters justify-content-center mt-5">
         <div class="col-10">
             <div class="section section-detail">
-                <h2 class="text-dark">12 Tips On Creating Content For Your New Website (A Complete Guide)</h2>
+                <h2 class="text-dark text-center">{{$blog->title}}</h2>
                 <div class="row no-gutters align-items-center">
                     <div class="col-3 col-lg-2">
-                        <div class="rounded-circle section-detail__profile-container">
-                            <img class="section-detail__profile-img" src="{{asset('images/img-profile.png')}}">
+                        <div class="section-detail__profile-container">
+                            <img class="section-detail__profile-img rounded-circle" src="{{asset(Storage::url('blog_images/'.$blog->user->profile_image))}}">
                         </div>
                     </div>
                     <div class="col-7 col-lg-9 ml-3 section-detail__profile-info">
-                        <a href="{{route('author')}}">
-                            <p class="section-detail__profile-name font-weight-bold d-inline-block mb-0">Emily Johnson</p>
+                        <a href="{{route('author', $blog->user->id)}}">
+                            <p class="section-detail__profile-name font-weight-bold d-inline-block mb-0">{{$blog->user->name}}</p>
                         </a>
                         <p>
-                            Published at: 12 Desember 2020<br>
-                            Published by: Alex
+                            Published at: {{$blog->published_at}}<br>
                         </p>
-                        <i class="far fa-eye mr-5">100</i>
+                        <i class="far fa-eye mr-5">{{$blog->view_count}}</i>
                     </div>
                 </div>
             </div>
             <div class="section section-body">
                 <div class="section-body__img-container mb-3">
-                    <img class="section-body__img" src="{{asset('images/img-content.svg')}}">
+                    <img class="section-body__img" src="{{asset(Storage::url('blog_images/'.$blog->image))}}">
                 </div>
-                <p class="mb-3">
-                    Adipisicing consectetur amet occaecat non excepteur consequat nulla laboris aute et nulla excepteur. Qui sit et ipsum labore voluptate ipsum enim sit. Aute duis ea dolore sunt fugiat et commodo eu amet culpa cillum. Do dolor deserunt dolor aliquip reprehenderit voluptate amet velit ullamco. Laboris anim aute commodo amet reprehenderit occaecat sint ipsum eiusmod laborum irure sunt ullamco.
-                </p>
-                <p class="mb-3">
-                    Adipisicing consectetur amet occaecat non excepteur consequat nulla laboris aute et nulla excepteur. Qui sit et ipsum labore voluptate ipsum enim sit. Aute duis ea dolore sunt fugiat et commodo eu amet culpa cillum. Do dolor deserunt dolor aliquip reprehenderit voluptate amet velit ullamco. Laboris anim aute commodo amet reprehenderit occaecat sint ipsum eiusmod laborum irure sunt ullamco.
-                </p>
-                <p class="mb-3">
-                    Adipisicing consectetur amet occaecat non excepteur consequat nulla laboris aute et nulla excepteur. Qui sit et ipsum labore voluptate ipsum enim sit. Aute duis ea dolore sunt fugiat et commodo eu amet culpa cillum. Do dolor deserunt dolor aliquip reprehenderit voluptate amet velit ullamco. Laboris anim aute commodo amet reprehenderit occaecat sint ipsum eiusmod laborum irure sunt ullamco.
-                </p>
-                <p class="mb-3">
-                    Adipisicing consectetur amet occaecat non excepteur consequat nulla laboris aute et nulla excepteur. Qui sit et ipsum labore voluptate ipsum enim sit. Aute duis ea dolore sunt fugiat et commodo eu amet culpa cillum. Do dolor deserunt dolor aliquip reprehenderit voluptate amet velit ullamco. Laboris anim aute commodo amet reprehenderit occaecat sint ipsum eiusmod laborum irure sunt ullamco.
-                </p>
+                {!! $blog->content !!}
             </div>                        
         </div>
     </div>
@@ -61,11 +49,11 @@
             Discover Related Blogs
         </h3>
         <div class="row">
-            @for($i = 0; $i < 4; $i++)
-            <div class="col-12 col-lg-6">
-                <x-content-horiz></x-content-horiz>
-            </div>
-            @endfor
+            @if($relatedBlogs->count() < 1)
+                <h2>No Data Found</h2>
+            @else
+                <x-content-list-home :blogs="$relatedBlogs"></x-content-list-home>
+            @endif
         </div>
     </div>
     <div class="section-btn-share fab-container">
