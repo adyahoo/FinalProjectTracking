@@ -121,8 +121,6 @@ Route::group([
     ], function () {
         Route::get('/{project}', 'GanttChartController@retriveData')
                     ->name('index');
-        Route::put('/status/{id}', 'GanttChartController@changeStatus')
-                    ->name('update');
     });
 });
 

@@ -7,11 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\ProjectDetail;
 use Carbon\Carbon;
+use App\Models\Role;
+use App\Models\UserAssignment;
 
 class GanttChartController extends Controller
 {
     public function retriveData(Project $project) {
-        $temp    = array();
+        $employees = Role::whereEmployee()->first()->user;
+        $temp      = array();
         if(isset($project->projectVersions)) {
             foreach($project->projectVersions as $version) {
                 foreach($version->projectDetails as $detail) {
@@ -38,13 +41,13 @@ class GanttChartController extends Controller
             ];
             $data = json_encode($datas);
             // dd($data);
-            return view('project.project_manager.pages.project.gantt', compact('data', 'project'));
+            return view('project.project_manager.pages.project.gantt', compact('data', 'project', 'employees'));
         }
         $datas = [
             'data' => ''
         ];
         $data = json_encode($datas);
-        return view('project.project_manager.pages.project.gantt', compact('data','project'));
+        return view('project.project_manager.pages.project.gantt', compact('data','project', 'employees'));
     }
 
     public function changeStatus(Request $request, $id){
@@ -53,5 +56,15 @@ class GanttChartController extends Controller
             'status' => $request->status
         ]);
         return redirect()->back()->with('success', 'Status has been changed');
+    }
+
+    public function assignEmployee(Request $request, $id){
+        $check = UserAssignment::where('project_detail_id',$id)->where('user_id', $request->user_id)->first();
+        if(!$check){
+            $assignment = new UserAssignment($request->all());
+            $assignment->save();
+            return redirect()->back()->with('success', 'Assignment has been created');
+        }
+        return redirect()->back()->with('error', 'Assignment on this member already created');
     }
 }

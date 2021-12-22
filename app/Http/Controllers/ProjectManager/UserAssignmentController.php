@@ -11,12 +11,16 @@ class UserAssignmentController extends Controller
 {
     public function store(Request $request, ProjectDetail $projectDetail)
     {
-        $userAssignment = $request->all();
-        $userAssignment += ['project_detail_id' => $projectDetail->id];
+        $check = UserAssignment::where('project_detail_id',$projectDetail->id)->where('user_id', $request->user_id)->first();
+        if (!$check) {
+            $userAssignment = $request->all();
+            $userAssignment += ['project_detail_id' => $projectDetail->id];
 
-        UserAssignment::create($userAssignment);
+            UserAssignment::create($userAssignment);
+            return redirect()->back()->with('success', 'Member added successfully');
+        }
 
-        return redirect()->back()->with('success', 'Member added successfully');
+        return redirect()->back()->with('error', 'This Member already added');
     }
 
     public function destroy(UserAssignment $userAssignment)

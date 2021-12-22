@@ -64,8 +64,8 @@
 
 @if(Auth::user()->role->privilege == 'admin')
     @include('layouts.components.project.admin.nav-topbar')
-@elseif(Auth::user()->role->priviledge == 'project_manager')
-@include('layouts.components.project.project_manager.nav-topbar')
-@elseif(Auth::user()->role->priviledge == 'developer')
+@elseif(Auth::user()->role->privilege == 'project_manager')
+    @include('layouts.components.project.project_manager.nav-topbar')
+@elseif(Auth::user()->role->privilege == 'developer')
     @include('')
 @endif
