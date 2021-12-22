@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/dashboard', 'DashboardController@index')->middleware(['admin'])->name('dashboard');
 
 #Admin Profile
-Route::group(['prefix' => 'profile','as'=>'profile.'], function () {
+Route::group(['prefix' => 'profile', 'as'=>'profile.'], function () {
     Route::get('/', 'ProfileController@index')->name('profile');
     Route::put('/update/{user}', 'ProfileController@editProfile')->name('update');
     Route::get('/change-password', 'ProfileController@changePasswordPages')->name('change-password');
@@ -102,7 +102,7 @@ Route::group(['prefix'=>'projects'], function () {
                 Route::delete('/destroy/{project_detail}', 'ProjectDetailController@destroySpecial')->name('destroy');
             });
 
-            Route::group(['as' => 'member.','prefix' => 'member'], function () {
+            Route::group(['as' => 'member.', 'prefix' => 'member'], function () {
                 Route::post('/{project_detail}/store', 'UserAssignmentController@store')->name('store');
                 Route::delete('/destroy/{user_assignment}', 'UserAssignmentController@destroy')->name('destroy');
             });

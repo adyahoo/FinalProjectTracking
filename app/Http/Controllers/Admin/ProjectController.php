@@ -16,8 +16,7 @@ use Auth;
 
 class ProjectController extends Controller
 {
-    public function index(Request $request)
-    {
+    public function index(Request $request) {
         $projects  = Project::get();
         $roles     = Role::whereEmployee()->get();
         $employees = Role::whereEmployee()->first()->user;
@@ -25,13 +24,11 @@ class ProjectController extends Controller
         return view('project.admin.pages.projects.index', compact('projects', 'roles', 'employees', 'request'));
     }
 
-    public function create()
-    {
+    public function create() {
         return view('project.admin.pages.projects.create');
     }
 
-    public function store(ProjectRequest $request)
-    {
+    public function store(ProjectRequest $request) {
         $project = $request->all();
         $project += ['user_id' => Auth::user()->id];
 
@@ -47,30 +44,26 @@ class ProjectController extends Controller
         return redirect()->route('admin.admin_projects.index')->with('success', 'Project created successfully');
     }
 
-    public function edit(Project $project)
-    {
+    public function edit(Project $project) {
         return view('project.admin.pages.projects.edit', compact('project'));
     }
 
-    public function update(ProjectRequest $request, Project $project)
-    {
+    public function update(ProjectRequest $request, Project $project) {
         $project->update($request->all());
 
         return redirect()->route('admin.admin_projects.index')->with('success', 'Project updated successfully');
     }
 
-    public function destroy(Project $project)
-    {
+    public function destroy(Project $project) {
         $project->delete();
 
         return redirect()->back()->with('success', 'Project deleted successfully');
     }
 
-    public function detail(Project $project)
-    {
-        $latestVersion    = ProjectVersion::where('project_id', $project->id)->latest()->first();
-        $projectDetail    = new ProjectDetail();
-        $logs             = Activity::where('subject_type', get_class($projectDetail))->latest()->get();
+    public function detail(Project $project) {
+        $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
+        $projectDetail = new ProjectDetail();
+        $logs          = Activity::where('subject_type', get_class($projectDetail))->latest()->get();
 
         if($latestVersion->projectDetails->count() == 0) {
             $progressPercentage = 0;
@@ -86,8 +79,7 @@ class ProjectController extends Controller
         ));
     }
 
-    public function scope(Project $project)
-    {
+    public function scope(Project $project) {
         $title         = 'Scope';
         $text          = $project->scope;
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
@@ -95,8 +87,7 @@ class ProjectController extends Controller
         return view('project.admin.pages.projects.text_detail', compact('project', 'title', 'text', 'latestVersion'));
     }
 
-    public function credentials(Project $project)
-    {
+    public function credentials(Project $project) {
         $title         = 'Credentials';
         $text          = $project->credentials;
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
@@ -104,8 +95,7 @@ class ProjectController extends Controller
         return view('project.admin.pages.projects.text_detail', compact('project', 'title', 'text', 'latestVersion'));
     }
 
-    public function addLaunchDate(LaunchDateRequest $request, Project $project)
-    {
+    public function addLaunchDate(LaunchDateRequest $request, Project $project) {
         $project->update($request->all());
 
         return redirect()->back()->with('success', 'Project updated successfully');

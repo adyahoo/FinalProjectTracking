@@ -32,20 +32,17 @@ class MemberController extends Controller
         return redirect()->route('admin.members.index')->with('success', 'Member has been added successfully');
     }
 
-    public function show(User $member)
-    {
+    public function show(User $member) {
         return response()->json($member);
     }
 
-    public function update(MemberRequest $request, User $member)
-    {
+    public function update(MemberRequest $request, User $member) {
         $member->update($request->all());
 
         return redirect()->route('admin.members.index')->with('success', 'Member has been updated successfully');
     }
 
-    public function destroy(User $member)
-    {
+    public function destroy(User $member) {
         $member->delete();
         
         return redirect()->route('admin.members.index')->with('success', 'Member has been deleted successfully');

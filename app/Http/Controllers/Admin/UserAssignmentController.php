@@ -9,8 +9,7 @@ use App\Models\ProjectDetail;
 
 class UserAssignmentController extends Controller
 {
-    public function store(Request $request, ProjectDetail $projectDetail)
-    {
+    public function store(Request $request, ProjectDetail $projectDetail) {
         $check = UserAssignment::where('project_detail_id',$projectDetail->id)->where('user_id', $request->user_id)->first();
         if (!$check) {
             $userAssignment = $request->all();
@@ -23,8 +22,7 @@ class UserAssignmentController extends Controller
         return redirect()->back()->with('error', 'This Member already added');
     }
 
-    public function destroy(UserAssignment $userAssignment)
-    {
+    public function destroy(UserAssignment $userAssignment) {
         $userAssignment->delete();
 
         return redirect()->back()->with('success', 'Member deleted successfully');

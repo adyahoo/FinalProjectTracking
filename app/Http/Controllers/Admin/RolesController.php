@@ -15,8 +15,7 @@ class RolesController extends Controller
         return view('project.admin.pages.roles.index', compact('roles'));
     }
 
-    public function store(RoleRequest $request)
-    {
+    public function store(RoleRequest $request) {
         $role = new Role($request->all());
         $role->save();
 

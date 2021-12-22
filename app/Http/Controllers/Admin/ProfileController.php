@@ -21,6 +21,7 @@ class ProfileController extends Controller
         $blogCount       = Blog::where('user_id', Auth::user()->id)->count();
         $blogViewCount   = $this->getAmount(Blog::where('user_id', Auth::user()->id)->sum('view_count'));
         $assignmentCount = $this->getAmount(UserAssignment::where('user_id', Auth::user()->id)->count());
+        
         return view('project.admin.pages.dashboard.profile', compact('blogCount', 'blogViewCount', 'assignmentCount'));
     }
 
