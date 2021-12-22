@@ -1,5 +1,7 @@
 @extends('layouts.project_manager')
 
+@section('title','Dashboard')
+
 @section('content')
     <div class="section-header">
         <h1>Dashboard</h1>
@@ -15,7 +17,7 @@
                         <h4>Total Projects</h4>
                     </div>
                     <div class="card-body">
-                        {{ $totalProjects }}
+                        {{ $projects->count() }}
                     </div>
                 </div>
             </div>
@@ -23,14 +25,14 @@
         <div class="col-lg-4 col-md-6 col-sm-6 col-12">
             <div class="card card-statistic-1">
                 <div class="card-icon bg-success">
-                    <i class="fas fa-check-double"></i>
+                    <i class="fas fa-rocket"></i>
                 </div>
                 <div class="card-wrap">
                     <div class="card-header">
-                        <h4>Finished Projects</h4>
+                        <h4>Launcehd Projects</h4>
                     </div>
                     <div class="card-body">
-                        {{ $finishedProjects }}
+                        {{ $launchedProjects }}
                     </div>
                 </div>
             </div>
@@ -73,7 +75,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($latestProjects as $project)
+                                @foreach($projects->take(3) as $project)
                                     <tr>
                                         <td>
                                             {{ $project->name }}

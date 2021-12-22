@@ -41,16 +41,6 @@ class ProjectDetail extends Model
         return "Module has been {$eventName} on this project by: :causer.name";
     }
 
-    public function scopeWhereDone($query)
-    {
-        return $query->where('status', $this->statusOption['done']);
-    }
-
-    public function scopeWhereDoneOrOnProgress($query)
-    {
-        return $query->where('status', $this->statusOption['done'])->orWhere('status', $this->statusOption['on_progress']);
-    }
-
     public function getStartDateAttribute()
     {
         $datetime = new DateTime($this->attributes['start_date']);
@@ -85,6 +75,31 @@ class ProjectDetail extends Model
         }
 
         return $datetime;
+    }
+
+    public function scopeWhereDone($query)
+    {
+        return $query->where('status', $this->statusOption['done']);
+    }
+
+    public function scopeWhereDoneOrOnProgress($query)
+    {
+        return $query->where('status', $this->statusOption['done'])->orWhere('status', $this->statusOption['on_progress']);
+    }
+
+    public function scopeWhereUserAssignee($query, $userId)
+    {
+        if (!empty($userId))
+            return $query->whereHas('userAssignments', function($userAssignments) use($userId){
+                $userAssignments->where('user_id', $userId);
+            });
+    }
+
+    public function scopeWhereVersion($query, $versionId)
+    {
+        if(!empty($versionId)) {
+            return $query->where('project_version_id', $versionId);
+        }
     }
 
     public function projectVersion()

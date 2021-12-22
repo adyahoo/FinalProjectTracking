@@ -55,6 +55,11 @@ class Blog extends Model
         return $this->belongsTo(BlogCategories::class);
     }
 
+    public function blogReviews()
+    {
+        return $this->hasMany(BlogReview::class);
+    }
+
     public function setSlugAttribute($value)
     {
         $this->attributes['slug'] = Str::slug($value);

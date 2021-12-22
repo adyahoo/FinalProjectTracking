@@ -8,7 +8,6 @@ use App\Http\Requests\ProjectRequest;
 use App\Http\Requests\LaunchDateRequest;
 use Spatie\Activitylog\Models\Activity;
 use App\Models\Project;
-use App\Models\UserAssignment;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\ProjectVersion;
@@ -19,9 +18,16 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $userAssignments = UserAssignment::where('user_id', Auth::user()->id)->get();
+        $projects  = Project::whereUserAssignee(Auth::user()->id)
+                            ->whereStartDate($request->start_date)
+                            ->whereEndDate($request->end_date)
+                            ->whereUserAssignee($request->user)
+                            ->whereRoleAssignee($request->role)
+                            ->get();
+        $roles     = Role::whereEmployee()->get();
+        $employees = Role::whereEmployee()->first()->user;
 
-        return view('project.employee.pages.project.index', compact('userAssignments', 'request'));
+        return view('project.employee.pages.project.index', compact('projects', 'request', 'roles', 'employees'));
     }
 
     public function create()

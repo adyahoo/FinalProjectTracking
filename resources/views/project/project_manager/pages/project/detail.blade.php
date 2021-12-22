@@ -1,5 +1,7 @@
 @extends('layouts.project_manager')
 
+@section('title','Project Detail')
+
 @section('content')
     @include('project.project_manager.include.project_page_tab', [
         'project'             => $project,
@@ -140,7 +142,7 @@
                         <div class="card-body">
                             @empty($project->launch_date)
                                 <p>No launch date created</p>
-                                <a href="#" data-action="{{ route('project_manager.projects.addLaunchDate', $project) }}" class="btn-add" data-toggle="modal" data-target="#modal">Add launch date</a>
+                                <a href="#" data-action="{{ route('project_manager.projects.addLaunchDate', $project) }}" class="btn-add btn btn-primary" data-toggle="modal" data-target="#modal"><i class="fa fa-plus"></i>Add launch date</a>
                             @else
                                 <div class="row">
                                     <div class="col-9">
@@ -243,6 +245,7 @@
             $('#title').text('Add Launch Date')
             $('#form').attr('action', action);
             $("#form").attr("method", "post");
+            $("#method").attr("value", "put");
         });
 
         $(".btn-edit").click(function(){
@@ -253,7 +256,6 @@
             $("#form").attr("method", "post");
             $("#method").attr("value", "put");
             $('#launchDate').val(detail);
-            console.log(detail);
         });
     </script>
 @endsection

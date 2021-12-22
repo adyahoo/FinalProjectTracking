@@ -1,5 +1,7 @@
 @extends('layouts.employee')
 
+@section('title','Edit Project')
+
 @section('content')
     <div class="section-header">
         <h1>Projects</h1>

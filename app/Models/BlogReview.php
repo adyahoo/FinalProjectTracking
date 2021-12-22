@@ -18,7 +18,6 @@ class BlogReview extends Model
         'reviews',
     ];
 
-
     protected static $logName       = 'blog';
     protected static $logAttributes = ['status', 'reviews'];
 

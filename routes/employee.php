@@ -124,4 +124,6 @@ Route::group([
                 ->name('destroy');
     Route::get('/preview/{slug}', 'BlogController@show')
                 ->name('preview');
+    Route::get('/review/{blog}', 'BlogReviewController@show')
+                ->name('review');
 });

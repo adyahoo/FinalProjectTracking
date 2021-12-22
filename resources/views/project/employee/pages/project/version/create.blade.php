@@ -1,5 +1,7 @@
 @extends('layouts.employee')
 
+@section('title','Project Version Create')
+
 @section('content')
     @include('project.employee.include.project_page_tab', [
         'project'             => $project,

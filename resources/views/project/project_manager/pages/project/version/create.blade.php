@@ -1,5 +1,7 @@
 @extends('layouts.project_manager')
 
+@section('title','Create Project Version')
+
 @section('content')
     @include('project.project_manager.include.project_page_tab', [
         'project'             => $project,

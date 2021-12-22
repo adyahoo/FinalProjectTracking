@@ -59,6 +59,11 @@ class Project extends Model
             return $query->where('end_date', '<=', $endDate);
     }
 
+    public function scopeWhereLaunched($query)
+    {
+        return $query->whereNotNull('launch_date');
+    }
+
     public function scopeWhereUserAssignee($query, $userId)
     {
         if (!empty($userId) && $userId != $this->filter['no_filter'])

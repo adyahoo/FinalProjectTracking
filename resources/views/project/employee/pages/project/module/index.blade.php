@@ -1,5 +1,7 @@
 @extends('layouts.employee')
 
+@section('title','Project Modules')
+
 @section('style')
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
@@ -20,6 +22,10 @@
                     <div class="card-header-form mr-4">
                         <form action="{{ route('employee.projects.module.all', $project) }}">
                             <div class="input-group">
+                                <select name="user" class="form-control form-control-sm py-1 mr-2" style="height: 32px; border-radius: 30px !important;">
+                                    <option value="">All Module</option>
+                                    <option value="{{ Auth::user()->id }}" @if($request->user == Auth::user()->id) selected @endif>Assigned to Me</option>
+                                </select>
                                 <select name="version" class="form-control form-control-sm py-1" style="height: 32px;">
                                     <option value="">All Version</option>
                                     @foreach($versions as $version)
@@ -99,9 +105,9 @@
                                             <td>
                                                 @if($projectDetail->userAssignments->where('user_id', Auth::user()->id)->count() != 0)
                                                     @if($projectDetail->moduleable_type == $projectDetail->moduleType['special_module'])
-                                                        <a data-detail="{{ route('employee.projects.module.edit', $projectDetail) }}" data-action="{{ route('employee.projects.module.special.update', $projectDetail) }}" href="#" class="btn btn-success btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status"><i class="fa fa-check"></i></a>
+                                                        <a data-detail="{{ route('employee.projects.module.edit', $projectDetail) }}" data-action="{{ route('employee.projects.module.special.update', $projectDetail) }}" href="#" class="btn btn-primary btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status">Change Status</a>
                                                     @else
-                                                        <a data-detail="{{ route('employee.projects.module.edit', $projectDetail) }}" data-action="{{ route('employee.projects.module.update', $projectDetail) }}" href="#" class="btn btn-success btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status"><i class="fa fa-check"></i></a>
+                                                        <a data-detail="{{ route('employee.projects.module.edit', $projectDetail) }}" data-action="{{ route('employee.projects.module.update', $projectDetail) }}" href="#" class="btn btn-primary btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status">Change Status</a>
                                                     @endif
                                                 @endif
                                             </td>

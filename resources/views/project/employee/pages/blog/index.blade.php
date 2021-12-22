@@ -66,6 +66,9 @@
                                             </td>
                                             <td>{{ $blog->view_count }}</td>
                                             <td>
+                                                @if($blog->blogReviews->count() && $blog->status != $blog->statusOption['waiting_for_review'])
+                                                    <a href="{{ route('employee.blogs.review', $blog) }}" class="btn btn-outline-danger @if($blog->status == $blog->statusOption['rejected']) beep @endif" title="See Review"><i class="fa fa-comment"></i></a>
+                                                @endif
                                                 <a href="{{ route('employee.blogs.preview', $blog->slug) }}" class="btn btn-primary btn-edit"><i class="fa fa-eye"></i></a>
                                                 <a href="{{ route('employee.blogs.edit', $blog) }}" class="btn btn-info btn-edit"><i class="fa fa-pencil-alt"></i></a>
                                                 <a onclick="deleteConfirm('del{{ $blog->id }}')" class="btn btn-danger text-white" data-toggle="tooltip" title="Delete">

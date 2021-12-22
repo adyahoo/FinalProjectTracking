@@ -21,11 +21,10 @@ class ProjectDetailController extends Controller
         $employees      = Role::whereEmployee()->first()->user;
         $latestVersion  = ProjectVersion::where('project_id', $project->id)->latest()->first();
         $versions       = ProjectVersion::where('project_id', $project->id)->get();
-        $projectModules = $project->projectDetails;
         $statusOptions  = (new ProjectDetail())->statusOption;
-
-        if(!empty($request->version))
-            $projectModules = ProjectDetail::where('project_version_id', $request->version)->get();
+        $projectModules = $project->projectDetails()->whereVersion($request->version)
+                                                    ->whereUserAssignee($request->user)
+                                                    ->get();
 
         return view('project.employee.pages.project.module.index', compact(
             'project',

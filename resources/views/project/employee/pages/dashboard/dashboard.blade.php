@@ -1,5 +1,7 @@
 @extends('layouts.employee')
 
+@section('title','Dashboard')
+
 @section('content')
     <div class="section-header">
         <h1>Dashboard</h1>
@@ -15,7 +17,7 @@
                         <h4>Total Projects</h4>
                     </div>
                     <div class="card-body">
-                        {{ $totalProjects }}
+                        {{ $projects->count() }}
                     </div>
                 </div>
             </div>
@@ -23,14 +25,14 @@
         <div class="col-lg-4 col-md-6 col-sm-6 col-12">
             <div class="card card-statistic-1">
                 <div class="card-icon bg-success">
-                    <i class="fas fa-check-double"></i>
+                    <i class="fas fa-rocket"></i>
                 </div>
                 <div class="card-wrap">
                     <div class="card-header">
-                        <h4>Finished Projects</h4>
+                        <h4>Projects Launched</h4>
                     </div>
                     <div class="card-body">
-                        {{ $finishedProjects }}
+                        {{ $launchedProjects }}
                     </div>
                 </div>
             </div>
@@ -69,45 +71,34 @@
                                     <th>Start Date</th>
                                     <th>End Date</th>
                                     <th>Status</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($userAssignments as $userAssignment)
+                                @foreach($projects->take(3) as $project)
                                     <tr>
                                         <td>
-                                            {{ $userAssignment->projectDetail->projectVersion->project->name }}
+                                            {{ $project->name }}
                                             <div class="table-links">
                                                 <div class="bullet"></div>
-                                                <a href="{{ route('employee.projects.detail', $userAssignment->projectDetail->projectVersion->project) }}">View</a>
+                                                <a href="{{ route('employee.projects.detail', $project) }}">View</a>
                                             </div>
                                         </td>
                                         <td>
-                                            {{ $userAssignment->projectDetail->projectVersion->project->start_date->format('d-m-Y') }}
+                                            {{ $project->start_date->format('d-m-Y') }}
                                         </td>
                                         <td>
-                                            {{ $userAssignment->projectDetail->projectVersion->project->end_date->format('d-m-Y') }}
+                                            {{ $project->end_date->format('d-m-Y') }}
                                         </td>
                                         <td>
-                                            @if($userAssignment->projectDetail->projectVersion->project->projectVersions->count() > 1)
+                                            @if($project->projectVersions->count() > 1)
                                                 <div class="badge badge-info">Maintenance</div>
-                                            @elseif(!empty($userAssignment->projectDetail->projectVersion->project->launch_date))
+                                            @elseif(!empty($project->launch_date))
                                                 <div class="badge badge-success">Launch</div>
-                                            @elseif($userAssignment->projectDetail->projectVersion->project->projectVersions->last()->projectDetails()->whereDoneOrOnProgress()->count() > 0)
+                                            @elseif($project->projectVersions->last()->projectDetails()->whereDoneOrOnProgress()->count() > 0)
                                                 <div class="badge badge-warning">Development</div>
                                             @else
                                                 <div class="badge badge-danger">Listed</div>
                                             @endif
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('employee.projects.edit', $userAssignment->projectDetail->projectVersion->project->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                            <a href="#" onclick="deleteConfirm('del{{ $userAssignment->projectDetail->projectVersion->project->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                            <form id="del{{ $userAssignment->projectDetail->projectVersion->project->id }}" action="{{ route('employee.projects.destroy', $userAssignment->projectDetail->projectVersion->project) }}" method="POST">
-                                                @method('delete')
-                                                @csrf
-                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
