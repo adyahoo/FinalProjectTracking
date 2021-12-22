@@ -121,9 +121,11 @@
             { name: "start_date", label: "Start Date", align: "center", width:90},
             { name: "end_date", label: "End Date", align: "center", width:90},
             {name: "buttons", align:"center", label: colHeader,width: 75,template: function (task) {
+                if(task.is_assigned) {
                 return (
                             '<button id="btn-edit'+task.id+'" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal">Edit</button>'
                         );
+                }
             }}
         ];
 
@@ -154,10 +156,6 @@
         gantt.config.drag_resize   = false;
         gantt.config.drag_progress = false;
         gantt.showDate(new Date());
-
-        gantt.attachEvent("onTaskDblClick", function(){
-            return false;
-        });
 
         gantt.templates.scale_cell_class = function(date){
             if(date.getDay()==0||date.getDay()==6){
@@ -200,11 +198,16 @@
                 var status = gantt.getTask(id).status;
                 $('#method').val('PUT');
                 $("#form").attr("method", "post");
-                $('#form').attr('action', '{{route("admin.admin_projects.gantt_chart.update", ":id")}}'.replace(':id', task.id));
+                $('#form').attr('action', '{{ route("employee.projects.module.update", ":id") }}'.replace(':id', task.id));
                 $('#title').html('Change Status');
                 $('#status').val(status);
                 console.log(status);
             }
+        });
+
+        gantt.attachEvent("onTaskDblClick", function(id,e){
+            var task   = gantt.getTask(id);
+            window.location.href = '{{ route("employee.projects.module.show", ":id") }}'.replace(':id', task.id);
         });
 
         gantt.parse({!! json_encode($data) !!});

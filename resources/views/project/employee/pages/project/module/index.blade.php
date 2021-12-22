@@ -60,10 +60,6 @@
                                                 <div class="mt-1">
                                                     <span>Added at : v{{ $projectDetail->projectVersion->version_number }}</span>
                                                 </div>
-                                                <div class="table-links">
-                                                    <div class="bullet"></div>
-                                                    <a href="{{ route('employee.projects.module.show', $projectDetail) }}">View</a>
-                                                </div>
                                             </td>
                                             <td>
                                                 <div class="badge 
@@ -103,6 +99,7 @@
                                                 ({{ $projectDetail->end_date->format('H:i') }})
                                             </td>
                                             <td>
+                                                <a href="{{ route('employee.projects.module.show', $projectDetail) }}" class="btn btn-light mr-1" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></a>
                                                 @if($projectDetail->userAssignments->where('user_id', Auth::user()->id)->count() != 0)
                                                     @if($projectDetail->moduleable_type == $projectDetail->moduleType['special_module'])
                                                         <a data-detail="{{ route('employee.projects.module.edit', $projectDetail) }}" data-action="{{ route('employee.projects.module.special.update', $projectDetail) }}" href="#" class="btn btn-primary btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status">Change Status</a>

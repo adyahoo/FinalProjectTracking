@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\ProjectDetail;
 use Carbon\Carbon;
+use Auth;
 
 class GanttChartController extends Controller
 {
@@ -24,12 +25,13 @@ class GanttChartController extends Controller
                         $name = implode(',', $names);
                     }
                     array_push($temp, [
-                        'id'         => $detail->id,
-                        'text'       => $detail->moduleable->name,
-                        'start_date' => Carbon::parse($detail->start_date)->format('d-m-Y H:i:s'),
-                        'end_date'   => Carbon::parse($detail->end_date)->format('d-m-Y H:i:s'),
-                        'assignee'   => $name,
-                        'status'     => $detail->status,
+                        'id'          => $detail->id,
+                        'text'        => $detail->moduleable->name,
+                        'start_date'  => Carbon::parse($detail->start_date)->format('d-m-Y H:i:s'),
+                        'end_date'    => Carbon::parse($detail->end_date)->format('d-m-Y H:i:s'),
+                        'assignee'    => $name,
+                        'status'      => $detail->status,
+                        'is_assigned' => $detail->userAssignments()->where('user_id', Auth::user()->id)->count()
                     ]);
                 }
             }
@@ -45,13 +47,5 @@ class GanttChartController extends Controller
         ];
         $data = json_encode($datas);
         return view('project.employee.pages.project.gantt', compact('data','project'));
-    }
-
-    public function changeStatus(Request $request, $id){
-        $detail = ProjectDetail::find($id);
-        $detail->update([
-            'status' => $request->status
-        ]);
-        return redirect()->back()->with('success', 'Status has been changed');
     }
 }
