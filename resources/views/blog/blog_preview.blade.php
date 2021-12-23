@@ -14,14 +14,12 @@
                 <h2 class="text-dark text-center">{{$blog->title}}</h2>
                 <div class="row no-gutters align-items-center">
                     <div class="col-3 col-lg-2">
-                        <div class="rounded-circle section-detail__profile-container">
-                            <img class="section-detail__profile-img" src="{{asset('images/img-profile.png')}}">
+                        <div class="section-detail__profile-container">
+                            <img class="rounded-circle section-detail__profile-img" src="{{Auth::user()->profile_image != null ? Storage::url('profile_images/'.Auth::user()->profile_image) : asset('templates/stisla/assets/img/avatar/avatar-1.png')}}">
                         </div>
                     </div>
                     <div class="col-7 col-lg-9 ml-3 section-detail__profile-info">
-                        <a href="{{route('author', $blog->user_id)}}">
-                            <p class="section-detail__profile-name font-weight-bold d-inline-block mb-0">{{$blog->user->name}}</p>
-                        </a>
+                        <p class="section-detail__profile-name font-weight-bold d-inline-block mb-0">{{$blog->user->name}}</p>
                         <p>
                             Published at: {{date('d M Y', strtotime($blog->published_at))}}<br>
                             Published by: {{$blog->user->name}}

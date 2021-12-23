@@ -33,7 +33,6 @@ class DashboardController extends Controller
         }
         
         $data = json_encode($temp);
-        // dd($data);
         return view('project.admin.pages.dashboard.dashboard', compact(
             'launchedProjects',
             'totalProjects',

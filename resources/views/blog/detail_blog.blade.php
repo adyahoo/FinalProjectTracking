@@ -22,7 +22,7 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col-3 col-lg-2">
                         <div class="section-detail__profile-container">
-                            <img class="section-detail__profile-img rounded-circle" src="{{asset(Storage::url('blog_images/'.$blog->user->profile_image))}}">
+                            <img class="section-detail__profile-img rounded-circle" src="{{$blog->user->profile_image != null ? asset(Storage::url('blog_images/'.$blog->user->profile_image)) : asset('templates/stisla/assets/img/avatar/avatar-1.png')}}">
                         </div>
                     </div>
                     <div class="col-7 col-lg-9 ml-3 section-detail__profile-info">

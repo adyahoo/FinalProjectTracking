@@ -21,7 +21,7 @@
                                         {{$blog->title}}
                                     </h2>
                                     <p class="section-banner__desc" id="bannerDesc">
-                                        {{$blog->content}}
+                                        {{strip_tags($blog->content)}}
                                     </p>                                
                                 </div>
                             </div>

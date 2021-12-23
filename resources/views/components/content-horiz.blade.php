@@ -12,7 +12,7 @@
                 {{$blog->title}}
             </h4>
             <p class="section-content__desc">
-                {{$blog->meta_description}}
+                {{strip_tags($blog->content)}}
             </p>
             <div class="section-content__count text-right">
                 <i class="far fa-heart mr-3">125</i>

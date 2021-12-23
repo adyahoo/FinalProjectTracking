@@ -19,7 +19,7 @@
     </nav>
     <div class="section section-author bg-white rounded text-center">
         <div class="section-author__profile-container">
-            <img class="section-author__profile-img rounded-circle" src="{{asset(Storage::url('profile_images/'.$user->profile_image))}}">
+            <img class="section-author__profile-img rounded-circle" src="{{$user->profile_image != null ? asset(Storage::url('blog_images/'.$user->profile_image)) : asset('templates/stisla/assets/img/avatar/avatar-1.png')}}">
         </div>
         <h2 class="text-dark">{{$user->name}}</h2>
         <p>{{$user->bio}}</p>
