@@ -22,7 +22,7 @@
         <select class="form-control mt-2" id="monthSelect" name="filterSidebar[month]" disabled>
             <option selected value="0" disabled>By Month</option>
             @foreach($blogMonths as $month)
-            <option value="{{$month->month}}">{{date("F", mktime(0, 0, 0, $month->month, 1))}}</option>
+            <option>{{date("F", mktime(0, 0, 0, $month->month, 1))}}</option>
             @endforeach
         </select>
     </div>

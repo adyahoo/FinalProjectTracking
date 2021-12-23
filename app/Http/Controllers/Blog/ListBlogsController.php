@@ -45,13 +45,14 @@ class ListBlogsController extends Controller
 
         if(!empty($request->filterSidebar['category'])) {
             $category = BlogCategories::where('name', $request->filterSidebar['category'])->first();
-            $blogs      = $blogs->where('blog_category_id', $category->id);
+            $blogs    = $blogs->where('blog_category_id', $category->id);
         }
         if(!empty($request->filterSidebar['year'])) {
             $blogs = $blogs->whereYear('published_at', $request->filterSidebar['year']);
         }
         if(!empty($request->filterSidebar['month'])) {
-            $blogs = $blogs->whereMonth('published_at', $request->filterSidebar['month']);
+            $month = date("m", strtotime($request->filterSidebar['month']));
+            $blogs = $blogs->whereMonth('published_at', $month);
         }
 
         $blogs = $blogs->get();
