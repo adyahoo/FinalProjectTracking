@@ -36,7 +36,7 @@ class PasswordRequest extends FormRequest
         return [
             'required'  => 'This :attribute collumn is Required!',
             'min'       => 'This :attribute collumn must be at least :min characters!',
-            'confirmed' => 'This :attribute collumn must be confirmed!',
+            'confirmed' => 'This :attribute is false !',
         ];
     }
 }

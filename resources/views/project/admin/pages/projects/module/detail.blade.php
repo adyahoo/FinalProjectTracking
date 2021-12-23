@@ -220,6 +220,13 @@
             });
         </script>
     @endif
+    @if (Session::has('error'))
+    <script>
+        swal("Error!", "{{ Session::get('error') }}", "error").then(function(){
+            window.location.reload(window.location.href)
+        });
+    </script>
+@endif
     @if($errors->any())
         <script>
             var msg = "{{ implode(' \n', $errors->all(':message')) }}";
