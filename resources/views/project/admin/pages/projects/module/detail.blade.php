@@ -18,7 +18,7 @@
                 <div class="card-header">
                     <h4>Project Members <span class="badge badge-secondary">{{ $projectDetail->userAssignments->count() }}</span></h4>
                     <div class="card-header-action">
-                        <button data-action="{{ route('project_manager.projects.module.member.store', $projectDetail) }}" title="Add Member" class="btn btn-primary btn-round ml-auto btn-add-member text-white" data-toggle="modal" data-target="#modalMember">
+                        <button data-action="{{ route('admin.admin_projects.project_module.member.store', $projectDetail) }}" title="Add Member" class="btn btn-primary btn-round ml-auto btn-add-member text-white" data-toggle="modal" data-target="#modalMember">
                             <i class="fa fa-plus"></i>
                             Add Member
                         </button>
@@ -31,6 +31,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Division</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -49,6 +50,9 @@
                                         </td>
                                         <td>
                                             {{ $userAssignment->user->email }}
+                                        </td>
+                                        <td>
+                                            {{ $userAssignment->user->division->name }}
                                         </td>
                                         <td>
                                             <a href="#" onclick="deleteConfirm('del{{ $userAssignment->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">

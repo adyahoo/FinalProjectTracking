@@ -28,7 +28,8 @@ class BlogReviewController extends Controller
             $blogReview += ['published_at' => Carbon::now()];
         }
 
-        $blog->update($blogReview);
+        $blog->update(['status' => $request->status]);
+
         return redirect()->route('admin.review.index')->with('success', 'Blog Review created successfully');
     }
 
@@ -36,6 +37,7 @@ class BlogReviewController extends Controller
         $reviews = BlogReview::with('blog')->where('blog_id', $review)->orderBy('created_at', 'desc')->get()->groupBy(function($date) {
             return Carbon::parse($date->created_at)->format('F Y');
         });
+
         return view('project.admin.pages.blogs.blog_review.detail', compact('reviews'));
     }
 }

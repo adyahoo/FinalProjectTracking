@@ -64,7 +64,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-11">
-                                    <p class="text-limit">{{ $project->scope }}</p>
+                                    <p class="text-limit">{{ strip_tags($project->scope) }}</p>
                                 </div>
                                 <div class="col-1 text-right">
                                     <a href="{{ route('admin.admin_projects.edit', $project) }}" class="h5" style="color: #78828a"><i class="fa fa-edit"></i></a>
@@ -84,7 +84,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-11">
-                                    <p class="text-limit">{{ $project->credentials }}</p>
+                                    <p class="text-limit">{{ strip_tags($project->credentials) }}</p>
                                 </div>
                                 <div class="col-1 text-right">
                                     <a href="{{ route('admin.admin_projects.edit', $project) }}" class="h5" style="color: #78828a"><i class="fa fa-edit"></i></a>

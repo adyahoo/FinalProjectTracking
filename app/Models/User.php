@@ -54,7 +54,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected static $logName       = 'user';
+    protected static $logName       = 'membership';
     protected static $logAttributes = ['name', 'email'];
 
     public function getActivitylogOptions(): LogOptions

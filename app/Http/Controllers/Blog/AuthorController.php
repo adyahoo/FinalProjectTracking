@@ -11,7 +11,7 @@ class AuthorController extends Controller
 {
     public function index($id)
     {
-        $user = User::find($id);
+        $user  = User::find($id);
         $blogs = Blog::with('user')->where('user_id', $id)->get();
         return view('blog.author', compact('user', 'blogs'));
     }

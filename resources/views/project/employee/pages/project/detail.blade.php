@@ -65,7 +65,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-11">
-                                    <p class="text-limit">{{ $project->scope }}</p>
+                                    <p class="text-limit">{{ strip_tags($project->scope) }}</p>
                                 </div>
                                 <div class="col-1 text-right">
                                 </div>
@@ -84,7 +84,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-11">
-                                    <p class="text-limit">{{ $project->credentials }}</p>
+                                    <p class="text-limit">{{ strip_tags($project->credentials) }}</p>
                                 </div>
                                 <div class="col-1 text-right">
                                 </div>

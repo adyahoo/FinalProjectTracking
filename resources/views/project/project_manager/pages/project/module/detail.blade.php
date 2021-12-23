@@ -33,6 +33,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Division</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -51,6 +52,9 @@
                                         </td>
                                         <td>
                                             {{ $userAssignment->user->email }}
+                                        </td>
+                                        <td>
+                                            {{ $userAssignment->user->division->name }}
                                         </td>
                                         <td>
                                             <a href="#" onclick="deleteConfirm('del{{ $userAssignment->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">

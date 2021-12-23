@@ -25,6 +25,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Division</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,6 +43,9 @@
                                         </td>
                                         <td>
                                             {{ $userAssignment->user->email }}
+                                        </td>
+                                        <td>
+                                            {{ $userAssignment->user->division->name }}
                                         </td>
                                     </tr>
                                 @endforeach
