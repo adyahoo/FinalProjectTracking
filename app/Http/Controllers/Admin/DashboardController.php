@@ -7,29 +7,40 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Blog;
 use Spatie\Activitylog\Models\Activity;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
     public function index() {
-        $latestProjects = Project::latest()->get()->take(5);
-        $totalProjects  = Project::count();
-        $projects       = Project::get();
-        $totalBlogs     = Blog::get()->count();
-        $blogs          = Blog::latest()->get()->take(7);
-        $logs           = Activity::latest()->get()->take(4);
-
-        $finishedProjects = 0;
-
-        foreach($projects as $project)
-            $finishedProjects += $project->projectDetails->where('status', 'done')->count();
-
+        $temp             = array();
+        $latestProjects   = Project::latest()->get()->take(5);
+        $totalProjects    = Project::count();
+        $totalBlogs       = Blog::get()->count();
+        $logs             = Activity::latest()->get()->take(4);
+        $launchedProjects = Project::whereLaunched()->count();
+        $projects         = Project::all();
+        foreach($projects as $project) {
+            array_push($temp, [
+                'title'           => 'Project: '.$project->name,
+                'description'     => 'Description: '.$project->description,
+                'url'             => route('admin.admin_projects.detail', $project->id),
+                'start'           => Carbon::parse($project->start_date)->format('Y-m-d'),
+                'end'             => Carbon::parse($project->end_date)->format('Y-m-d'),
+                'backgroundColor' => "#6dda5f",
+                'borderColor'     => "#6dda5f",
+                'textColor'       => '#fff',
+            ]);
+        }
+        
+        $data = json_encode($temp);
+        // dd($data);
         return view('project.admin.pages.dashboard.dashboard', compact(
-            'finishedProjects',
+            'launchedProjects',
             'totalProjects',
             'latestProjects',
             'totalBlogs',
             'logs',
-            'blogs'
+            'data'
         ));
     }
 }

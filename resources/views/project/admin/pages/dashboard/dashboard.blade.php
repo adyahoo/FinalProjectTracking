@@ -127,7 +127,7 @@
         <div class="col-lg-8 col-md-12 col-12 col-sm-12">
             <div class="card">
             <div class="card-header">
-                <h4>Calendar</h4>
+                <h4>Project Calendar</h4>
             </div>
             <div class="card-body">
                 <div class="fc-overflow">
@@ -145,7 +145,7 @@
                 <ul class="list-unstyled list-unstyled-border">
                     @foreach($logs as $log)
                         <li class="media">
-                            @if($log->causer->profile_image == null)
+                            @if(!isset($log->causer->profile_image))
                                 <img class="mr-3 rounded-circle" width="50" src="{{asset('templates/stisla/assets/img/avatar/avatar-1.png')}}" alt="avatar">
                             @else
                                 <img style="height: 50px;width: 50px;max-height: 50px; max-width: 50px;" class="mr-3 rounded-circle" src="{{Storage::url('profile_images/'.$log->causer->profile_image)}}" alt="avatar">
@@ -186,9 +186,16 @@ $("#myEvent").fullCalendar({
     },
     eventClick: function(event) {
         if (event.url) {
-            window.location.href =  event.url;
+            window.open(event.url);
+            return false;
         }
-    }
+    },
+    eventMouseover: function(event, jsEvent, view) {
+        var tooltip = '<div class="tooltipevent" style="width:auto;height:auto;background:#000;color:#fff;position:absolute;z-index:10001;padding:10px border-radius:5px;font-size:12px;">' + event.description + '</div>';
+        var $tooltip = $(tooltip).appendTo('body');
+    },
+    
+
 });
 </script>
 @if (Session::has('success'))

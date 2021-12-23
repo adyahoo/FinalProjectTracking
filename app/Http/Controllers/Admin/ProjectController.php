@@ -17,7 +17,11 @@ use Auth;
 class ProjectController extends Controller
 {
     public function index(Request $request) {
-        $projects  = Project::get();
+        $projects  = Project::whereStartDate($request->start_date)
+                        ->whereEndDate($request->end_date)
+                        ->whereUserAssignee($request->user)
+                        ->whereRoleAssignee($request->role)
+                        ->get();
         $roles     = Role::whereEmployee()->get();
         $employees = Role::whereEmployee()->first()->user;
 
