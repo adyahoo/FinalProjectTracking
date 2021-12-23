@@ -25,9 +25,8 @@ class ProjectController extends Controller
                             ->whereRoleAssignee($request->role)
                             ->get();
         $roles     = Role::whereEmployee()->get();
-        $employees = Role::whereEmployee()->first()->user;
 
-        return view('project.project_manager.pages.project.index', compact('projects', 'roles', 'employees', 'request'));
+        return view('project.project_manager.pages.project.index', compact('projects', 'roles', 'request'));
     }
 
     public function create()

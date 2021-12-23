@@ -35,8 +35,10 @@
                                 <label>User Assignee</label>
                                 <select class="form-control form-control-sm" name="user">
                                     <option value="no_filter">All</option>
-                                    @foreach($employees as $user)
-                                        <option value="{{ $user->id }}" @if($user->id == $request->user) selected @endif>{{ $user->name }}</option>
+                                    @foreach($roles as $role)
+                                        @foreach($role->user as $user)
+                                            <option value="{{ $user->id }}" @if($user->id == $request->user) selected @endif>{{ $user->name }}</option>
+                                        @endforeach
                                     @endforeach
                                 </select>
                             </div>

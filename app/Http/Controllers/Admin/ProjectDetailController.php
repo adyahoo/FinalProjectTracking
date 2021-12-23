@@ -11,6 +11,7 @@ use App\Models\Module;
 use App\Models\Role;
 use App\Models\SpecialModule;
 use App\Http\Requests\ModuleRequest;
+use App\Http\Requests\ProjectDetailRequest;
 use DateTime;
 
 class ProjectDetailController extends Controller
@@ -38,7 +39,7 @@ class ProjectDetailController extends Controller
         ));
     }
 
-    public function store(Request $request, Project $project) {
+    public function store(ProjectDetailRequest $request, Project $project) {
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
 
         $projectDetail                     = new ProjectDetail();
@@ -54,7 +55,7 @@ class ProjectDetailController extends Controller
         return redirect()->back()->with('success', 'Module created successfully');
     }
 
-    public function storeSpecial(Request $request, Project $project) {
+    public function storeSpecial(ProjectDetailRequest $request, Project $project) {
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
 
         $startDate = new DateTime($request->start_date);
@@ -88,13 +89,13 @@ class ProjectDetailController extends Controller
         return response()->json($projectDetail);
     }
 
-    public function update(Request $request, ProjectDetail $projectDetail) {
+    public function update(ProjectDetailRequest $request, ProjectDetail $projectDetail) {
         $projectDetail->update($request->all());
 
         return redirect()->back()->with('success', 'Project module updated successfully');
     }
 
-    public function updateSpecial(Request $request, ProjectDetail $projectDetail) {
+    public function updateSpecial(ProjectDetailRequest $request, ProjectDetail $projectDetail) {
         $projectDetail->update($request->all());
 
         $startDate = new DateTime($request->start_date);

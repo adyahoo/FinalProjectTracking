@@ -139,7 +139,6 @@
                         <div class="card-body">
                             @empty($project->launch_date)
                                 <p>No launch date created</p>
-                                <a href="#" data-action="{{ route('employee.projects.addLaunchDate', $project) }}" class="btn-add" data-toggle="modal" data-target="#modal">Add launch date</a>
                             @else
                                 <div class="row">
                                     <div class="col-9">

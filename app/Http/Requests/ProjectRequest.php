@@ -28,7 +28,7 @@ class ProjectRequest extends FormRequest
         return [
             'name'        => 'required',
             'start_date'  => 'required',
-            'end_date'    => 'required',
+            'end_date'    => 'required|after_or_equal:start_date',
             'description' => 'required',
             'scope'       => 'required',
             'credentials' => 'required'
