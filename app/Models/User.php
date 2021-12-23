@@ -59,7 +59,7 @@ class User extends Authenticatable
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults();
+        return LogOptions::defaults()->dontLogIfAttributesChangedOnly(['password']);
     }
 
     public function getDescriptionForEvent(string $eventName): string

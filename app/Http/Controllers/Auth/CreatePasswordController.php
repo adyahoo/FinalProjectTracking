@@ -20,6 +20,7 @@ class CreatePasswordController extends Controller
     }
 
     public function store(PasswordRequest $request, User $user) {
+        $user->disableLogging();
         $user->update(['password' => $request->password]);
         
         return redirect(route('login'))->with('success', 'Password Created Successfully!');
