@@ -1,5 +1,15 @@
 @extends('layouts.admin')
 @section('title', 'Dashboard')
+
+@section('css')
+<link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/fullcalendar/dist/fullcalendar.min.css') }}">
+<style>
+    .fc-event{
+        text-align: center;
+    }
+</style>
+@endsection
+
 @section('content')
     <div class="section-header">
         <h1>Dashboard</h1>
@@ -23,14 +33,14 @@
         <div class="col-lg-4 col-md-6 col-sm-6 col-12">
             <div class="card card-statistic-1">
                 <div class="card-icon bg-success">
-                    <i class="fas fa-check-double"></i>
+                    <i class="fas fa-rocket"></i>
                 </div>
                 <div class="card-wrap">
                     <div class="card-header">
-                        <h4>Finished Projects</h4>
+                        <h4>Launched Projects</h4>
                     </div>
                     <div class="card-body">
-                        {{ $finishedProjects }}
+                        {{ $launchedProjects }}
                     </div>
                 </div>
             </div>
@@ -117,45 +127,11 @@
         <div class="col-lg-8 col-md-12 col-12 col-sm-12">
             <div class="card">
             <div class="card-header">
-                <h4>Latest Blogs</h4>
-                <div class="card-header-action">
-                <a href="{{route('admin.review.index')}}" class="btn btn-primary">View All</a>
-                </div>
+                <h4>Calendar</h4>
             </div>
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                <table class="table table-striped mb-0">
-                    <thead>
-                        <tr>
-                            <th style="width: 40%">Title</th>
-                            <th style="width: 50%">Author</th>
-                            <th style="width: 10%" class="text-center">Published At</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($blogs as $blog)
-                            <tr>
-                                <td>
-                                    {{$blog->title}}
-                                </td>
-                                <td>
-                                    @if($blog->user->profile_image == null)
-                                        <span class="font-weight-600"><img src="{{asset('templates/stisla/assets/img/avatar/avatar-1.png')}}" alt="avatar" width="30" class="rounded-circle mr-1"> {{$blog->user->name}}</span>
-                                    @else
-                                        <span class="font-weight-600"><img src="{{Storage::url('profile_images/'.$blog->user->profile_image)}}" alt="avatar" style="height: 30px;width: 30px;max-height: 30px; max-width: 30px;" class="rounded-circle mr-1"> {{$blog->user->name}}</span>
-                                    @endif
-                                </td>
-                                <td class="text-center">
-                                    @if($blog->published_at == null)
-                                        <span class="badge badge-warning">Not Yet Published</span>
-                                    @else
-                                        <span >{{date('d M Y', strtotime($blog->published_at))}}</span>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <div class="card-body">
+                <div class="fc-overflow">
+                <div id="myEvent"></div>
                 </div>
             </div>
             </div>
@@ -193,7 +169,28 @@
     </div>
 @endsection
 @section('js')
+<script src="{{ asset('templates/stisla/node_modules/fullcalendar/dist/fullcalendar.min.js') }}"></script>
 <script src="{{ asset('templates/stisla/node_modules/sweetalert/dist/sweetalert.min.js') }}"></script>
+<script>
+$("#myEvent").fullCalendar({
+    height: 'auto',
+    header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay,listWeek'
+    },
+    editable: false,
+    events: {!! $data !!},
+    eventRender: function(event, element) {
+        element.find('.fc-title').append("<br/>" + event.description);
+    },
+    eventClick: function(event) {
+        if (event.url) {
+            window.location.href =  event.url;
+        }
+    }
+});
+</script>
 @if (Session::has('success'))
         <script>
             swal("Success!", "{{ Session::get('success') }}", "success").then(function(){
