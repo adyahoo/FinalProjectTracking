@@ -24,6 +24,7 @@ class CreateProjectsTable extends Migration
             $table->datetime('end_date');
             $table->date('launch_date')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

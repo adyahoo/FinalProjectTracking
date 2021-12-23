@@ -28,8 +28,8 @@ class ProjectRequest extends FormRequest
         return [
             'name'        => 'required',
             'start_date'  => 'required',
-            'end_date'    => 'required',
-            'description' => 'required',
+            'end_date'    => 'required|after_or_equal:start_date',
+            'description' => 'required|max:200',
             'scope'       => 'required',
             'credentials' => 'required'
         ];
@@ -38,7 +38,8 @@ class ProjectRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' => 'A :attribute is required'
+            'required' => 'This :attribute is required',
+            'max'      => 'This :attribute must be less than :max characters'
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
@@ -11,12 +12,13 @@ use Auth;
 
 class Project extends Model
 {
-    use HasFactory, LogsActivity, HasRelationships;
+    use HasFactory, LogsActivity, HasRelationships, SoftDeletes;
 
     protected $dates    = [
         'start_date',
         'end_date',
-        'launch_date'
+        'launch_date',
+        'deleted_at'
     ];
 
     protected $filter   = [
