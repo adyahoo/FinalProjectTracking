@@ -116,9 +116,9 @@
                                                                     <tr>
                                                                         <td align='center' style='font-size:0px;padding:10px 25px;word-break:break-word;'>
                                                                             <div style='color:#777777;font-family:Oxygen, Helvetica neue, sans-serif;font-size:14px;line-height:21px;text-align:left;'>
-                                                                                <h2 align="center"><b style="color: #242E3B;">Hello, {{$data['name']}}</b></h5>
+                                                                                <h2 align="center"><b style="color: #242E3B;">Hello, {{$datas['name']}}</b></h5>
                                                                                 <h3 align="center" ><span>Please go to the Create Password page by clicking the button below.</span></h3>
-                                                                                <a href="{{route('password.create', $data['hashed-mail'])}}" style="align-items: center;display: flex;justify-content: center;background-color: #6DDA5F;color: white;padding: 15px 25px;text-decoration: none;">Proceed to Page</a>
+                                                                                <a href="{{route('password.create', $datas['hashed-mail'])}}" style="align-items: center;display: flex;justify-content: center;background-color: #6DDA5F;color: white;padding: 15px 25px;text-decoration: none;">Proceed to Page</a>
                                                                             </div>
                                                                         </td>
                                                                     </tr>

@@ -3,6 +3,7 @@ namespace App\Traits;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CreatePasswordMail;
+use App\Jobs\SendEmailJob;
 
 trait CreatePasswordTrait
 {
@@ -13,6 +14,6 @@ trait CreatePasswordTrait
             'hashed-mail' => encrypt($mail)
         ];
 
-        Mail::to($mail)->send(new CreatePasswordMail($data));
+        SendEmailJob::dispatch($data);
     }
 }

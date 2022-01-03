@@ -9,7 +9,7 @@ use Illuminate\Queue\SerializesModels;
 
 class CreatePasswordMail extends Mailable
 {
-    public $data;
+    public $datas;
     use Queueable, SerializesModels;
 
     /**
@@ -17,9 +17,9 @@ class CreatePasswordMail extends Mailable
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($datas)
     {
-        $this->data = $data;
+        $this->datas = $datas;
     }
 
     /**
