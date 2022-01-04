@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group">
                   <label>Description</label>
-                  <textarea @error('description') class="form-control is-invalid" @else class="form-control" @enderror rows="10" name="description">{{ old('description') }}</textarea>
+                  <textarea style="height: 200px" @error('description') class="form-control is-invalid" @else class="form-control" @enderror name="description">{{ old('description') }}</textarea>
                   @error('description')
                       <div class="invalid-feedback">
                         {{ $message }}

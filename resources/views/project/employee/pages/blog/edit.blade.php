@@ -45,10 +45,10 @@
                                     @else
                                         <img id="thumbnail" class="img-fluid" id="propic" src="https://via.placeholder.com/1920x1080" alt="">
                                     @endif
+                                    @error('image')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
-                                @error('image')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
                             </div>
                             <div class="form-group row mb-4">
                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Slug <sup style="color: gray">*optional</sup></label>

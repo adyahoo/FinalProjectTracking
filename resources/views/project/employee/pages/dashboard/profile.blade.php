@@ -67,14 +67,14 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-md-6 col-12">
-                                <label>Name</label>
+                                <label>Name <sup style="color: red">*required</sup></label>
                                 <input name="name" type="text" class="form-control" value="{{Auth::user()->name}}" required="">
                                 @error('name')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
                             <div class="form-group col-md-6 col-12">
-                                <label>Gender</label>
+                                <label>Gender <sup style="color: red">*required</sup></label>
                                 <select id="memberGender" name="gender" class="form-control">
                                     <option value="">Select Gender</option>
                                     <option value="male" {{Auth::user()->gender == 'male' ? 'selected' : ''}}>Male</option>
@@ -87,14 +87,14 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-md-7 col-12">
-                                <label>Email</label>
+                                <label>Email <sup style="color: red">*required</sup></label>
                                 <input name="email" type="email" class="form-control" value="{{Auth::user()->email}}" required="">
                                 @error('email')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
                             <div class="form-group col-md-5 col-12">
-                                <label>Phone</label>
+                                <label>Phone <sup style="color: red">*required</sup></label>
                                 <input name="phone" type="number" class="form-control" value="{{Auth::user()->phone}}">
                                 @error('phone')
                                     <small class="text-danger">{{ $message }}</small>
@@ -103,7 +103,7 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-12">
-                                <label>Birth Date</label>
+                                <label>Birth Date <sup style="color: red">*required</sup></label>
                                 <input name="birth_date" type="date" class="form-control" value="{{Auth::user()->birth_date}}">
                                 @error('birth_date')
                                     <small class="text-danger">{{ $message }}</small>
@@ -112,7 +112,7 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-12">
-                                <label>Bio</label>
+                                <label>Bio <sup style="color: red">*required</sup></label>
                                 <textarea name="bio" class="form-control summernote-simple">{!! Auth::user()->bio !!}</textarea>
                                 @error('bio')
                                     <small class="text-danger">{{ $message }}</small>

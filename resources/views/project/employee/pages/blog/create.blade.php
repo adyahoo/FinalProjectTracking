@@ -40,10 +40,10 @@
                                 <div class="col-sm-12 col-md-7">
                                     <input name="image" class="form-control" value="{{ old('image') }}" type="file" onchange="showPreview(event);" accept="image/jpg, image/jpeg, image/gif"/>
                                     <img id="thumbnail" class="img-fluid" id="propic" src="https://via.placeholder.com/1920x1080" alt="">
+                                    @error('image')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
                                 </div>
-                                @error('image')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
                             </div>
                             <div class="form-group row mb-4">
                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Slug <sup style="color: gray">*optional</sup></label>
@@ -71,6 +71,7 @@
                             <div class="form-group">
                                 <label>Content <sup style="color: red">*required</sup></label>
                                 @error('content')
+                                    <br>
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                                 <textarea name="content" class="summernotes">{{ old('content') }}</textarea>
