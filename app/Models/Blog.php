@@ -8,6 +8,7 @@ use App\Traits\ImageTrait;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Str;
+use Carbon\Carbon;
 use Auth;
 
 class Blog extends Model
@@ -67,7 +68,7 @@ class Blog extends Model
 
     public function setSlugAttribute($value)
     {
-        $this->attributes['slug'] = Str::slug($value);
+        $this->attributes['slug'] = Str::slug($value.'-'.Carbon::now(), '-');
     }
 
     public function setContentAttribute($value){
