@@ -17,7 +17,7 @@ class CreateProjectDetails extends Migration
             $table->id();
             $table->unsignedBigInteger('project_version_id');
             $table->morphs('moduleable');
-            $table->enum('status', ['not yet', 'on progress', 'done']);
+            $table->string('status');
             $table->datetime('start_date');
             $table->datetime('end_date');
             $table->datetime('start_date_actual')->nullable();

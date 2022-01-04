@@ -49,6 +49,12 @@ class Project extends Model
         return "Project :subject.name has been {$eventName} by: :causer.name";
     }
 
+    public function scopeWhereProjectManager($query, $projectManager)
+    {
+        if (!empty($projectManager) && $projectManager != $this->filter['no_filter'])
+            return $query->where('user_id', $projectManager);
+    }
+
     public function scopeWhereMyProject($query)
     {
         return $query->where('user_id', Auth::user()->id);
@@ -77,7 +83,7 @@ class Project extends Model
             return $query->whereHas('projectVersions', function($projectVersions) use($userId){
                 $projectVersions->whereHas('projectDetails', function($projectDetails) use($userId){
                     $projectDetails->whereHas('userAssignments', function($userAssignments) use($userId){
-                        $userAssignments->where('user_id', $userId);
+                        $userAssignments->whereIn('user_id', $userId);
                     });
                 });
             });
@@ -90,7 +96,7 @@ class Project extends Model
                 $projectVersions->whereHas('projectDetails', function($projectDetails) use($roleId){
                     $projectDetails->whereHas('userAssignments', function($userAssignments) use($roleId){
                         $userAssignments->whereHas('user', function($user) use($roleId){
-                            $user->where('role_id', $roleId);
+                            $user->whereIn('role_id', $roleId);
                         });
                     });
                 });
@@ -110,6 +116,11 @@ class Project extends Model
     public function userAssignments()
     {
         return $this->hasManyDeep(UserAssignment::class, [ProjectVersion::class, ProjectDetail::class]);
+    }
+
+    public function roles()
+    {
+        return $this->hasManyDeep(Role::class, [UserAssignment::class, ProjectVersion::class, ProjectDetail::class]);
     }
 
     public function projectDetails()

@@ -33,6 +33,11 @@ class Role extends Model
         return $query->where('privilege', $this->privileges['employee']);
     }
 
+    public function scopeWhereProjectManager($query)
+    {
+        return $query->where('privilege', $this->privileges['project_manager']);
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
         return "Role :subject.name has been {$eventName} by: :causer.name";

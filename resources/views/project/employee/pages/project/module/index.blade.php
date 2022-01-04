@@ -63,11 +63,15 @@
                                             </td>
                                             <td>
                                                 <div class="badge 
-                                                    @if($projectDetail->status == $projectDetail->statusOption['not_yet'])
+                                                    @if($projectDetail->status == $projectDetail->statusOption['open'])
                                                         badge-danger
                                                     @elseif($projectDetail->status == $projectDetail->statusOption['on_progress'])
+                                                        badge-primary
+                                                    @elseif($projectDetail->status == $projectDetail->statusOption['pending'])
                                                         badge-warning
-                                                    @elseif($projectDetail->status == $projectDetail->statusOption['done'])
+                                                    @elseif($projectDetail->status == $projectDetail->statusOption['testing'])
+                                                        badge-info
+                                                    @elseif($projectDetail->status == $projectDetail->statusOption['finish'])
                                                         badge-success
                                                     @endif
                                                 ">{{ $projectDetail->status }}</div>

@@ -44,7 +44,7 @@ class ProjectDetailController extends Controller
 
         $projectDetail                     = new ProjectDetail();
         $projectDetail->project_version_id = $latestVersion->id;
-        $projectDetail->status             = $projectDetail->statusOption['not_yet'];
+        $projectDetail->status             = $projectDetail->statusOption['open'];
         $projectDetail->start_date         = $request->start_date;
         $projectDetail->end_date           = $request->end_date;
 
@@ -68,7 +68,7 @@ class ProjectDetailController extends Controller
 
         $projectDetail                     = new ProjectDetail();
         $projectDetail->project_version_id = $latestVersion->id;
-        $projectDetail->status             = $projectDetail->statusOption['not_yet'];
+        $projectDetail->status             = $projectDetail->statusOption['open'];
         $projectDetail->start_date         = $request->start_date;
         $projectDetail->end_date           = $request->end_date;
 

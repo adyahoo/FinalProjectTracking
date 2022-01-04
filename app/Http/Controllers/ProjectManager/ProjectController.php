@@ -18,15 +18,32 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $projects  = Project::whereMyProject()
-                            ->whereStartDate($request->start_date)
-                            ->whereEndDate($request->end_date)
-                            ->whereUserAssignee($request->user)
-                            ->whereRoleAssignee($request->role)
-                            ->get();
-        $roles     = Role::whereEmployee()->get();
+        $startDate = "";
+        $endDate   = "";
 
-        return view('project.project_manager.pages.project.index', compact('projects', 'roles', 'request'));
+        if(!empty($request->start_end_date)) {
+            $dates     = explode(' - ', $request->start_end_date);
+            $startDate = $dates[0];
+            $endDate   = $dates[1];
+        }
+
+        $projects        = Project::whereStartDate($startDate)
+                                    ->whereEndDate($endDate)
+                                    ->whereUserAssignee($request->user)
+                                    ->whereRoleAssignee($request->role)
+                                    ->whereProjectManager($request->project_manager)
+                                    ->get();
+        $roles           = Role::whereEmployee()->get();
+        $projectManagers = Role::whereProjectManager()->first()->user;
+        $employees       = Role::whereEmployee()->first()->user;
+
+        return view('project.project_manager.pages.project.index', compact(
+            'projects',
+            'roles',
+            'request',
+            'projectManagers',
+            'employees'
+        ));
     }
 
     public function create()
@@ -70,22 +87,23 @@ class ProjectController extends Controller
         return redirect()->back()->with('success', 'Project deleted successfully');
     }
 
-    public function detail(Project $project)
+    public function detail(Project $project, Request $request)
     {
-        $latestVersion    = ProjectVersion::where('project_id', $project->id)->latest()->first();
-        $projectDetail    = new ProjectDetail();
-        $logs             = Activity::where('subject_type', get_class($projectDetail))->latest()->get();
+        $versions      = ProjectVersion::where('project_id', $project->id)->get();
+        $projectDetail = new ProjectDetail();
+        $logs          = Activity::where('subject_type', get_class($projectDetail))->latest()->get();
 
-        if($latestVersion->projectDetails->count() == 0) {
+        if($versions[0]->projectDetails->count() == 0) {
             $progressPercentage = 0;
         } else {
-            $progressPercentage = ($latestVersion->projectDetails()->whereDone()->count() / $latestVersion->projectDetails->count()) * 100;
+            $progressPercentage = ($versions[0]->projectDetails()->whereDone()->count() / $versions[0]->projectDetails->count()) * 100;
         }
 
         return view('project.project_manager.pages.project.detail', compact(
             'project',
-            'latestVersion',
+            'versions',
             'progressPercentage',
+            'request',
             'logs'
         ));
     }

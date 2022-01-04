@@ -4,7 +4,20 @@
             <h1>{{ $project->name }}</h1>
         </div>
         <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-right">
-            <p>Latest Version v{{ $latestVersionNumber }}</p>
+            Selected Version 
+            <form action="{{ route('project_manager.projects.module.all', $project) }}">
+                <div class="input-group">
+                    <select name="version" class="form-control form-control-sm py-1" style="height: 32px;">
+                        <option value="">All Version</option>
+                        @foreach($versions as $version)
+                            <option value="{{ $version->id }}" @if($requestVersion == $version->id) selected @endif>{{ $version->version_number }}</option>
+                        @endforeach
+                    </select>
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary py-1" title="Search" type="submit" style="height: 32px; margin-top: 0;"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <div class="row">

@@ -12,8 +12,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $projects         = Project::whereUserAssignee(Auth::user()->id)->latest()->get();
-        $launchedProjects = Project::whereUserAssignee(Auth::user()->id)->whereLaunched()->count();
+        $projects         = Project::whereUserAssignee(array(Auth::user()->id))->latest()->get();
+        $launchedProjects = Project::whereUserAssignee(array(Auth::user()->id))->whereLaunched()->count();
         $totalBlogs       = Blog::myBlogs()->count();
 
         return view('project.employee.pages.dashboard.dashboard', compact(

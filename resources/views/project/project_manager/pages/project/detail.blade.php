@@ -4,8 +4,9 @@
 
 @section('content')
     @include('project.project_manager.include.project_page_tab', [
-        'project'             => $project,
-        'latestVersionNumber' => $latestVersion->version_number
+        'project'        => $project,
+        'versions'       => $versions,
+        'requestVersion' => $request->version
     ])
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
@@ -50,7 +51,7 @@
                                     <div class="progress mt-3">
                                         <div class="progress-bar" role="progressbar" data-width="{{ $progressPercentage }}%" aria-valuenow="{{ $progressPercentage }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $progressPercentage }}%;">{{ round($progressPercentage) }}%</div>
                                     </div>
-                                    <p class="mt-2 mb-0 text-dark">Module done on latest version : <b><span class="text-primary">{{ $latestVersion->projectDetails()->whereDone()->count() }}</span> / {{ $latestVersion->projectDetails->count() }}</b></p>
+                                    <p class="mt-2 mb-0 text-dark">Module done on latest version : <b><span class="text-primary">{{ $versions[0]->projectDetails()->whereDone()->count() }}</span> / {{ $versions[0]->projectDetails->count() }}</b></p>
                                 </div>
                             </div>
                         </div>
@@ -93,40 +94,6 @@
                                 </div>
                             </div>
                             <a href="{{ route('project_manager.projects.credentials', $project) }}"><i class="fa fa-book-open"></i> Read More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="section-body">
-                <h2 class="section-title">Latest Activities</h2>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="activities">
-                            @php
-                                $logCount = 0;
-                            @endphp
-                            @foreach($logs as $log)
-                                @if($log->subject->projectVersion->project_id == $project->id && $logCount < 4)
-                                    <div class="activity">
-                                        <div class="activity-icon bg-primary text-white shadow-primary">
-                                            <i class="fas fa-history"></i>
-                                        </div>
-                                        <div class="activity-detail">
-                                            <div class="mb-2">
-                                                <span class="text-job text-primary">{{ $log->created_at->format('d F Y') }} ({{ $log->created_at->format('H:i') }})</span>
-                                                <span class="bullet"></span>
-                                                <a class="text-job" href="{{ route('project_manager.projects.logs.all', $project) }}">View</a>
-                                            </div>
-                                            <p>
-                                                {{ $log->description }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    @php
-                                        $logCount += 1;
-                                    @endphp
-                                @endif
-                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -186,6 +153,47 @@
                             </ul>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="section-body">
+                <h2 class="section-title">
+                    Latest Activities
+                    <a href="{{ route('project_manager.projects.logs.all', $project) }}" class="btn btn-outline-primary ml-2">View All</a>
+                </h2>
+                <div class="row">
+                    @php
+                        $logCount = 0;
+                    @endphp
+                    @foreach($logs as $log)
+                        @if($log->subject->projectVersion->project_id == $project->id && $logCount < 4)
+                            <div class="col-6">
+                                <div class="activities">
+                                    <div class="activity">
+                                        <div class="activity-icon bg-primary text-white shadow-primary">
+                                            <i class="fas fa-history"></i>
+                                        </div>
+                                        <div class="activity-detail">
+                                            <div class="mb-2">
+                                                <span class="text-job text-primary">{{ $log->created_at->format('d F Y') }} ({{ $log->created_at->format('H:i') }})</span>
+                                                <span class="bullet"></span>
+                                                <span class="text-job" href=""><i class="fa fa-user-circle"></i> {{ $log->causer->name }}</span>
+                                            </div>
+                                            <p>
+                                                {{ $log->description }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @php
+                                $logCount += 1;
+                            @endphp
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </div>

@@ -13,9 +13,11 @@ class ProjectDetail extends Model
     use HasFactory, LogsActivity;
 
     public $statusOption = [
-        'done'        => 'done',
-        'not_yet'     => 'not yet',
-        'on_progress' => 'on progress'
+        'finish'      => 'Finish',
+        'testing'     => 'Testing',
+        'on_progress' => 'On Progress',
+        'pending'     => 'Pending',
+        'open'        => 'Open'
     ];
 
     public $moduleType = [
@@ -87,12 +89,12 @@ class ProjectDetail extends Model
 
     public function scopeWhereDone($query)
     {
-        return $query->where('status', $this->statusOption['done']);
+        return $query->where('status', $this->statusOption['finish']);
     }
 
     public function scopeWhereDoneOrOnProgress($query)
     {
-        return $query->where('status', $this->statusOption['done'])->orWhere('status', $this->statusOption['on_progress']);
+        return $query->where('status', $this->statusOption['finish'])->orWhere('status', $this->statusOption['on_progress']);
     }
 
     public function scopeWhereUserAssignee($query, $userId)
