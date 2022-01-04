@@ -12,7 +12,7 @@
                             <div class="row mb-4 bg-white align-items-center">
                                 <div class="col-4">
                                     <div class="section-banner__content-container">
-                                        <img class="section-banner__content-img" src="{{asset(Storage::url('blog_images/'.$blog->image))}}">
+                                        <img class="section-banner__content-img rounded" src="{{asset(Storage::url('blog_images/'.$blog->image))}}">
                                     </div>
                                 </div>
                                 <div class="col-7">

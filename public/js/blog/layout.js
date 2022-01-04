@@ -12,10 +12,6 @@ $(document).ready(function () {
     $('.navbar-nav li .home-link').addClass('active');
   }
 });
-
-function search(id) {
-  $("#formSearch" + id).submit();
-}
 /******/ })()
 ;
 //# sourceMappingURL=layout.js.map
