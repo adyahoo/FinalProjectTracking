@@ -28,7 +28,7 @@ class BlogRequest extends FormRequest
             'title'            => 'required|min:10|max:60',
             'content'          => 'required|min:100',
             'status'           => 'required',
-            'slug'             => 'nullable|min:10|max:50',
+            'slug'             => 'nullable|min:10|max:70',
 
         ];
 

@@ -20,64 +20,6 @@
         <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
         <h2 class="section-title">Edit Blog</h2>
         <p class="section-lead">On this page, you can edit your blog.</p>
-        <div class="card">
-            <div id="accordion">
-                <div class="accordion">
-                    <div class="card-header" data-toggle="collapse" data-target="#panel-body-1">
-                        <h4>Edit Meta Data</h4>
-                        <i class="fa fa-angle-down ml-auto"></i>
-                    </div>
-                    <div class="accordion-body collapse show" id="panel-body-1" data-parent="#accordion">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label>Meta Title <sup style="color: red">*optional</sup></label>
-                                <input name="meta_title" value="{{ $blog->meta_title }}" type="text" class="form-control" placeholder="Input Meta Title">
-                                @error('meta_title')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label>Meta Description <sup style="color: red">*optional</sup></label>
-                                <textarea style="height: 200px" name="meta_description" value="" type="text" class="form-control" placeholder="Input Meta Description">{{ $blog->meta_description }}</textarea>
-                                @error('meta_description')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div id="accordion">
-                <div class="accordion">
-                    <div class="card-header" data-toggle="collapse" data-target="#panel-body-2" >
-                        <h4>Edit Thumbnail</h4>
-                        <i class="fa fa-angle-down ml-auto"></i>
-                    </div>
-                    <div class="accordion-body collapse show" id="panel-body-2" data-parent="#accordion">
-                        <div class="card-body">
-                            <div class="form-group text-center">
-                                <div class="col-sm-12">
-                                    <label for="image-upload">Choose Thumbnail</label>
-                                    <div class="col-md-6 col-lg-6 mx-auto">
-                                        <input name="image" class="form-control" value="{{ old('image') }}" type="file" onchange="showPreview(event);" accept="image/jpg, image/jpeg, image/gif"/>
-                                        @if($blog->image)
-                                            <img id="thumbnail" class="img-fluid" id="propic" src="{{ Storage::url('blog_images/'.$blog->image) }}" alt="">
-                                        @else
-                                            <img id="thumbnail" class="img-fluid" id="propic" src="https://via.placeholder.com/1920x1080" alt="">
-                                        @endif
-                                    </div>
-                                </div>
-                                @error('image')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -86,7 +28,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Title</label>
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Title <sup style="color: red">*required</sup></label>
                             <div class="col-sm-12 col-md-7">
                                 <input value="{{ $blog->title }}" name="title" type="text" class="form-control" placeholder="Input Blog Title">
                                 @error('title')
@@ -95,16 +37,31 @@
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Slug <sup style="color: red">*optional</sup></label>
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" for="image-upload">Thumbnail <sup style="color: red">*required</sup></label>
                             <div class="col-sm-12 col-md-7">
-                                <input value="{{ str_replace('-', '', $blog->slug) }}" name="slug" type="text" class="form-control" placeholder="Input Slug">
+                                <input name="image" class="form-control" value="{{ old('image') }}" type="file" onchange="showPreview(event);" accept="image/jpg, image/jpeg, image/gif"/>
+                                @if($blog->image)
+                                    <img id="thumbnail" class="img-fluid" id="propic" src="{{ Storage::url('blog_images/'.$blog->image) }}" alt="">
+                                @else
+                                    <img id="thumbnail" class="img-fluid" id="propic" src="https://via.placeholder.com/1920x1080" alt="">
+                                @endif
+                                @error('image')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mb-4">
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Slug <sup style="color: gray">*optional</sup></label>
+                            <div class="col-sm-12 col-md-7">
+                                @php $slug = preg_replace('/\d{4}\-\d{2}-\d{2}-\d{6}/', ' ' ,$blog->slug); @endphp
+                                <input value="{{ str_replace('-', ' ', $slug) }}" name="slug" type="text" class="form-control" placeholder="Input Slug">
                                 @error('slug')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
                         </div>
                         <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Category</label>
+                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Category <sup style="color: red">*required</sup></label>
                             <div class="col-sm-12 col-md-7">
                                 <select name="blog_category_id" class="form-control selectric">
                                     <option value="">Select Blog Category</option>
@@ -118,8 +75,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Content</label>
+                            <label>Content <sup style="color: red">*required</sup></label>
                             @error('content')
+                                <br>
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                             <textarea name="content" class="summernotes">{{ $blog->content }}</textarea>
@@ -133,15 +91,40 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row mb-4">
-                            <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
-                            <div class="col-sm-12 col-md-7">
-                                <button type="submit" class="btn btn-primary">Edit Blog</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div id="accordion">
+                <div class="accordion">
+                    <div class="card-header" data-toggle="collapse" data-target="#panel-body-1">
+                        <h4>Edit Meta Data</h4>
+                        <i class="fa fa-angle-down ml-auto"></i>
+                    </div>
+                    <div class="accordion-body collapse show" id="panel-body-1" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Meta Title <sup style="color: gray">*optional</sup></label>
+                                <input name="meta_title" value="{{ $blog->meta_title }}" type="text" class="form-control" placeholder="Input Meta Title">
+                                @error('meta_title')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label>Meta Description <sup style="color: gray">*optional</sup></label>
+                                <textarea style="height: 200px" name="meta_description" value="" type="text" class="form-control" placeholder="Input Meta Description">{{ $blog->meta_description }}</textarea>
+                                @error('meta_description')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-sm-12 col-md-7">
+            <button type="submit" class="btn btn-primary">Edit Blog</button>
         </div>
     </form>
 </div>

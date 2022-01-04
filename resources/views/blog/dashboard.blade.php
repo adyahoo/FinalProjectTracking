@@ -34,8 +34,4 @@
 @endsection
 
 @push('js')
-<!-- <script src="{{ asset('templates/stisla/node_modules/summernote/dist/summernote-bs4.js') }}"></script>
-<script>
-    alert($($('#bannerDesc').summernote('code')).text())
-</script> -->
 @endpush

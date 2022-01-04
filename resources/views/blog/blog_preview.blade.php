@@ -22,7 +22,6 @@
                         <p class="section-detail__profile-name font-weight-bold d-inline-block mb-0">{{$blog->user->name}}</p>
                         <p>
                             Published at: {{date('d M Y', strtotime($blog->published_at))}}<br>
-                            Published by: {{$blog->user->name}}
                         </p>
                         <i class="far fa-eye mr-5">100</i>
                     </div>

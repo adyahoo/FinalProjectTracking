@@ -33,11 +33,11 @@ class BlogController extends Controller
         }
         
         if ($request->meta_description == '') {
-            $blogs['meta_description'] = str_replace('<p>', '', substr($request->content, 0, 200));
+            $blogs['meta_description'] = substr(strip_tags($request->content), 0, 200);
         }
         
         if ($request->slug == '') {
-            $blogs['slug'] = Str::slug($request->title);
+            $blogs['slug'] = $request->title;
         }
 
         if ($request->status == 'Published') {
