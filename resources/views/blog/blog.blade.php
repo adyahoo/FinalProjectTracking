@@ -52,28 +52,6 @@
 @push('js')
 <script src="{{asset('js/bootstrap-toolkit.min.js')}}"></script>
 <script src="{{asset('js/blog/blog.js')}}"></script>
-<!-- <script>
-    $('#sortSelect').on('change', function () {
-        var sort = $(this).val()
-
-        $.ajax({
-            url: "{{route('sort_blog')}}",
-            method: "post",
-            data: {
-                _token: $('meta[name="csrf-token"]').attr('content'),
-                sort: sort,
-            },
-            success: function (result) {
-                $('#gridContent').html(
-                    '<h2>asdas</h2>'
-                )
-                // $('#gridContent').html(
-                //     JSON.parse(result.view)
-                // )
-                alert(result)
-            }
-        })
-    })
 </script> -->
 @stack('blog-js')
 @endpush

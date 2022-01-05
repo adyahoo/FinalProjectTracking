@@ -7,13 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\ImageTrait;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Overtrue\LaravelLike\Traits\Likeable;
 use Str;
 use Carbon\Carbon;
 use Auth;
 
 class Blog extends Model
 {
-    use HasFactory, ImageTrait, LogsActivity;
+    use HasFactory, ImageTrait, LogsActivity, Likeable;
 
     const IMAGE_PATH    = 'public/blog_images/';
 
@@ -64,6 +65,11 @@ class Blog extends Model
     public function blogReviews()
     {
         return $this->hasMany(BlogReview::class);
+    }
+
+    public function blogLike()
+    {
+        return $this->hasMany(BlogLike::class);
     }
 
     public function setSlugAttribute($value)

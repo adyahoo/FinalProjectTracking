@@ -133,4 +133,12 @@ body {
   border-bottom: 2px solid black;
 }
 
+.fa-heart:hover {
+  cursor: pointer;
+}
+
+#guestLikeBtn:hover, #guestLikeListBtn:hover {
+  cursor: default !important;
+}
+
 /*# sourceMappingURL=layout.css.map*/

@@ -20,5 +20,6 @@ Route::post('/blog/search/kategori', 'blog\ListBlogsController@returnKategori')-
 Route::post('/blog/search/filter', 'blog\ListBlogsController@returnSidebar')->name("filter");
 Route::get('/blog_detail/{slug}', 'blog\DetailBlogController@index')->name("detail_blog");
 Route::get('/author/{id}', 'blog\AuthorController@index')->name("author");
+Route::post('/like', 'blog\HomeBlogController@likePost')->name("like");
 
 require __DIR__.'/auth.php';
