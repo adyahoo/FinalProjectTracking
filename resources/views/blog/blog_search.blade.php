@@ -7,7 +7,7 @@
     @if($request != null)
         @if($request->searchInput != null)
         <span id="labelSearch" class="badge badge-info section-blog__label rounded-pill mr-3">
-            {{$request->searchInput}} <i id="cancelLabelSearch" class="fas fa-times ml-3"></i>
+            {{$request->searchInput}}
         </span>
         @endif
         
@@ -15,7 +15,7 @@
             @foreach($request->filterSidebar as $data)
             @if($data != "")
             <span id="labelFilter-{{$loop->iteration}}" class="badge badge-info section-blog__label rounded-pill mr-3">
-                {{$data}} <i id="cancelLabelFilter-{{$loop->iteration}}" class="fas fa-times ml-3"></i>
+                {{$data}}
                 <input type="hidden" id="filterIndex" name="filterIndex[]" value="{{$loop->count}}">
             </span>
             @endif
@@ -24,7 +24,7 @@
 
         @if($request->categoryName != null)
         <span id="labelKategori" class="badge badge-info section-blog__label rounded-pill mr-3">
-            {{$request->categoryName}} <i id="cancelLabelKategori" class="fas fa-times ml-3"></i>
+            {{$request->categoryName}}
         </span>
         @endif
     @endif
