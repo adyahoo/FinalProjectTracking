@@ -21,13 +21,13 @@
 </div>
 <div class="section container section-popular-author">
     <h3 class="section-popular-author__title">
-        From Popular Author
+        Most Favorited Blogs
     </h3>
     <div class="row">
         @if($mostViewed->count() < 1)
             <h2>No Data Found</h2>
         @else
-            <x-content-list-home :blogs="$mostViewed"></x-content-list-home>
+            <x-content-list-home :blogs="$mostLiked"></x-content-list-home>
         @endif
     </div>
 </div>

@@ -15,29 +15,29 @@
         @yield('label')
     </div>
     <div class="section-sort row no-gutters mb-4 justify-content-end align-items-center">
-        <p class="m-0 mr-2">Sort By : </p>
+        <p class="m-0 mr-2" id="sortTitle">Sort By : </p>
         <form>
             <div class="form-group m-0">
                 <select class="form-control" id="sortSelect">
                     <option selected disabled>Choose...</option>
-                    <option>Newest</option>
-                    <option>Oldest</option>
+                    <option value="newest">Newest</option>
+                    <option value="oldest">Oldest</option>
                 </select>
             </div>
         </form>
-        <i data-id="0" id="view_id" class="fas fa-th-large section-content__icon"></i>
+        <i data-id="0" id="viewId" class="fas fa-th-large section-content__icon"></i>
         <a data-toggle="collapse" href="#collapseSidebar" role="button" aria-expanded="false"
             aria-controls="collapseSidebar">
             <i class="fa fa-filter section-content__icon"></i>
         </a>
     </div>
     <div class="section-body row no-gutters justify-content-between">
-        <div class="col-12 col-md-8 order-1 order-md-0" id="list-view">
+        <div class="col-12 col-md-8 order-1 order-md-0" id="listView">
             @yield('content-list')
         </div>
 
-        <div class="col-12 col-md-8 order-1 order-md-0" id="grid-view">
-            @yield('content-grid')            
+        <div class="col-12 col-md-8 order-1 order-md-0" id="gridView">
+            @yield('content-grid')
         </div>
 
         <div class="col-12 col-md-3 mb-4 collapse" id="collapseSidebar">
@@ -52,6 +52,5 @@
 @push('js')
 <script src="{{asset('js/bootstrap-toolkit.min.js')}}"></script>
 <script src="{{asset('js/blog/blog.js')}}"></script>
-</script> -->
 @stack('blog-js')
 @endpush

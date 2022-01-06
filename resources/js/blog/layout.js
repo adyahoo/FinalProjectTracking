@@ -7,10 +7,6 @@ $(document).ready(function() {
     }
 });
 
-function searchCategory(id) {
-    $("#formSearch" + id).submit();
-}
-
 $("#like_btn").click(function () {
     $(this).toggleClass("far fas");
 });

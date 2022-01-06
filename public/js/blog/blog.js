@@ -3,16 +3,52 @@ var __webpack_exports__ = {};
 /*!***********************************!*\
   !*** ./resources/js/blog/blog.js ***!
   \***********************************/
-$("#list-view").hide();
-$("#view_id").click(function () {
+$(document).ready(function () {
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  var index = $('#filterIndex').val();
+  $('#cancelLabelSearch').click(function () {
+    $('#labelSearch').hide();
+  });
+  $('#cancelLabelKategori').click(function () {
+    $('#labelKategori').hide();
+  });
+
+  var _loop = function _loop(i) {
+    $('#cancelLabelFilter-' + i).click(function () {
+      $('#labelFilter-' + i).hide();
+    });
+  };
+
+  for (var i = 1; i <= index; i++) {
+    _loop(i);
+  }
+
+  $('#sortSelect').change(function () {
+    sortValue = this.value;
+    checkViewLayout();
+  });
+  $('#viewId').click(function () {
+    sortValue = $('#sortSelect').val();
+
+    if (sortValue != null) {
+      checkViewLayout();
+    }
+  });
+});
+$("#listView").hide();
+$("#viewId").click(function () {
   $(this).toggleClass("fa-th-large fa-list");
 
   if ($(this).hasClass("fa-th-large")) {
-    $("#list-view").hide();
-    $("#grid-view").show();
+    $("#listView").hide();
+    $("#gridView").show();
   } else {
-    $("#list-view").show();
-    $("#grid-view").hide();
+    $("#listView").show();
+    $("#gridView").hide();
   }
 });
 
@@ -34,25 +70,6 @@ $("#view_id").click(function () {
   }));
 })(jQuery, document, window, ResponsiveBootstrapToolkit);
 
-$(document).ready(function () {
-  var index = $('#filterIndex').val();
-  $('#cancelLabelSearch').click(function () {
-    $('#labelSearch').hide();
-  });
-  $('#cancelLabelKategori').click(function () {
-    $('#labelKategori').hide();
-  });
-
-  var _loop = function _loop(i) {
-    $('#cancelLabelFilter-' + i).click(function () {
-      $('#labelFilter-' + i).hide();
-    });
-  };
-
-  for (var i = 1; i <= index; i++) {
-    _loop(i);
-  }
-});
 $('#yearSelect').change(function () {
   var selected = $('#yearSelect').find(":selected").val();
 
@@ -60,6 +77,32 @@ $('#yearSelect').change(function () {
     $('#monthSelect').removeAttr('disabled');
   }
 });
+
+function checkViewLayout() {
+  if ($('#viewId').hasClass("fa-th-large")) {
+    getSortedData(sortValue, 'grid');
+  } else {
+    getSortedData(sortValue, 'list');
+  }
+}
+
+function getSortedData(data, type) {
+  $.ajax({
+    type: 'POST',
+    url: '/sort_blog',
+    data: {
+      data: data,
+      type: type
+    },
+    success: function success(data) {
+      if (type == 'grid') {
+        $('#gridContent').html(data);
+      } else {
+        $('#listContent').html(data);
+      }
+    }
+  });
+}
 /******/ })()
 ;
 //# sourceMappingURL=blog.js.map

@@ -27,6 +27,7 @@ mix.sass('resources/scss/auth/auth.scss', 'public/css/auth')
     .js('resources/js/blog/layout.js', 'public/js/blog')
     .js('resources/js/blog/swiper-js.js', 'public/js/blog')
     .js('resources/js/blog/blog.js', 'public/js/blog')
+    .js('resources/js/blog/author.js', 'public/js/blog')
     .sourceMaps(true, 'source-map');
 
 mix.version();
