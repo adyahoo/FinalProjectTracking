@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\BlogCategories;
 use App\Models\User;
+use Illuminate\Support\Facades\View;
 
 class ListBlogsController extends Controller
 {
@@ -20,15 +21,18 @@ class ListBlogsController extends Controller
     public function sort(Request $request)
     {
         if ($request->ajax()) {
-            $data   = $request->all();
-            $blogs  = Blog::with('user');
-            $result = $data['sort'] == "Oldest" ? $blogs->orderBy('published_at', "ASC")->get() : $blogs->orderBy('published_at', "DESC")->get();
-            // $view   = view('components.content-horiz', compact('result'))->render();
+            $data      = $request->all();
+            $blogs     = Blog::with('user');
+            $results   = $data['data'] == "oldest" ? $blogs->orderBy('published_at', "ASC")->get() : $blogs->orderBy('published_at', "DESC")->get();
+    
+            $component = $data['type'] == "grid" ? View::make("components.content-vert") : View::make("components.content-horiz");
+            $view      = $component->with('blogs', $results)->render();
             
-            return json_encode([
-                // 'view' => $view,
-                'data' => $result,
-            ]);
+            if (count($results) > 0) {
+                echo $view;
+            } else {
+                echo '<div class="col">No Data</div>';
+            }
         }
     }
 

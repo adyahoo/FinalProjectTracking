@@ -1,14 +1,51 @@
-$("#list-view").hide();
+$(document).ready(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
-$("#view_id").click(function() {
+    var index = $('#filterIndex').val()
+
+    $('#cancelLabelSearch').click(function() {
+        $('#labelSearch').hide()
+    });
+
+    $('#cancelLabelKategori').click(function() {
+        $('#labelKategori').hide()
+    });
+
+    for(let i = 1; i <= index; i++) {
+        $('#cancelLabelFilter-' + i).click(function() {
+            $('#labelFilter-' + i).hide()
+        });
+    }
+
+    $('#sortSelect').change(function () {
+        sortValue = this.value
+        checkViewLayout()
+    })
+
+    $('#viewId').click(function () {
+        sortValue = $('#sortSelect').val()
+
+        if (sortValue != null) {
+            checkViewLayout()
+        }
+    })
+});
+
+$("#listView").hide();
+
+$("#viewId").click(function() {
     $(this).toggleClass("fa-th-large fa-list")
     
     if ($(this).hasClass("fa-th-large")) {
-        $("#list-view").hide();
-        $("#grid-view").show();
+        $("#listView").hide();
+        $("#gridView").show();
     } else {
-        $("#list-view").show();
-        $("#grid-view").hide();
+        $("#listView").show();
+        $("#gridView").hide();
     }
 });
 
@@ -33,23 +70,6 @@ $("#view_id").click(function() {
     );
 })(jQuery, document, window, ResponsiveBootstrapToolkit);
 
-$(document).ready(function () {
-    var index = $('#filterIndex').val()
-
-    $('#cancelLabelSearch').click(function() {
-        $('#labelSearch').hide()
-    });
-
-    $('#cancelLabelKategori').click(function() {
-        $('#labelKategori').hide()
-    });
-
-    for(let i = 1; i <= index; i++) {
-        $('#cancelLabelFilter-' + i).click(function() {
-            $('#labelFilter-' + i).hide()
-        });
-    }
-})
 
 $('#yearSelect').change(function() {
     var selected = $('#yearSelect').find(":selected").val()
@@ -57,3 +77,29 @@ $('#yearSelect').change(function() {
         $('#monthSelect').removeAttr('disabled')
     }
 })
+
+function checkViewLayout() {
+    if ($('#viewId').hasClass("fa-th-large")) {
+        getSortedData(sortValue, 'grid')
+    } else {
+        getSortedData(sortValue, 'list')
+    }
+}
+
+function getSortedData(data, type) {
+    $.ajax({
+        type: 'POST',
+        url: '/sort_blog',
+        data: {
+            data: data,
+            type: type,
+        },
+        success: function success(data) {
+            if (type == 'grid') {
+                $('#gridContent').html(data)
+            } else {
+                $('#listContent').html(data)
+            }
+        }
+    });
+}

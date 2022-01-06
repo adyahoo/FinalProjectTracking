@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="col-7 col-lg-9 ml-3 section-detail__profile-info">
-                        <a href="{{route('author', $blog->user->id)}}">
+                        <a href="{{route('author', $blog->user->name)}}">
                             <p class="section-detail__profile-name font-weight-bold d-inline-block mb-0">{{$blog->user->name}}</p>
                         </a>
                         <p>

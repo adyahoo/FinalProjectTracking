@@ -18,8 +18,10 @@
         </ol>
     </nav>
     <div class="section section-author bg-white rounded text-center">
+        <input type="hidden" id="userSelectedId" value="{{$user->id}}">
         <div class="section-author__profile-container">
-            <img class="section-author__profile-img rounded-circle" src="{{$user->profile_image != null ? asset(Storage::url('profile_images/'.$user->profile_image)) : asset('templates/stisla/assets/img/avatar/avatar-1.png')}}">
+            <img class="section-author__profile-img rounded-circle"
+                src="{{$user->profile_image != null ? asset(Storage::url('profile_images/'.$user->profile_image)) : asset('templates/stisla/assets/img/avatar/avatar-1.png')}}">
         </div>
         <h2 class="text-dark">{{$user->name}}</h2>
         <p>{{strip_tags($user->bio)}}</p>
@@ -28,43 +30,43 @@
         <p class="m-0 mr-2">Sort By : </p>
         <form>
             <div class="form-group m-0">
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option selected>Choose...</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                <select class="form-control" id="authorSortSelect">
+                    <option selected disabled>Choose...</option>
+                    <option value="newest">Newest</option>
+                    <option value="oldest">Oldest</option>
                 </select>
             </div>
         </form>
-        <i data-id="0" id="view_id" class="fas fa-th-large section-content__icon"></i>
-        <a data-toggle="collapse" href="#collapseSidebar" role="button" aria-expanded="false" aria-controls="collapseSidebar">
+        <i data-id="0" id="viewId" class="fas fa-th-large section-content__icon"></i>
+        <a data-toggle="collapse" href="#collapseSidebar" role="button" aria-expanded="false"
+            aria-controls="collapseSidebar">
             <i class="fa fa-filter section-content__icon"></i>
         </a>
     </div>
     <div class="section row no-gutters justify-content-between">
-        <div class="col-12 col-md-8 order-1 order-md-0" id="list-view">
-            @if($blogs->count() < 1)
-                <h2>No Data Found</h2>
-            @else
-                <x-content-horiz :blogs="$blogs"></x-content-horiz>
-            @endif
-        </div>        
-        <div class="col-12 col-md-8 order-1 order-md-0" id="grid-view">
-            <div class="row no-gutters justify-content-between">
-                @if($blogs->count() < 1)
-                    <h2>No Data Found</h2>
+        <div class="col-12 col-md-8 order-1 order-md-0" id="listView">
+            @if($blogs->count() < 1) <h2>No Data Found</h2>
                 @else
-                    <x-content-vert :blogs="$blogs"></x-content-vert>
+                <div class="row no-gutters justify-content-between" id="listContent">
+                    <x-content-horiz :blogs="$blogs"></x-content-horiz>
+                </div>
                 @endif
+        </div>
+        <div class="col-12 col-md-8 order-1 order-md-0" id="gridView">
+            <div class="row no-gutters justify-content-between">
+                @if($blogs->count() < 1) <h2>No Data Found</h2>
+                    @else
+                    <div class="row no-gutters justify-content-between" id="gridContent">
+                        <x-content-vert :blogs="$blogs"></x-content-vert>
+                    </div>
+                    @endif
             </div>
         </div>
-        
+
         <div class="col-12 col-md-3 mb-4 collapse" id="collapseSidebar">
             <div class="border rounded p-2 bg-white" id="sidebar">
                 <x-blog-sidebar>
-                </x-blog-sidebar>                
+                </x-blog-sidebar>
             </div>
         </div>
     </div>
@@ -96,4 +98,5 @@
 @push('js')
 <script src="{{asset('js/bootstrap-toolkit.min.js')}}"></script>
 <script src="{{asset('js/blog/blog.js')}}"></script>
+<script src="{{asset('js/blog/author.js')}}"></script>
 @endpush

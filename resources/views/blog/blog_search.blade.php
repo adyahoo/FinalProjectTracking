@@ -36,7 +36,9 @@
     @if($blogs->count() < 1)
     <h2>No Data Found</h2>
     @else
-    <x-content-horiz :blogs="$blogs"></x-content-horiz>
+    <div class="row no-gutters justify-content-between" id="listContent">
+        <x-content-horiz :blogs="$blogs"></x-content-horiz>
+    </div>
     @endif
 @endsection
 
@@ -64,4 +66,10 @@
 @endsection
 
 @push('blog-js')
+<script>
+    $(document).ready(function() {
+        $('#sortSelect').remove()
+        $('#sortTitle').remove()
+    })
+</script>
 @endpush
