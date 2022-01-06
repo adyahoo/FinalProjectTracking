@@ -61,7 +61,7 @@
                         {{ $message }}
                     </div>
                   @enderror
-                  <textarea class="summernote" name="scope">{{ old('scope') }}</textarea>
+                  <textarea class="summernotes" name="scope">{{ old('scope') }}</textarea>
                 </div>
                 <div class="form-group">
                   <label>Credentials</label>
@@ -70,7 +70,7 @@
                         {{ $message }}
                     </div>
                   @enderror
-                  <textarea class="summernote" name="credentials">{{ old('credentials') }}</textarea>
+                  <textarea class="summernotes" name="credentials">{{ old('credentials') }}</textarea>
                 </div>
               </div>
               <div class="card-footer text-center">
@@ -82,4 +82,18 @@
           </div>
         </div>
     </div>
+@endsection
+@section('js')
+<script>
+  $(".summernotes").summernote({
+      dialogsInBody: true,
+      minHeight: 250,
+      toolbar: [
+              ['style', ['bold', 'italic', 'underline', 'clear']],
+              ['font', ['strikethrough']],
+              ['para', ['paragraph', 'ul', 'ol'],
+          ]
+      ]
+  });
+</script>
 @endsection

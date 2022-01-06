@@ -22,7 +22,7 @@ class Module extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults();
+        return LogOptions::defaults()->useLogName('project');
     }
 
     public function getDescriptionForEvent(string $eventName): string

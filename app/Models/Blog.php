@@ -22,7 +22,7 @@ class Blog extends Model
         'draft'              => 'Draft',
         'published'          => 'Published',
         'rejected'           => 'Rejected',
-        'waiting_for_review' => 'Waiting for Review'
+        'waiting_for_review' => 'Waiting for Review',
     ];
 
     protected $fillable = [
@@ -44,11 +44,14 @@ class Blog extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults();
+        return LogOptions::defaults()->useLogName('blog');
     }
 
     public function getDescriptionForEvent(string $eventName): string
     {
+        if($this->published_at == 'Review'){
+            return "Blog :subject.title has been published on {$this->published_at} by: :causer.name";
+        }
         return "Blog :subject.title has been {$eventName} by: :causer.name";
     }
 

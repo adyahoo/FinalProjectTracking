@@ -78,26 +78,28 @@
                             </thead>
                             <tbody>
                                 @foreach($blogs as $blog)
-                                    <tr>
-                                        <td>
-                                            {{$loop->iteration}}
-                                        </td>
-                                        <td>{{$blog->title}}</td>
-                                        <td>{{$blog->blogCategory->name}}</td>
-                                        <td>
-                                            @if($blog->status == 'Published')
-                                                <span class="badge badge-success">{{$blog->status}}</span>
-                                            @else
-                                                <span class="badge badge-danger">{{$blog->status}}</span>
-                                            @endif
-                                        </td>
-                                        <td>{{$blog->user->name}}</td>
-                                        <td>
-                                            <a title="Preview Blog" href="{{route('admin.blog.preview', $blog->slug)}}" class="btn btn-primary btn-edit"><i class="fa fa-eye"></i></a>
-                                            <a title="Review Blog" data-id="{{$blog->id}}" data-action="{{route('admin.review.review', $blog)}}" href="#" class="btn btn-info btn-add" data-toggle="modal" data-target="#modal"><i class="fa fa-star"></i></a>
-                                            <a title="Show Review List Detail" href="{{route('admin.review.show', $blog)}}" href="#" class="btn btn-secondary btn-edit"><i class="fa fa-list"></i></a>
-                                        </td>
-                                    </tr>
+                                    @if($blog->user->role->privilege != 'admin')
+                                        <tr>
+                                            <td>
+                                                {{$loop->iteration}}
+                                            </td>
+                                            <td>{{$blog->title}}</td>
+                                            <td>{{$blog->blogCategory->name}}</td>
+                                            <td>
+                                                @if($blog->status == 'Published')
+                                                    <span class="badge badge-success">{{$blog->status}}</span>
+                                                @else
+                                                    <span class="badge badge-danger">{{$blog->status}}</span>
+                                                @endif
+                                            </td>
+                                            <td>{{$blog->user->name}}</td>
+                                            <td>
+                                                <a title="Preview Blog" href="{{route('admin.blog.preview', $blog->slug)}}" class="btn btn-primary btn-edit"><i class="fa fa-eye"></i></a>
+                                                <a title="Review Blog" data-id="{{$blog->id}}" data-action="{{route('admin.review.review', $blog)}}" href="#" class="btn btn-info btn-add" data-toggle="modal" data-target="#modal"><i class="fa fa-star"></i></a>
+                                                <a title="Show Review List Detail" href="{{route('admin.review.show', $blog)}}" href="#" class="btn btn-secondary btn-edit"><i class="fa fa-list"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>

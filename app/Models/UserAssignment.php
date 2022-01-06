@@ -21,12 +21,15 @@ class UserAssignment extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults();
+        return LogOptions::defaults()->useLogName('project');
     }
 
     public function getDescriptionForEvent(string $eventName): string
     {
-        return "User Assignment has been {$eventName} by: :causer.name";
+        $user           = User::find($this->user_id);
+        $project_detail = ProjectDetail::find($this->project_detail_id);
+        $project        = Project::find($project_detail->project_id);
+        return "User {$user->name} has been {$eventName} on Project {$project->name} by: :causer.name";
     }
 
     public function user()

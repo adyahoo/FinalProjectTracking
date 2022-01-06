@@ -87,7 +87,7 @@
                                 <div class="col-sm-12 col-md-7">
                                     <select name="status" class="form-control selectric">
                                         <option {{ $blog->status == $blog->statusOption['draft'] ? 'selected' : '' }} value="{{ $blog->statusOption['draft'] }}">{{ $blog->statusOption['draft'] }}</option>
-                                        <option {{ $blog->status == $blog->statusOption['waiting_for_review'] ? 'selected' : '' }} value="{{ $blog->statusOption['waiting_for_review'] }}">{{ $blog->statusOption['published'] }}</option>
+                                        <option {{ $blog->status == $blog->statusOption['waiting_for_review'] || $blog->status == $blog->statusOption['published']  ? 'selected' : '' }} value="{{ $blog->statusOption['waiting_for_review'] }}">{{ $blog->statusOption['published'] }}</option>
                                     </select>
                                 </div>
                             </div>
