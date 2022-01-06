@@ -24,12 +24,13 @@ class ProjectVersion extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults();
+        return LogOptions::defaults()->useLogName('project');
     }
 
     public function getDescriptionForEvent(string $eventName): string
     {
-        return "Project Version has been {$eventName} by: :causer.name";
+        $project    = Project::find($this->project_id);
+        return "Project Version :subject.version_number has been {$eventName} on Project {$project->name} by: :causer.name";
     }
 
     public function project()

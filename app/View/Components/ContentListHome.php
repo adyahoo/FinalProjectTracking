@@ -14,7 +14,7 @@ class ContentListHome extends Component
      */
     public function __construct($blogs)
     {
-        $this->blogs = $blogs;
+        $this->blogs      = $blogs;
     }
 
     /**

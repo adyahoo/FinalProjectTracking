@@ -11,10 +11,11 @@ use Hash;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use App\Traits\ImageTrait;
+use Overtrue\LaravelLike\Traits\Liker;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, LogsActivity, ImageTrait;
+    use HasApiTokens, HasFactory, Notifiable, LogsActivity, ImageTrait, Liker;
 
     /**
      * The attributes that are mass assignable.
@@ -59,7 +60,9 @@ class User extends Authenticatable
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults()->dontLogIfAttributesChangedOnly(['password']);
+        return LogOptions::defaults()
+                ->useLogName('membership')
+                ->dontLogIfAttributesChangedOnly(['password', 'updated_at', 'remember_token']);
     }
 
     public function getDescriptionForEvent(string $eventName): string
@@ -87,7 +90,8 @@ class User extends Authenticatable
         $this->attributes['password'] = !$value ?  null : Hash::make($value);
     }
 
-    public function setProfileImageAttribute($value){
+    public function setProfileImageAttribute($value)
+    {
         $this->attributes['profile_image'] = $this->uploadImage($value, self::IMAGE_PATH);
     }
 
@@ -100,7 +104,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Division::class);
     }
-    
+
     public function projects()
     {
         return $this->hasMany(Project::class);
@@ -119,5 +123,10 @@ class User extends Authenticatable
     public function review()
     {
         return $this->hasMany(BlogReview::class);
+    }
+
+    public function blogLike()
+    {
+        return $this->hasMany(BlogLike::class);
     }
 }

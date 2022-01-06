@@ -28,7 +28,8 @@ class BlogReview extends Model
 
     public function getDescriptionForEvent(string $eventName): string
     {
-        return "Blog Review has been {$eventName} by: :causer.name";
+        $blog = Blog::find($this->blog_id);
+        return "Blog Review on a blog with title:{$blog->title} has been {$eventName} by: :causer.name";
     }
 
     public function blog()

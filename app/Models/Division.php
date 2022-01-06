@@ -17,7 +17,7 @@ class Division extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults();
+        return LogOptions::defaults()->useLogName('membership');
     }
 
     public function getDescriptionForEvent(string $eventName): string

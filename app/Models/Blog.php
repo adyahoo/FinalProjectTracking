@@ -7,13 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use App\Traits\ImageTrait;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Overtrue\LaravelLike\Traits\Likeable;
 use Str;
 use Carbon\Carbon;
 use Auth;
 
 class Blog extends Model
 {
-    use HasFactory, ImageTrait, LogsActivity;
+    use HasFactory, ImageTrait, LogsActivity, Likeable;
 
     const IMAGE_PATH    = 'public/blog_images/';
 
@@ -21,7 +22,7 @@ class Blog extends Model
         'draft'              => 'Draft',
         'published'          => 'Published',
         'rejected'           => 'Rejected',
-        'waiting_for_review' => 'Waiting for Review'
+        'waiting_for_review' => 'Waiting for Review',
     ];
 
     protected $fillable = [
@@ -43,11 +44,14 @@ class Blog extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults();
+        return LogOptions::defaults()->useLogName('blog');
     }
 
     public function getDescriptionForEvent(string $eventName): string
     {
+        if($this->published_at == 'Review'){
+            return "Blog :subject.title has been published on {$this->published_at} by: :causer.name";
+        }
         return "Blog :subject.title has been {$eventName} by: :causer.name";
     }
 
@@ -64,6 +68,11 @@ class Blog extends Model
     public function blogReviews()
     {
         return $this->hasMany(BlogReview::class);
+    }
+
+    public function blogLike()
+    {
+        return $this->hasMany(BlogLike::class);
     }
 
     public function setSlugAttribute($value)

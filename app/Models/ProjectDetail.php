@@ -43,12 +43,15 @@ class ProjectDetail extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults();
+        return LogOptions::defaults()->useLogName('project');
     }
 
     public function getDescriptionForEvent(string $eventName): string
     {
-        return "Module has been {$eventName} on this project by: :causer.name";
+        $module     = Module::find($this->moduleable_id);
+        $projectVer = ProjectVersion::find($this->project_version_id);
+        $project    = Project::find($projectVer->project_id);
+        return "Module {$module->name} has been {$eventName} on Project {$project->name} by: :causer.name";
     }
 
     public function getStartDateAttribute()

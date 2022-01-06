@@ -76,7 +76,7 @@ class BlogController extends Controller
     {
         $newBlog = $request->all();
         $newBlog += ['user_id' => Auth::user()->id];
-
+        
         $blog->update($newBlog);
 
         return redirect()->route('employee.blogs.all')->with('success', 'Blog updated successfully');

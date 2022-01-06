@@ -21,7 +21,7 @@ class PageSetting extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults();
+        return LogOptions::defaults()->useLogName('setting');
     }
 
     public function getDescriptionForEvent(string $eventName): string
