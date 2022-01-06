@@ -6,13 +6,12 @@
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/bootstrap-daterangepicker/daterangepicker.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
 @endsection
 
 @section('content')
-    @include('project.project_manager.include.project_page_tab', [
-        'project'             => $projectDetail->projectVersion->project,
-        'latestVersionNumber' => $projectDetail->projectVersion->version_number
+    @include('project.project_manager.include.project_page_tab_version', [
+        'project' => $projectDetail->projectVersion->project
     ])
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-12">
@@ -95,6 +94,15 @@
                     <div class="row">
                         <div class="col-6">
                             <h6>Actual Start</h6>
+                            <p class="lead 
+                                @empty($startInterval->format('%r'))
+                                    text-danger
+                                @else
+                                    text-success
+                                @endempty
+                                ">
+                                    {{ $startInterval->format('%R') }} {{ $startInterval->format('%a') }}
+                            </p>
                             @empty($projectDetail->start_date_actual)
                                 <p>-</p>
                             @else
@@ -103,6 +111,15 @@
                         </div>
                         <div class="col-6">
                             <h6>Actual End</h6>
+                            <p class="lead 
+                                @empty($endInterval->format('%r'))
+                                    text-danger
+                                @else
+                                    text-success
+                                @endempty
+                                ">
+                                    {{ $endInterval->format('%R') }} {{ $endInterval->format('%a') }}
+                            </p>
                             @empty($projectDetail->end_date_actual)
                                 <p>-</p>
                             @else
@@ -189,6 +206,22 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
+                        {{-- <div class="form-group">
+                            <label>Start - End Actual Date</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-calendar"></i>
+                                    </div>
+                                </div>
+                                <input
+                                  type="text"
+                                  name="start_end_date_actual"
+                                  class="form-control daterange-cus"
+                                  value=""
+                                />
+                            </div>
+                        </div> --}}
                     </div>
                     <div class="modal-footer bg-whitesmoke br">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -214,7 +247,13 @@
     <script src="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('templates/stisla/node_modules/sweetalert/dist/sweetalert.min.js') }}"></script>
     <script src="{{ asset('templates/stisla/node_modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
-    <script src="{{ asset('templates/stisla/node_modules/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}"></script>
+    <script>
+        $('.daterange-cus').daterangepicker({
+            locale: {format: 'YYYY-MM-DD'},
+            drops: 'down',
+            opens: 'right'
+        });
+    </script>
     @if (Session::has('success'))
         <script>
             swal("Success!", "{{ Session::get('success') }}", "success").then(function(){

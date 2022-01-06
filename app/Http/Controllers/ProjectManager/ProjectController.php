@@ -12,10 +12,13 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\ProjectVersion;
 use App\Models\ProjectDetail;
+use App\Traits\ProjectVersionTrait;
 use Auth;
 
 class ProjectController extends Controller
 {
+    use ProjectVersionTrait;
+
     public function index(Request $request)
     {
         $startDate = "";
@@ -89,22 +92,23 @@ class ProjectController extends Controller
 
     public function detail(Project $project, Request $request)
     {
-        $versions      = ProjectVersion::where('project_id', $project->id)->get();
-        $projectDetail = new ProjectDetail();
-        $logs          = Activity::where('subject_type', get_class($projectDetail))->latest()->get();
+        $versions        = ProjectVersion::where('project_id', $project->id)->latest()->get();
+        $projectDetail   = new ProjectDetail();
+        $logs            = Activity::where('subject_type', get_class($projectDetail))->latest()->get();
+        $selectedVersion = $this->selectedVersion($versions, $request->version);
 
-        if($versions[0]->projectDetails->count() == 0) {
+        if($selectedVersion->projectDetails->count() == 0) {
             $progressPercentage = 0;
         } else {
-            $progressPercentage = ($versions[0]->projectDetails()->whereDone()->count() / $versions[0]->projectDetails->count()) * 100;
+            $progressPercentage = ($selectedVersion->projectDetails()->whereDone()->count() / $selectedVersion->projectDetails->count()) * 100;
         }
 
         return view('project.project_manager.pages.project.detail', compact(
             'project',
             'versions',
             'progressPercentage',
-            'request',
-            'logs'
+            'logs',
+            'selectedVersion'
         ));
     }
 

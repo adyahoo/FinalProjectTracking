@@ -4,9 +4,7 @@
 
 @section('content')
     @include('project.project_manager.include.project_page_tab', [
-        'project'        => $project,
-        'versions'       => $versions,
-        'requestVersion' => $request->version
+        'requestVersion' => $selectedVersion->id
     ])
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
@@ -51,7 +49,7 @@
                                     <div class="progress mt-3">
                                         <div class="progress-bar" role="progressbar" data-width="{{ $progressPercentage }}%" aria-valuenow="{{ $progressPercentage }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ $progressPercentage }}%;">{{ round($progressPercentage) }}%</div>
                                     </div>
-                                    <p class="mt-2 mb-0 text-dark">Module done on latest version : <b><span class="text-primary">{{ $versions[0]->projectDetails()->whereDone()->count() }}</span> / {{ $versions[0]->projectDetails->count() }}</b></p>
+                                    <p class="mt-2 mb-0 text-dark">Module finished on selected version : <b><span class="text-primary">{{ $selectedVersion->projectDetails()->whereDone()->count() }}</span> / {{ $selectedVersion->projectDetails->count() }}</b></p>
                                 </div>
                             </div>
                         </div>
@@ -128,14 +126,14 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Members <span class="badge badge-secondary">{{ $project->userAssignments->groupBy('user_id')->count() }}</span></h4>
+                            <h4>Members <span class="badge badge-secondary">{{ $selectedVersion->userAssignments->groupBy('user_id')->count() }}</span></h4>
                             <div class="card-header-action">
                                 <a href="{{ route('project_manager.projects.module.all', $project) }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                             </div>
                         </div>
                         <div class="card-body">
                             <ul class="list-unstyled user-progress list-unstyled-border list-unstyled-noborder">
-                                @foreach($project->userAssignments->groupBy('user_id') as $userAssignment)
+                                @foreach($selectedVersion->userAssignments->groupBy('user_id') as $userAssignment)
                                     <li class="media">
                                         <img alt="image" class="mr-3 rounded-circle" width="50"
                                             @empty($userAssignment[0]->user->profile_image)
@@ -169,7 +167,7 @@
                         $logCount = 0;
                     @endphp
                     @foreach($logs as $log)
-                        @if($log->subject->projectVersion->project_id == $project->id && $logCount < 4)
+                        @if($log->subject->projectVersion->project_id == $project->id && $log->subject->projectVersion->id == $selectedVersion->id && $logCount < 4)
                             <div class="col-6">
                                 <div class="activities">
                                     <div class="activity">

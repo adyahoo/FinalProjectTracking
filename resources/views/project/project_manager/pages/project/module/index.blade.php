@@ -11,29 +11,13 @@
 
 @section('content')
     @include('project.project_manager.include.project_page_tab', [
-        'project'             => $project,
-        'latestVersionNumber' => $latestVersion->version_number
+        'requestVersion' => $selectedVersion->id
     ])
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Project Modules <span class="badge badge-secondary">{{ $project->projectDetails->count() }}</span></h4>
-                    <div class="card-header-form mr-4">
-                        <form action="{{ route('project_manager.projects.module.all', $project) }}">
-                            <div class="input-group">
-                                <select name="version" class="form-control form-control-sm py-1" style="height: 32px;">
-                                    <option value="">All Version</option>
-                                    @foreach($versions as $version)
-                                        <option value="{{ $version->id }}" @if($request->version == $version->id) selected @endif>{{ $version->version_number }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="input-group-btn">
-                                    <button class="btn btn-primary py-1" title="Search" type="submit" style="height: 32px; margin-top: 0;"><i class="fas fa-search"></i></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    <h4>Project Modules <span class="badge badge-secondary">{{ $projectModules->count() }}</span></h4>
                     <div class="card-header-action">
                         <button data-action="{{ route('project_manager.projects.module.store', $project) }}" class="btn btn-primary btn-round ml-auto btn-add text-white" data-toggle="modal" data-target="#modal">
                             <i class="fa fa-plus"></i>
@@ -59,37 +43,37 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                    @foreach($projectModules as $projectDetail)
+                                    @foreach($projectModules as $projectModule)
                                         <tr>
                                             <td>
-                                                <b>{{ $projectDetail->moduleable->name }} </b>
-                                                @if($projectDetail->moduleable_type == $projectDetail->moduleType['special_module'])
-                                                    <span class="badge badge-success">Special</span>
+                                                <b>{{ $projectModule->moduleable->name }} </b>
+                                                @if($projectModule->moduleable_type == $projectModule->moduleType['special_module'])
+                                                    <span class="badge" style="background-color: #34395e; color: #fff;">Special</span>
                                                 @endif
                                                 <div class="mt-1">
-                                                    <span>Added at : v{{ $projectDetail->projectVersion->version_number }}</span>
+                                                    <span>Added at : v{{ $projectModule->projectVersion->version_number }}</span>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="badge 
-                                                    @if($projectDetail->status == $projectDetail->statusOption['open'])
+                                                    @if($projectModule->status == $projectModule->statusOption['open'])
                                                         badge-danger
-                                                    @elseif($projectDetail->status == $projectDetail->statusOption['on_progress'])
+                                                    @elseif($projectModule->status == $projectModule->statusOption['on_progress'])
                                                         badge-primary
-                                                    @elseif($projectDetail->status == $projectDetail->statusOption['pending'])
+                                                    @elseif($projectModule->status == $projectModule->statusOption['pending'])
                                                         badge-warning
-                                                    @elseif($projectDetail->status == $projectDetail->statusOption['testing'])
+                                                    @elseif($projectModule->status == $projectModule->statusOption['testing'])
                                                         badge-info
-                                                    @elseif($projectDetail->status == $projectDetail->statusOption['finish'])
+                                                    @elseif($projectModule->status == $projectModule->statusOption['finish'])
                                                         badge-success
                                                     @endif
-                                                ">{{ $projectDetail->status }}</div>
+                                                ">{{ $projectModule->status }}</div>
                                             </td>
                                             <td>
-                                                @if($projectDetail->userAssignments->count() == 0)
+                                                @if($projectModule->userAssignments->count() == 0)
                                                     no one assigned
                                                 @else
-                                                    @foreach($projectDetail->userAssignments->take(3) as $userAssignment)
+                                                    @foreach($projectModule->userAssignments->take(3) as $userAssignment)
                                                         <img alt="image" class="rounded-circle mb-2" width="35" data-toggle="tooltip" title="{{ $userAssignment->user->name }}"
                                                             @empty($userAssignment->user->profile_image)
                                                                 src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}"
@@ -98,39 +82,39 @@
                                                             @endempty
                                                         >
                                                     @endforeach
-                                                    @if($projectDetail->userAssignments->count() > 3)
-                                                        <br><a href="{{ route('project_manager.projects.module.show', $projectDetail) }}">+ {{ $projectDetail->userAssignments->count() - 3 }} members</a>
+                                                    @if($projectModule->userAssignments->count() > 3)
+                                                        <br><a href="{{ route('project_manager.projects.module.show', $projectModule) }}">+ {{ $projectModule->userAssignments->count() - 3 }} members</a>
                                                     @endif
                                                 @endif
                                             </td>
                                             <td>
-                                                {{ $projectDetail->start_date->format('d-m-Y') }}<br>
-                                                ({{ $projectDetail->start_date->format('H:i') }})
+                                                {{ $projectModule->start_date->format('d-m-Y') }}<br>
+                                                ({{ $projectModule->start_date->format('H:i') }})
                                             </td>
                                             <td>
-                                                {{ $projectDetail->end_date->format('d-m-Y') }}<br>
-                                                ({{ $projectDetail->end_date->format('H:i') }})
+                                                {{ $projectModule->end_date->format('d-m-Y') }}<br>
+                                                ({{ $projectModule->end_date->format('H:i') }})
                                             </td>
                                             <td>
-                                                <a href="{{ route('project_manager.projects.module.show', $projectDetail) }}" class="btn btn-light" data-toggle="tooltip" title="View"><i class="fas fa-eye"></i></a>
-                                                <a data-action="{{ route('project_manager.projects.module.member.store', $projectDetail) }}" title="Add Member" href="#" class="btn btn-primary btn-add-member" data-toggle="modal" data-target="#modalMember" title="Add Member"><i class="fa fa-user-plus"></i></a>
+                                                <a href="{{ route('project_manager.projects.module.show', $projectModule) }}" class="btn btn-light" data-toggle="tooltip" title="View"><i class="fas fa-eye"></i></a>
+                                                <a data-action="{{ route('project_manager.projects.module.member.store', $projectModule) }}" title="Add Member" href="#" class="btn btn-primary btn-add-member" data-toggle="modal" data-target="#modalMember" title="Add Member"><i class="fa fa-user-plus"></i></a>
 
-                                                @if($projectDetail->moduleable_type == $projectDetail->moduleType['special_module'])
-                                                    <a data-detail="{{ route('project_manager.projects.module.edit', $projectDetail) }}" data-action="{{ route('project_manager.projects.module.special.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit-special" data-toggle="modal" data-target="#modalSpecial" title="Edit"><i class="fa fa-pencil-alt"></i></a>
+                                                @if($projectModule->moduleable_type == $projectModule->moduleType['special_module'])
+                                                    <a data-detail="{{ route('project_manager.projects.module.edit', $projectModule) }}" data-action="{{ route('project_manager.projects.module.special.update', $projectModule) }}" href="#" class="btn btn-primary btn-edit-special" data-toggle="modal" data-target="#modalSpecial" title="Edit"><i class="fa fa-pencil-alt"></i></a>
 
-                                                    <a href="#" onclick="deleteConfirm('del{{ $projectDetail->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
+                                                    <a href="#" onclick="deleteConfirm('del{{ $projectModule->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
-                                                    <form id="del{{ $projectDetail->id }}" action="{{ route('project_manager.projects.module.special.destroy', $projectDetail) }}" method="POST">
+                                                    <form id="del{{ $projectModule->id }}" action="{{ route('project_manager.projects.module.special.destroy', $projectModule) }}" method="POST">
                                                         @method('delete')
                                                         @csrf
                                                     </form>
                                                 @else
-                                                    <a data-detail="{{ route('project_manager.projects.module.edit', $projectDetail) }}" data-action="{{ route('project_manager.projects.module.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#modal" title="Edit"><i class="fa fa-pencil-alt"></i></a>
-                                                    <a href="#" onclick="deleteConfirm('del{{ $projectDetail->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
+                                                    <a data-detail="{{ route('project_manager.projects.module.edit', $projectModule) }}" data-action="{{ route('project_manager.projects.module.update', $projectModule) }}" href="#" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#modal" title="Edit"><i class="fa fa-pencil-alt"></i></a>
+                                                    <a href="#" onclick="deleteConfirm('del{{ $projectModule->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
                                                         <i class="fa fa-trash"></i>
                                                     </a>
-                                                    <form id="del{{ $projectDetail->id }}" action="{{ route('project_manager.projects.module.destroy', $projectDetail) }}" method="POST">
+                                                    <form id="del{{ $projectModule->id }}" action="{{ route('project_manager.projects.module.destroy', $projectModule) }}" method="POST">
                                                         @method('delete')
                                                         @csrf
                                                     </form>

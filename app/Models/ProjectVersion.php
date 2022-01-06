@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class ProjectVersion extends Model
 {
-    use HasFactory, LogsActivity;
+    use HasFactory, LogsActivity, HasRelationships;
 
     protected $fillable = [
         'project_id', 
@@ -39,5 +40,10 @@ class ProjectVersion extends Model
     public function projectDetails()
     {
         return $this->hasMany(ProjectDetail::class);
+    }
+
+    public function userAssignments()
+    {
+        return $this->hasManyDeep(UserAssignment::class, [ProjectDetail::class]);
     }
 }

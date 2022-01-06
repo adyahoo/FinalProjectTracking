@@ -15,16 +15,12 @@ class ProjectVersionController extends Controller
 
     public function index(Project $project)
     {
-        $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
-
-        return view('project.project_manager.pages.project.version.index', compact('project', 'latestVersion'));
+        return view('project.project_manager.pages.project.version.index', compact('project'));
     }
 
     public function detail(Project $project, ProjectVersion $projectVersion)
     {
-        $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
-
-        return view('project.project_manager.pages.project.version.detail', compact('latestVersion', 'projectVersion'));
+        return view('project.project_manager.pages.project.version.detail', compact('projectVersion'));
     }
 
     public function create(Project $project)
@@ -32,7 +28,7 @@ class ProjectVersionController extends Controller
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
         $versionFetch  = explode('.', $latestVersion->version_number);
 
-        return view('project.project_manager.pages.project.version.create', compact('latestVersion', 'project', 'versionFetch'));
+        return view('project.project_manager.pages.project.version.create', compact('project', 'versionFetch'));
     }
 
     public function store(ProjectVersionRequest $request, Project $project)
@@ -55,9 +51,7 @@ class ProjectVersionController extends Controller
 
     public function edit(ProjectVersion $projectVersion)
     {
-        $latestVersion = ProjectVersion::where('project_id', $projectVersion->project_id)->latest()->first();
-
-        return view('project.project_manager.pages.project.version.edit', compact('projectVersion', 'latestVersion'));
+        return view('project.project_manager.pages.project.version.edit', compact('projectVersion'));
     }
 
     public function update(ProjectVersionRequest $request, ProjectVersion $projectVersion)

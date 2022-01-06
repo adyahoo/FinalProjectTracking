@@ -3,9 +3,8 @@
 @section('title','Create Project Version')
 
 @section('content')
-    @include('project.project_manager.include.project_page_tab', [
-        'project'             => $project,
-        'latestVersionNumber' => $latestVersion->version_number
+    @include('project.project_manager.include.project_page_tab_version', [
+        'project' => $project
     ])
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12">

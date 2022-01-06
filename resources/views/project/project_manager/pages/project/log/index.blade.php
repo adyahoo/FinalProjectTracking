@@ -11,8 +11,7 @@
 
 @section('content')
     @include('project.project_manager.include.project_page_tab', [
-        'project'             => $project,
-        'latestVersionNumber' => $project->projectVersions->last()->version_number
+        'requestVersion' => $selectedVersion->id
     ])
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
@@ -32,7 +31,7 @@
                             </thead>
                             <tbody>
                                 @foreach($logs as $log)
-                                    @if($log->subject->projectVersion->project_id == $project->id)
+                                    @if($log->subject->projectVersion->project_id == $project->id && $log->subject->projectVersion->id == $selectedVersion->id)
                                         <tr>
                                             <td>
                                                 <img alt="image" 
