@@ -70,11 +70,6 @@ class Blog extends Model
         return $this->hasMany(BlogReview::class);
     }
 
-    public function blogLike()
-    {
-        return $this->hasMany(BlogLike::class);
-    }
-
     public function setSlugAttribute($value)
     {
         $this->attributes['slug'] = Str::slug($value.'-'.Carbon::now(), '-');
