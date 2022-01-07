@@ -14,8 +14,8 @@ class HomeBlogController extends Controller
     public function index() 
     {
         $newest     = Blog::with('user')->orderBy('published_at', 'DESC')->take(3)->get();
-        $mostViewed = Blog::with('user', 'blogLike')->orderBy('view_count', 'DESC')->take(4)->get();
-        $mostLiked = Blog::with('user', 'blogLike')->withCount('likers')->orderBy('likers_count', 'DESC')->take(4)->get();
+        $mostViewed = Blog::with('user')->orderBy('view_count', 'DESC')->take(4)->get();
+        $mostLiked = Blog::with('user')->withCount('likers')->orderBy('likers_count', 'DESC')->take(4)->get();
         return view('blog.dashboard', compact('newest', 'mostViewed', 'mostLiked'));
     }
 
