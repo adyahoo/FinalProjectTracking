@@ -62,7 +62,7 @@ class BlogController extends Controller
     {
         $blog = Blog::where('slug', $slug)->first();
 
-        return view('blog.blog_preview', compact('blog'));
+        return view('project.project_manager.pages.blog.preview', compact('blog'));
     }
 
     public function edit(Blog $blog)

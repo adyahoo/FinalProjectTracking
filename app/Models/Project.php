@@ -8,11 +8,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
+use App\Traits\ImageTrait;
 use Auth;
 
 class Project extends Model
 {
-    use HasFactory, LogsActivity, HasRelationships, SoftDeletes;
+    use HasFactory, LogsActivity, HasRelationships, SoftDeletes, ImageTrait;
+
+    const IMAGE_PATH    = 'public/project_logo/';
 
     protected $dates    = [
         'start_date',
@@ -29,10 +32,12 @@ class Project extends Model
         'user_id',
         'name',
         'description',
+        'logo',
         'scope',
         'credentials',
         'start_date',
         'end_date',
+        'total_estimated_days',
         'launch_date'
     ];
 
@@ -47,6 +52,10 @@ class Project extends Model
     public function getDescriptionForEvent(string $eventName): string
     {
         return "Project :subject.name has been {$eventName} by: :causer.name";
+    }
+
+    public function setLogoAttribute($value){
+        $this->attributes['logo'] = $this->uploadImage($value, self::IMAGE_PATH);
     }
 
     public function scopeWhereProjectManager($query, $projectManager)

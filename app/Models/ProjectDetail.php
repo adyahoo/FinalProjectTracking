@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use DateTime;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Contracts\Activity;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 class ProjectDetail extends Model
 {
-    use HasFactory, LogsActivity;
+    use HasFactory, LogsActivity, HasRelationships;
 
     public $statusOption = [
         'finish'      => 'Finish',
@@ -46,12 +48,16 @@ class ProjectDetail extends Model
         return LogOptions::defaults()->useLogName('project');
     }
 
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->properties = ['sdsd', 'sdshdsj'];
+    }
+
     public function getDescriptionForEvent(string $eventName): string
     {
-        $module     = Module::find($this->moduleable_id);
         $projectVer = ProjectVersion::find($this->project_version_id);
         $project    = Project::find($projectVer->project_id);
-        return "Module {$module->name} has been {$eventName} on Project {$project->name} by: :causer.name";
+        return "Module {$this->moduleable->name} has been {$eventName} on Project {$project->name} by: :causer.name";
     }
 
     public function getStartDateAttribute()
@@ -118,6 +124,11 @@ class ProjectDetail extends Model
     public function projectVersion()
     {
         return $this->belongsTo(ProjectVersion::class);
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
     }
 
     public function moduleable()

@@ -98,8 +98,9 @@
                             <thead>
                                 <tr>
                                     <th>Title</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
+                                    <th>Estimated Start Date</th>
+                                    <th>Estimated End Date</th>
+                                    <th>Total Estimated Days</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -116,6 +117,9 @@
                                             </td>
                                             <td>
                                                 {{ $project->end_date->format('d-m-Y') }}
+                                            </td>
+                                            <td>
+                                                {{ $project->total_estimated_days }} days
                                             </td>
                                             <td>
                                                 @if($project->projectVersions->count() > 1)
@@ -163,9 +167,18 @@
     <script src="{{ asset('templates/stisla/node_modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script>
         $('.daterange-cus').daterangepicker({
-            locale: {format: 'YYYY-MM-DD'},
+            locale: {format: 'DD-MM-YYYY'},
             drops: 'down',
-            opens: 'right'
+            opens: 'right',
+            autoUpdateInput: false
+        });
+
+        $('.daterange-cus').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+        });
+
+        $('.daterange-cus').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
         });
     </script>
     @if (Session::has('success'))

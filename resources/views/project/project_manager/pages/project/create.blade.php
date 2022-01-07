@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
           <div class="card">
-            <form action="{{ route('project_manager.projects.store') }}" method="POST">
+            <form action="{{ route('project_manager.projects.store') }}" enctype="multipart/form-data" method="POST">
               @csrf
 
               <div class="card-header">
@@ -23,6 +23,16 @@
                       <div class="invalid-feedback">
                         {{ $message }}
                       </div>
+                  @enderror
+                </div>
+                <div class="form-group">
+                  <label for="image-upload">Logo</label>
+                  <div class="col-sm-12 col-md-7 mx-auto">
+                      <input name="logo" class="form-control" value="{{ old('logo') }}" type="file" onchange="showPreview(event);" accept="image/jpg, image/jpeg, image/gif"/>
+                      <img id="logo" class="img-fluid" id="propic" src="https://via.placeholder.com/480x480" alt="">
+                  </div>
+                  @error('logo')
+                      <small class="text-danger">{{ $message }}</small>
                   @enderror
                 </div>
                 <div class="form-group">
@@ -84,16 +94,27 @@
     </div>
 @endsection
 @section('script')
-<script>
-  $(".summernotes").summernote({
-      dialogsInBody: true,
-      minHeight: 250,
-      toolbar: [
-              ['style', ['bold', 'italic', 'underline', 'clear']],
-              ['font', ['strikethrough']],
-              ['para', ['paragraph', 'ul', 'ol'],
+    <script src="{{ asset('templates/stisla/node_modules/jquery_upload_preview/assets/js/jquery.uploadPreview.min.js') }}"></script>
+    <script>
+      function showPreview(event){
+          if(event.target.files.length > 0){
+              var src = URL.createObjectURL(event.target.files[0]);
+              var preview = document.getElementById("logo");
+              preview.src = src;
+              preview.style.display = "block";
+          }
+      }
+    </script>
+    <script>
+      $(".summernotes").summernote({
+          dialogsInBody: true,
+          minHeight: 250,
+          toolbar: [
+                  ['style', ['bold', 'italic', 'underline', 'clear']],
+                  ['font', ['strikethrough']],
+                  ['para', ['paragraph', 'ul', 'ol'],
+              ]
           ]
-      ]
-  });
-</script>
+      });
+    </script>
 @endsection

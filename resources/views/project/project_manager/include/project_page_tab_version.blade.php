@@ -1,6 +1,7 @@
 <div class="section-header" style="display: block">
     <div class="row mb-3">
         <div class="col-lg-8 col-md-8 col-12 col-sm-12">
+            <img class="section-detail__profile-img rounded-circle mr-2" style="height: 50px;" src="{{ $project->logo != null ? asset(Storage::url('project_logo/'.$project->logo)) : asset('templates/stisla/assets/img/avatar/avatar-1.png') }}">
             <h1>{{ $project->name }}</h1>
         </div>
     </div>

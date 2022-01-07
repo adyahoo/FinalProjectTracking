@@ -16,8 +16,7 @@ class ProjectLogController extends Controller
 
     public function index(Project $project, Request $request)
     {
-        $projectDetail   = new ProjectDetail();
-        $logs            = Activity::where('subject_type', get_class($projectDetail))->get();
+        $logs            = Activity::where('log_name', 'project')->get();
         $versions        = ProjectVersion::where('project_id', $project->id)->latest()->get();
         $selectedVersion = $this->selectedVersion($versions, $request->version);
 

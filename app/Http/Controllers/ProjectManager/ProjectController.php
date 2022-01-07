@@ -13,11 +13,13 @@ use App\Models\User;
 use App\Models\ProjectVersion;
 use App\Models\ProjectDetail;
 use App\Traits\ProjectVersionTrait;
+use App\Traits\DateTrait;
+use DateTime;
 use Auth;
 
 class ProjectController extends Controller
 {
-    use ProjectVersionTrait;
+    use ProjectVersionTrait, DateTrait;
 
     public function index(Request $request)
     {
@@ -58,6 +60,7 @@ class ProjectController extends Controller
     {
         $project = $request->all();
         $project += ['user_id' => Auth::user()->id];
+        $project += ['total_estimated_days' => $this->findInterval($request->start_date, $request->end_date)->format('%a')];
 
         $projectInserted = Project::create($project);
 

@@ -46,7 +46,7 @@ class ProjectDetailController extends Controller
 
         $projectDetail                     = new ProjectDetail();
         $projectDetail->project_version_id = $latestVersion->id;
-        $projectDetail->status             = $projectDetail->statusOption['not_yet'];
+        $projectDetail->status             = $projectDetail->statusOption['open'];
         $projectDetail->start_date         = $request->start_date;
         $projectDetail->end_date           = $request->end_date;
 
@@ -71,7 +71,7 @@ class ProjectDetailController extends Controller
 
         $projectDetail                     = new ProjectDetail();
         $projectDetail->project_version_id = $latestVersion->id;
-        $projectDetail->status             = $projectDetail->statusOption['not_yet'];
+        $projectDetail->status             = $projectDetail->statusOption['open'];
         $projectDetail->start_date         = $request->start_date;
         $projectDetail->end_date           = $request->end_date;
 
@@ -82,9 +82,15 @@ class ProjectDetailController extends Controller
 
     public function show(ProjectDetail $projectDetail)
     {
-        $employees     = Role::whereEmployee()->first()->user;
-        $startInterval = $this->findInterval($projectDetail->start_date, $projectDetail->start_date_actual);
-        $endInterval   = $this->findInterval($projectDetail->end_date, $projectDetail->end_date_actual);
+        $startInterval = '';
+        $endInterval   = '';
+
+        $employees = Role::whereEmployee()->first()->user;
+
+        if(!empty($projectDetail->start_date_actual)) {
+            $startInterval = $projectDetail->start_date->diff($projectDetail->start_date_actual);
+            $endInterval   = $projectDetail->end_date->diff($projectDetail->end_date_actual);
+        }
 
         return view('project.project_manager.pages.project.module.detail', compact('projectDetail', 'employees', 'startInterval', 'endInterval'));
     }

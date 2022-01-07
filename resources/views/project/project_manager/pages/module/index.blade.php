@@ -98,7 +98,7 @@
                         </div>
                         <div class="form-group">
                             <label>Time Estimation (in hour)</label>
-                            <input id="moduleTime" name="time_estimation" value="" type="number" class="form-control" placeholder="Input Module Time Estimation">
+                            <input id="moduleTime" name="time_estimation" value="" type="number" min="0" pattern="^\d*(\.\d{0,2})?$" class="form-control" placeholder="Input Module Time Estimation">
                             @error('time_estimation')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror

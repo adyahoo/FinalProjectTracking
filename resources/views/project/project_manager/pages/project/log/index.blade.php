@@ -31,7 +31,10 @@
                             </thead>
                             <tbody>
                                 @foreach($logs as $log)
-                                    @if($log->subject->projectVersion->project_id == $project->id && $log->subject->projectVersion->id == $selectedVersion->id)
+                                    @if($log->id == 80)
+                                    {{ $log->subject->project }}
+                                    @endif
+                                    {{-- @if(!empty($log->subject->project) &&  $log->subject->project->id == $project->id && $log->subject->projectVersion->id == $selectedVersion->id)
                                         <tr>
                                             <td>
                                                 <img alt="image" 
@@ -50,7 +53,7 @@
                                                 {{ $log->created_at->format('d-m-Y') }} ({{ $log->created_at->format('H:i') }})
                                             </td>
                                         </tr>
-                                    @endif
+                                    @endif --}}
                                 @endforeach
                             </tbody>
                         </table>
