@@ -29,7 +29,7 @@ class UserAssignment extends Model
         $user           = User::find($this->user_id);
         $project_detail = ProjectDetail::find($this->project_detail_id);
         $project        = Project::find($project_detail->project_id);
-        // dd($eventName);
+        
         if($eventName == 'created'){
             return "User {$user->name} has been assigned to Project {$project_detail->projectVersion->project->name} on Module {$project_detail->moduleable->name} by: :causer.name";
         }

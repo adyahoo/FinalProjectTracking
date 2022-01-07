@@ -14,7 +14,7 @@ class LogController extends Controller
     }
 
     public function show($log) {
-        $logs = Activity::where('log_name', $log)
+        $logs = Activity::where('log_name','like', '%'. $log.'%')
                     ->orderBy('created_at','desc')
                     ->get();
                 
