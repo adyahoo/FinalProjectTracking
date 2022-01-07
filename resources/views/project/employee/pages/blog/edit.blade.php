@@ -54,7 +54,7 @@
                                 <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">Slug <sup style="color: gray">*optional</sup></label>
                                 <div class="col-sm-12 col-md-7">
                                     @php $slug = preg_replace('/\d{4}\-\d{2}-\d{2}-\d{6}/', ' ' ,$blog->slug); @endphp
-                                    <input value="{{ str_replace('-', '', $slug) }}" name="slug" type="text" class="form-control" placeholder="Input Slug">
+                                    <input value="{{ str_replace('-', ' ', $slug) }}" name="slug" type="text" class="form-control" placeholder="Input Slug">
                                     @error('slug')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
@@ -87,7 +87,7 @@
                                 <div class="col-sm-12 col-md-7">
                                     <select name="status" class="form-control selectric">
                                         <option {{ $blog->status == $blog->statusOption['draft'] ? 'selected' : '' }} value="{{ $blog->statusOption['draft'] }}">{{ $blog->statusOption['draft'] }}</option>
-                                        <option {{ $blog->status == $blog->statusOption['waiting_for_review'] || $blog->status == $blog->statusOption['published']  ? 'selected' : '' }} value="{{ $blog->statusOption['waiting_for_review'] }}">{{ $blog->statusOption['published'] }}</option>
+                                        <option {{ $blog->status == $blog->statusOption['waiting_for_review'] || $blog->status == $blog->statusOption['published']  ? 'selected' : '' }} value="{{ $blog->published_at != null ? $blog->statusOption['published'] : $blog->statusOption['waiting_for_review'] }}">{{ $blog->statusOption['published'] }}</option>
                                     </select>
                                 </div>
                             </div>
