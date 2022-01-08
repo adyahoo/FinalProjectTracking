@@ -17,7 +17,7 @@ class CreateModules extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
-            $table->integer('time_estimation');
+            $table->decimal('time_estimation', $precision = 8, $scale = 1);
             $table->timestamps();
         });
     }

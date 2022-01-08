@@ -26,7 +26,7 @@ class ModuleRequest extends FormRequest
         $rules = [
             'name'            => 'required',
             'description'     => 'required',
-            'time_estimation' => 'required',
+            'time_estimation' => 'required|min:0',
         ];
 
         return $rules;

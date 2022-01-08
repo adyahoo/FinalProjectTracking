@@ -127,13 +127,18 @@ class Project extends Model
         return $this->hasManyDeep(UserAssignment::class, [ProjectVersion::class, ProjectDetail::class]);
     }
 
-    public function roles()
-    {
-        return $this->hasManyDeep(Role::class, [UserAssignment::class, ProjectVersion::class, ProjectDetail::class]);
-    }
-
     public function projectDetails()
     {
         return $this->hasManyDeep(ProjectDetail::class, [ProjectVersion::class]);
+    }
+
+    public function roles()
+    {
+        $roles = [];
+        foreach($this->userAssignments()->get() as $userAssignment) {
+            $roles[] += $userAssignment->user->role_id;
+        }
+
+        return $roles;
     }
 }

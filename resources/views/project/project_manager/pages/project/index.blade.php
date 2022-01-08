@@ -98,16 +98,20 @@
                             <thead>
                                 <tr>
                                     <th>Title</th>
-                                    <th>Estimated Start Date</th>
-                                    <th>Estimated End Date</th>
-                                    <th>Total Estimated Days</th>
+                                    <th>Estimated <br> Start Date</th>
+                                    <th>Estimated <br> End Date</th>
+                                    <th>Total <br> Estimated Days</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($projects as $project)
-                                    {{-- @if(!empty($request->user) && !array_diff($request->user, $project->userAssignments()->pluck('user_id')->toArray())) --}}
+                                    @if(!empty($request->user) 
+                                        && !empty($request->role) 
+                                        && !array_diff($request->user, $project->userAssignments()->pluck('user_id')->toArray())
+                                        && !array_diff($request->role, $project->roles())
+                                    )
                                         <tr>
                                             <td>
                                                 {{ $project->name }}
@@ -147,7 +151,129 @@
                                                 @endif
                                             </td>
                                         </tr>
-                                    {{-- @endif --}}
+                                    @else
+                                        @if(empty($request->role) && empty($request->user))
+                                            <tr>
+                                                <td>
+                                                    {{ $project->name }}
+                                                </td>
+                                                <td>
+                                                    {{ $project->start_date->format('d-m-Y') }}
+                                                </td>
+                                                <td>
+                                                    {{ $project->end_date->format('d-m-Y') }}
+                                                </td>
+                                                <td>
+                                                    {{ $project->total_estimated_days }} days
+                                                </td>
+                                                <td>
+                                                    @if($project->projectVersions->count() > 1)
+                                                        <div class="badge badge-info">Maintenance</div>
+                                                    @elseif(!empty($project->launch_date))
+                                                        <div class="badge badge-success">Launch</div>
+                                                    @elseif($project->projectVersions->last()->projectDetails()->whereDoneOrOnProgress()->count() > 0)
+                                                        <div class="badge badge-warning">Development</div>
+                                                    @else
+                                                        <div class="badge badge-danger">Listed</div>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('project_manager.projects.detail', $project) }}" class="btn btn-light mr-1" data-toggle="tooltip" title="View"><i class="fas fa-eye"></i></a>
+
+                                                    @if($project->user_id == Auth::user()->id)
+                                                        <a href="{{ route('project_manager.projects.edit', $project->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                                        <a href="#" onclick="deleteConfirm('del{{ $project->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+                                                        <form id="del{{ $project->id }}" action="{{ route('project_manager.projects.destroy', $project) }}" method="POST">
+                                                            @method('delete')
+                                                            @csrf
+                                                        </form>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @elseif(empty($request->user) && !array_diff($request->role, $project->roles()))
+                                            <tr>
+                                                <td>
+                                                    {{ $project->name }}
+                                                </td>
+                                                <td>
+                                                    {{ $project->start_date->format('d-m-Y') }}
+                                                </td>
+                                                <td>
+                                                    {{ $project->end_date->format('d-m-Y') }}
+                                                </td>
+                                                <td>
+                                                    {{ $project->total_estimated_days }} days
+                                                </td>
+                                                <td>
+                                                    @if($project->projectVersions->count() > 1)
+                                                        <div class="badge badge-info">Maintenance</div>
+                                                    @elseif(!empty($project->launch_date))
+                                                        <div class="badge badge-success">Launch</div>
+                                                    @elseif($project->projectVersions->last()->projectDetails()->whereDoneOrOnProgress()->count() > 0)
+                                                        <div class="badge badge-warning">Development</div>
+                                                    @else
+                                                        <div class="badge badge-danger">Listed</div>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('project_manager.projects.detail', $project) }}" class="btn btn-light mr-1" data-toggle="tooltip" title="View"><i class="fas fa-eye"></i></a>
+
+                                                    @if($project->user_id == Auth::user()->id)
+                                                        <a href="{{ route('project_manager.projects.edit', $project->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                                        <a href="#" onclick="deleteConfirm('del{{ $project->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+                                                        <form id="del{{ $project->id }}" action="{{ route('project_manager.projects.destroy', $project) }}" method="POST">
+                                                            @method('delete')
+                                                            @csrf
+                                                        </form>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @elseif(empty($request->role) && !array_diff($request->user, $project->userAssignments()->pluck('user_id')->toArray()))
+                                            <tr>
+                                                <td>
+                                                    {{ $project->name }}
+                                                </td>
+                                                <td>
+                                                    {{ $project->start_date->format('d-m-Y') }}
+                                                </td>
+                                                <td>
+                                                    {{ $project->end_date->format('d-m-Y') }}
+                                                </td>
+                                                <td>
+                                                    {{ $project->total_estimated_days }} days
+                                                </td>
+                                                <td>
+                                                    @if($project->projectVersions->count() > 1)
+                                                        <div class="badge badge-info">Maintenance</div>
+                                                    @elseif(!empty($project->launch_date))
+                                                        <div class="badge badge-success">Launch</div>
+                                                    @elseif($project->projectVersions->last()->projectDetails()->whereDoneOrOnProgress()->count() > 0)
+                                                        <div class="badge badge-warning">Development</div>
+                                                    @else
+                                                        <div class="badge badge-danger">Listed</div>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('project_manager.projects.detail', $project) }}" class="btn btn-light mr-1" data-toggle="tooltip" title="View"><i class="fas fa-eye"></i></a>
+
+                                                    @if($project->user_id == Auth::user()->id)
+                                                        <a href="{{ route('project_manager.projects.edit', $project->id) }}" class="btn btn-primary btn-action mr-1" data-toggle="tooltip" title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                                        <a href="#" onclick="deleteConfirm('del{{ $project->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+                                                        <form id="del{{ $project->id }}" action="{{ route('project_manager.projects.destroy', $project) }}" method="POST">
+                                                            @method('delete')
+                                                            @csrf
+                                                        </form>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @endif
                                 @endforeach
                             </tbody>
                         </table>
