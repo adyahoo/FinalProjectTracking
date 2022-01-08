@@ -193,20 +193,6 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Start Date Actual</label>
-                            <input value="{{ old('start_date_actual') }}" type="text" id="startActual" name="start_date_actual" class="form-control datetimepicker">
-                            @error('start_date_actual')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>End Date Actual</label>
-                            <input value="{{ old('end_date_actual') }}" type="text" id="endActual" name="end_date_actual" class="form-control datetimepicker">
-                            @error('end_date_actual')
-                                <small class="text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                        {{-- <div class="form-group">
                             <label>Start - End Actual Date</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -217,11 +203,15 @@
                                 <input
                                   type="text"
                                   name="start_end_date_actual"
+                                  id="startEndDateActual"
                                   class="form-control daterange-cus"
                                   value=""
                                 />
                             </div>
-                        </div> --}}
+                            @error('start_end_date_actual')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
                     </div>
                     <div class="modal-footer bg-whitesmoke br">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -248,10 +238,13 @@
     <script src="{{ asset('templates/stisla/node_modules/sweetalert/dist/sweetalert.min.js') }}"></script>
     <script src="{{ asset('templates/stisla/node_modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script>
-        $('.daterange-cus').daterangepicker({
-            locale: {format: 'YYYY-MM-DD'},
-            drops: 'down',
-            opens: 'right'
+        $(function() {
+            $('#startEndDateActual').daterangepicker({
+                timePicker: true,
+                locale: {
+                    format: 'YYYY-MM-DD HH:mm'
+                }
+            });
         });
     </script>
     @if (Session::has('success'))

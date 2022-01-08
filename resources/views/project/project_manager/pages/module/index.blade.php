@@ -45,7 +45,7 @@
                                             </td>
                                             <td>{{ $module->name }}</td>
                                             <td>{{ $module->description }}</td>
-                                            <td>{{ $module->time_estimation }}</td>
+                                            <td>{{ $module->time_estimation }} hours</td>
                                             <td>
                                                 <a data-detail="{{ route('project_manager.modules.show', $module) }}" data-action="{{ route('project_manager.modules.update', $module) }}" href="#" class="btn btn-info btn-edit" data-toggle="modal" data-target="#modal"><i class="fa fa-pencil-alt"></i></a>
                                                 <a href="#" onclick="deleteConfirm('del{{ $module->id }}')" class="btn btn-danger text-white">
