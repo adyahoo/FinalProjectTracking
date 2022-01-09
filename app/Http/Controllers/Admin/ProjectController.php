@@ -12,19 +12,41 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\ProjectVersion;
 use App\Models\ProjectDetail;
+use App\Traits\ProjectVersionTrait;
+use App\Traits\DateTrait;
+use DateTime;
 use Auth;
 
 class ProjectController extends Controller
 {
-    public function index(Request $request) {
-        $projects  = Project::whereStartDate($request->start_date)
-                        ->whereEndDate($request->end_date)
-                        ->whereUserAssignee($request->user)
-                        ->whereRoleAssignee($request->role)
-                        ->get();
-        $roles     = Role::whereEmployee()->get();
+    use ProjectVersionTrait, DateTrait;
 
-        return view('project.admin.pages.projects.index', compact('projects', 'roles', 'request'));
+    public function index(Request $request) {
+        $startDate = "";
+        $endDate   = "";
+
+        if(!empty($request->start_end_date)) {
+            $dates     = explode(' - ', $request->start_end_date);
+            $startDate = $dates[0];
+            $endDate   = $dates[1];
+        }
+
+        $projects        = Project::whereStartDate($request->start_date)
+                                ->whereEndDate($request->end_date)
+                                ->whereUserAssignee($request->user)
+                                ->whereRoleAssignee($request->role)
+                                ->get();
+        $projectManagers = Role::whereProjectManager()->first()->user;
+        $employees       = Role::whereEmployee()->first()->user;
+        $roles           = Role::whereEmployee()->get();
+
+        return view('project.admin.pages.projects.index', compact(
+            'projects', 
+            'roles', 
+            'request', 
+            'projectManagers', 
+            'employees'
+        ));
     }
 
     public function create() {
@@ -34,6 +56,7 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request) {
         $project = $request->all();
         $project += ['user_id' => Auth::user()->id];
+        $project += ['total_estimated_days' => $this->findInterval($request->start_date, $request->end_date)->format('%a')];
 
         $projectInserted = Project::create($project);
 
@@ -63,22 +86,24 @@ class ProjectController extends Controller
         return redirect()->back()->with('success', 'Project deleted successfully');
     }
 
-    public function detail(Project $project) {
-        $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
-        $projectDetail = new ProjectDetail();
-        $logs          = Activity::where('subject_type', get_class($projectDetail))->latest()->get();
+    public function detail(Project $project, Request $request) {
+        $versions        = ProjectVersion::where('project_id', $project->id)->latest()->get();
+        $projectDetail   = new ProjectDetail();
+        $logs            = Activity::where('subject_type', get_class($projectDetail))->latest()->get();
+        $selectedVersion = $this->selectedVersion($versions, $request->version);
 
-        if($latestVersion->projectDetails->count() == 0) {
+        if($selectedVersion->projectDetails->count() == 0) {
             $progressPercentage = 0;
         } else {
-            $progressPercentage = ($latestVersion->projectDetails()->whereDone()->count() / $latestVersion->projectDetails->count()) * 100;
+            $progressPercentage = ($selectedVersion->projectDetails()->whereDone()->count() / $selectedVersion->projectDetails->count()) * 100;
         }
 
         return view('project.admin.pages.projects.detail', compact(
             'project',
-            'latestVersion',
+            'versions',
+            'selectedVersion',
             'progressPercentage',
-            'logs'
+            'logs',
         ));
     }
 

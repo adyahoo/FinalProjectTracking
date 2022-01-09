@@ -9,29 +9,13 @@
 
 @section('content')
     @include('project.admin.include.project_page_tab', [
-        'project'             => $project,
-        'latestVersionNumber' => $latestVersion->version_number
+        'requestVersion' => $selectedVersion->id
     ])
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
             <div class="card">
                 <div class="card-header">
                     <h4>Project Modules <span class="badge badge-secondary">{{ $project->projectDetails->count() }}</span></h4>
-                    <div class="card-header-form mr-4">
-                        <form action="{{ route('admin.admin_projects.project_module.index', $project) }}">
-                            <div class="input-group">
-                                <select name="version" class="form-control form-control-sm py-1" style="height: 32px;">
-                                    <option value="">All Version</option>
-                                    @foreach($versions as $version)
-                                        <option value="{{ $version->id }}" @if($request->version == $version->id) selected @endif>{{ $version->version_number }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="input-group-btn">
-                                    <button class="btn btn-primary py-1" title="Search" type="submit" style="height: 32px; margin-top: 0;"><i class="fas fa-search"></i></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
                     <div class="card-header-action">
                         <button data-action="{{ route('admin.admin_projects.project_module.store', $project) }}" class="btn btn-primary btn-round ml-auto btn-add text-white" data-toggle="modal" data-target="#modal">
                             <i class="fa fa-plus"></i>

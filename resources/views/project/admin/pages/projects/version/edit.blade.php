@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title','Project Version')
 @section('content')
-    @include('project.admin.include.project_page_tab', [
+    @include('project.admin.include.project_page_tab_version', [
         'project'             => $projectVersion->project,
         'latestVersionNumber' => $latestVersion->version_number
     ])

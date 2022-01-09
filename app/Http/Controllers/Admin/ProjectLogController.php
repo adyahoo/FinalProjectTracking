@@ -7,13 +7,18 @@ use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 use App\Models\Project;
 use App\Models\ProjectDetail;
+use App\Models\ProjectVersion;
+use App\Traits\ProjectVersionTrait;
 
 class ProjectLogController extends Controller
 {
-    public function index(Project $project) {
-        $projectDetail = new ProjectDetail();
-        $logs          = Activity::where('subject_type', get_class($projectDetail))->get();
+    use ProjectVersionTrait;
+    
+    public function index(Project $project, Request $request) {
+        $logs            = Activity::where('log_name', 'project')->get();
+        $versions        = ProjectVersion::where('project_id', $project->id)->latest()->get();
+        $selectedVersion = $this->selectedVersion($versions, $request->version);
 
-        return view('project.admin.pages.projects.log.index', compact('project', 'logs'));
+        return view('project.admin.pages.projects.log.index', compact('project', 'logs', 'versions', 'selectedVersion'));
     }
 }

@@ -93,17 +93,35 @@
                     <div class="row">
                         <div class="col-6">
                             <h6>Actual Start</h6>
-                            @empty($projectDetail->start_date_actual)
+                            @empty($startInterval)
                                 <p>-</p>
                             @else
+                                <p class="
+                                    @empty($startInterval->format('%r'))
+                                        text-danger
+                                    @else
+                                        text-success
+                                    @endempty
+                                    ">
+                                        {{ $startInterval->format('%R') }} {{ $startInterval->format('%a') }} days {{ $startInterval->format('%h') }} hours
+                                </p>
                                 <p>{{ $projectDetail->start_date_actual->format('d-m-Y') }} ({{ $projectDetail->start_date_actual->format('H:i') }})</p>
                             @endempty
                         </div>
                         <div class="col-6">
                             <h6>Actual End</h6>
-                            @empty($projectDetail->end_date_actual)
+                            @empty($endInterval)
                                 <p>-</p>
                             @else
+                                <p class=" 
+                                    @empty($endInterval->format('%r'))
+                                        text-danger
+                                    @else
+                                        text-success
+                                    @endempty
+                                    ">
+                                        {{ $endInterval->format('%R') }} {{ $endInterval->format('%a') }} days {{ $endInterval->format('%h') }} hours
+                                </p>
                                 <p>{{ $projectDetail->end_date_actual->format('d-m-Y') }} ({{ $projectDetail->end_date_actual->format('H:i') }})</p>
                             @endempty
                         </div>

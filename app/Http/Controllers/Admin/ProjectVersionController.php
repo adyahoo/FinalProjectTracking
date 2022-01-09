@@ -14,15 +14,11 @@ class ProjectVersionController extends Controller
     use VersionValidationTrait;
 
     public function index(Project $project) {
-        $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
-
-        return view('project.admin.pages.projects.version.index', compact('project', 'latestVersion'));
+        return view('project.admin.pages.projects.version.index', compact('project'));
     }
 
     public function detail(Project $project, ProjectVersion $projectVersion) {
-        $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
-
-        return view('project.admin.pages.projects.version.detail', compact('latestVersion', 'projectVersion'));
+        return view('project.admin.pages.projects.version.detail', compact('projectVersion'));
     }
 
     public function create(Project $project) {

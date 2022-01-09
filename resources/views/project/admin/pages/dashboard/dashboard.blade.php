@@ -83,7 +83,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($latestProjects as $project)
+                                @forelse($latestProjects as $project)
                                     <tr>
                                         <td>
                                             {{ $project->name }}
@@ -117,7 +117,11 @@
                                             </form>
                                         </td>
                                     </tr>
-                                @endforeach
+                                @empty
+                                    <tr>
+                                        <td colspan="5" class="text-center">No data available</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
@@ -143,7 +147,7 @@
             </div>
             <div class="card-body">
                 <ul class="list-unstyled list-unstyled-border">
-                    @foreach($logs as $log)
+                    @forelse($logs as $log)
                         <li class="media">
                             @if(!isset($log->causer->profile_image))
                                 <img class="mr-3 rounded-circle" width="50" src="{{asset('templates/stisla/assets/img/avatar/avatar-1.png')}}" alt="avatar">
@@ -156,13 +160,21 @@
                                 <span class="text-small text-muted">{{$log->description}}</span>
                             </div>
                         </li>
-                    @endforeach
+                    @empty
+                        <li class="media">
+                            <div class="media-body">
+                                <div class="media-title text-center">No Recent Activity</div>
+                            </div>
+                        </li>
+                    @endforelse
                 </ul>
-                <div class="text-center pt-1 pb-1">
-                    <a href="{{route('admin.logs.index')}}" class="btn btn-primary btn-lg btn-round">
-                        View All
-                    </a>
-                </div>
+                @if($logs->count() > 1)
+                    <div class="text-center pt-1 pb-1">
+                        <a href="{{route('admin.logs.index')}}" class="btn btn-primary btn-lg btn-round">
+                            View All
+                        </a>
+                    </div>
+                @endif
             </div>
             </div>
         </div>
