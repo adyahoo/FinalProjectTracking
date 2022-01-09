@@ -100,7 +100,10 @@
                 </div>
                 <div class="modal-footer bg-whitesmoke br">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Assign Member</button>
+
+                    @if($project->user_id == Auth::user()->id)
+                        <button type="submit" class="btn btn-primary">Assign Member</button>
+                    @endif
                 </div>
             </div>
         </form>

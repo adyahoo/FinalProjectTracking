@@ -22,8 +22,10 @@
                 </li>
             </ul>
         </div>
-        <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-right">
-            <a href="{{ route('project_manager.projects.edit', $project) }}" class="btn btn-icon btn-primary"><i class="fa fa-cog"></i></a>
-        </div>
+        @if($project->user_id == Auth::user()->id)
+            <div class="col-lg-4 col-md-4 col-12 col-sm-12 text-right">
+                <a href="{{ route('project_manager.projects.edit', $project) }}" class="btn btn-icon btn-primary"><i class="fa fa-cog"></i></a>
+            </div>
+        @endif
     </div>
 </div>

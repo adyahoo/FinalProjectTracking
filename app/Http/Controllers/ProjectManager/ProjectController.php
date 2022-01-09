@@ -58,9 +58,12 @@ class ProjectController extends Controller
 
     public function store(ProjectRequest $request)
     {
+        $dates   = explode(' - ', $request->start_end_date);
         $project = $request->all();
         $project += ['user_id' => Auth::user()->id];
-        $project += ['total_estimated_days' => $this->findInterval($request->start_date, $request->end_date)->format('%a')];
+        $project += ['start_date' => $dates[0]];
+        $project += ['end_date' => $dates[1]];
+        $project += ['total_estimated_days' => $this->findInterval($dates[0], $dates[1])->format('%a')];
 
         $projectInserted = Project::create($project);
 
@@ -81,7 +84,14 @@ class ProjectController extends Controller
 
     public function update(ProjectRequest $request, Project $project)
     {
-        $project->update($request->all());
+        $projectUpdate = $request->all();
+
+        $dates         = explode(' - ', $request->start_end_date);
+        $projectUpdate += ['start_date' => $dates[0]];
+        $projectUpdate += ['end_date'   => $dates[1]];
+        $projectUpdate += ['total_estimated_days' => $this->findInterval($dates[0], $dates[1])->format('%a')];
+
+        $project->update($projectUpdate);
 
         return redirect()->route('project_manager.projects.all')->with('success', 'Project updated successfully');
     }
@@ -96,8 +106,11 @@ class ProjectController extends Controller
     public function detail(Project $project, Request $request)
     {
         $versions        = ProjectVersion::where('project_id', $project->id)->latest()->get();
-        $projectDetail   = new ProjectDetail();
-        $logs            = Activity::where('subject_type', get_class($projectDetail))->latest()->get();
+        $logs            = Activity::where('log_name', 'project')
+                                    ->where('properties->project_id', $project->id)
+                                    ->latest()
+                                    ->take(4)
+                                    ->get();
         $selectedVersion = $this->selectedVersion($versions, $request->version);
 
         if($selectedVersion->projectDetails->count() == 0) {

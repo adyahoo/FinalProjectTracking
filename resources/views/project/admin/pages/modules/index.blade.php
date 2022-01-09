@@ -97,7 +97,7 @@
                     </div>
                     <div class="form-group">
                         <label>Time Estimation (in hour)</label>
-                        <input id="moduleTime" name="time_estimation" value="" type="number" class="form-control" placeholder="Input Module Time Estimation">
+                        <input id="moduleTime" name="time_estimation" value="" type="number" min=0 step="0.01" class="form-control" placeholder="Input Module Time Estimation">
                         @error('time_estimation')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
@@ -118,6 +118,20 @@
 <script src="{{ asset('templates/stisla/node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/js/select.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('templates/stisla/node_modules/sweetalert/dist/sweetalert.min.js') }}"></script>
+<script>
+    $(document).on('keydown', 'input[pattern]', function(e){
+        var input = $(this);
+        var oldVal = input.val();
+        var regex = new RegExp(input.attr('pattern'), 'g');
+
+        setTimeout(function(){
+            var newVal = input.val();
+            if(!regex.test(newVal)){
+            input.val(oldVal); 
+            }
+        }, 1);
+    });
+</script>
 @if (Session::has('success'))
     <script>
         swal("Success!", "{{ Session::get('success') }}", "success").then(function(){

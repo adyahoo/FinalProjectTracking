@@ -50,7 +50,7 @@ class ProjectDetail extends Model
 
     public function tapActivity(Activity $activity, string $eventName)
     {
-        $activity->properties = ['sdsd', 'sdshdsj'];
+        $activity->properties = ['project_id' => $this->projectVersion->project_id];
     }
 
     public function getDescriptionForEvent(string $eventName): string

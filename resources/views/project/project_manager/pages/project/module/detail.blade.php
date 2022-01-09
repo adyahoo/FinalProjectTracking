@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/datatables.net-select-bs4/css/select.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/bootstrap-daterangepicker/daterangepicker.css') }}"/>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
 @endsection
 
 @section('content')
@@ -19,10 +18,12 @@
                 <div class="card-header">
                     <h4>Project Members <span class="badge badge-secondary">{{ $projectDetail->userAssignments->count() }}</span></h4>
                     <div class="card-header-action">
-                        <button data-action="{{ route('project_manager.projects.module.member.store', $projectDetail) }}" title="Add Member" class="btn btn-primary btn-round ml-auto btn-add-member text-white" data-toggle="modal" data-target="#modalMember">
-                            <i class="fa fa-plus"></i>
-                            Add Member
-                        </button>
+                        @if($projectDetail->projectVersion->project->user_id == Auth::user()->id)
+                            <button data-action="{{ route('project_manager.projects.module.member.store', $projectDetail) }}" title="Add Member" class="btn btn-primary btn-round ml-auto btn-add-member text-white" data-toggle="modal" data-target="#modalMember">
+                                <i class="fa fa-plus"></i>
+                                Add Member
+                            </button>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body">
@@ -33,7 +34,9 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Division</th>
-                                    <th>Action</th>
+                                    @if($projectDetail->projectVersion->project->user_id == Auth::user()->id)
+                                        <th>Action</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,15 +58,17 @@
                                         <td>
                                             {{ $userAssignment->user->division->name }}
                                         </td>
-                                        <td>
-                                            <a href="#" onclick="deleteConfirm('del{{ $userAssignment->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                            <form id="del{{ $userAssignment->id }}" action="{{ route('project_manager.projects.module.member.destroy', $userAssignment) }}" method="POST">
-                                                @method('delete')
-                                                @csrf
-                                            </form>
-                                        </td>
+                                        @if($projectDetail->projectVersion->project->user_id == Auth::user()->id)
+                                            <td>
+                                                <a href="#" onclick="deleteConfirm('del{{ $userAssignment->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                                <form id="del{{ $userAssignment->id }}" action="{{ route('project_manager.projects.module.member.destroy', $userAssignment) }}" method="POST">
+                                                    @method('delete')
+                                                    @csrf
+                                                </form>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -128,15 +133,17 @@
                         </div>
                     </div>
                     <div class="row mt-4">
-                        <button data-action="{{ route('project_manager.projects.module.update', $projectDetail) }}" data-detail="{{ route('project_manager.projects.module.edit', $projectDetail) }}" title="Add Actual Date" class="btn btn-primary btn-round mx-auto mt-2 btn-add-actual-date text-white" data-toggle="modal" data-target="#modalDateActual">
-                            @empty($projectDetail->start_date_actual)
-                                <i class="fa fa-plus"></i>
-                                Add Actual Date
-                            @else
-                                <i class="fa fa-edit"></i>
-                                Update Actual Date
-                            @endempty
-                        </button>
+                        @if($projectDetail->projectVersion->project->user_id == Auth::user()->id)
+                            <button data-action="{{ route('project_manager.projects.module.update', $projectDetail) }}" data-detail="{{ route('project_manager.projects.module.edit', $projectDetail) }}" title="Add Actual Date" class="btn btn-primary btn-round mx-auto mt-2 btn-add-actual-date text-white" data-toggle="modal" data-target="#modalDateActual">
+                                @empty($projectDetail->start_date_actual)
+                                    <i class="fa fa-plus"></i>
+                                    Add Actual Date
+                                @else
+                                    <i class="fa fa-edit"></i>
+                                    Update Actual Date
+                                @endempty
+                            </button>
+                        @endif
                     </div>
                 </div>
             </div>

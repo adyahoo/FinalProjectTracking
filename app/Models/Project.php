@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Contracts\Activity;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 use App\Traits\ImageTrait;
 use Auth;
@@ -47,6 +48,11 @@ class Project extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->useLogName('project');
+    }
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->properties = ['project_id' => $this->id];
     }
 
     public function getDescriptionForEvent(string $eventName): string

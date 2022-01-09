@@ -12,6 +12,7 @@ use App\Models\Role;
 use App\Models\SpecialModule;
 use App\Http\Requests\ModuleRequest;
 use App\Http\Requests\ProjectDetailRequest;
+use App\Http\Requests\ProjectDetailSpecialRequest;
 use App\Traits\ProjectVersionTrait;
 use App\Traits\DateTrait;
 use DateTime;
@@ -48,8 +49,9 @@ class ProjectDetailController extends Controller
         $projectDetail                     = new ProjectDetail();
         $projectDetail->project_version_id = $latestVersion->id;
         $projectDetail->status             = $projectDetail->statusOption['open'];
-        $projectDetail->start_date         = $request->start_date;
-        $projectDetail->end_date           = $request->end_date;
+        $dates                             = explode(' - ', $request->start_end_date);
+        $projectDetail->start_date         = $dates[0];
+        $projectDetail->end_date           = $dates[1];
 
         $module = Module::find($request->moduleable_id);
 
@@ -58,7 +60,7 @@ class ProjectDetailController extends Controller
         return redirect()->back()->with('success', 'Module created successfully');
     }
 
-    public function storeSpecial(ProjectDetailRequest $request, Project $project) {
+    public function storeSpecial(ProjectDetailSpecialRequest $request, Project $project) {
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
 
         $startDate = new DateTime($request->start_date);
@@ -72,8 +74,9 @@ class ProjectDetailController extends Controller
         $projectDetail                     = new ProjectDetail();
         $projectDetail->project_version_id = $latestVersion->id;
         $projectDetail->status             = $projectDetail->statusOption['open'];
-        $projectDetail->start_date         = $request->start_date;
-        $projectDetail->end_date           = $request->end_date;
+        $dates                             = explode(' - ', $request->start_end_date);
+        $projectDetail->start_date         = $dates[0];
+        $projectDetail->end_date           = $dates[1];
 
         $specialModuleInserted->project_detail()->save($projectDetail);
 
@@ -101,12 +104,20 @@ class ProjectDetailController extends Controller
     }
 
     public function update(ProjectDetailRequest $request, ProjectDetail $projectDetail) {
-        $projectDetail->update($request->all());
+        $projectDetailUpdate = $request->all();
+
+        if(!empty($request->start_end_date_actual)) {
+            $dates               = explode(' - ', $request->start_end_date_actual);
+            $projectDetailUpdate += ['start_date_actual' => $dates[0]];
+            $projectDetailUpdate += ['end_date_actual'   => $dates[1]];
+        }
+
+        $projectDetail->update($projectDetailUpdate);
 
         return redirect()->back()->with('success', 'Project module updated successfully');
     }
 
-    public function updateSpecial(ProjectDetailRequest $request, ProjectDetail $projectDetail) {
+    public function updateSpecial(ProjectDetailSpecialRequest $request, ProjectDetail $projectDetail) {
         $projectDetail->update($request->all());
 
         $startDate = new DateTime($request->start_date);

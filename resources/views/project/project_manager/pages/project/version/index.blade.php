@@ -17,7 +17,9 @@
                 <div class="card-header">
                     <h4>Project Versions <span class="badge badge-secondary">{{ $project->projectVersions->count() }}</span></h4>
                     <div class="card-header-action">
-                        <a href="{{ route('project_manager.projects.version.create', $project) }}" class="btn btn-primary"><i class="fas fa-plus"></i> Add Version</a>
+                        @if($project->user_id == Auth::user()->id)
+                            <a href="{{ route('project_manager.projects.version.create', $project) }}" class="btn btn-primary"><i class="fas fa-plus"></i> Add Version</a>
+                        @endif
                     </div>
                 </div>
                 <div class="card-body">
@@ -41,14 +43,16 @@
                                         </td>
                                         <td>
                                             <a href="{{ route('project_manager.projects.version.detail', [$project, $version]) }}" class="btn btn-secondary btn-action mr-1" data-toggle="tooltip" title="Notes"><i class="fas fa-sticky-note"></i></a>
-                                            <a href="{{ route('project_manager.projects.version.edit', $version) }}" class="btn btn-primary btn-edit" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil-alt"></i></a>
-                                            <a href="#" onclick="deleteConfirm('del{{ $version->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                            <form id="del{{ $version->id }}" action="{{ route('project_manager.projects.version.destroy', $version) }}" method="POST">
-                                                @method('delete')
-                                                @csrf
-                                            </form>
+                                            @if($project->user_id == Auth::user()->id)
+                                                <a href="{{ route('project_manager.projects.version.edit', $version) }}" class="btn btn-primary btn-edit" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil-alt"></i></a>
+                                                <a href="#" onclick="deleteConfirm('del{{ $version->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                                <form id="del{{ $version->id }}" action="{{ route('project_manager.projects.version.destroy', $version) }}" method="POST">
+                                                    @method('delete')
+                                                    @csrf
+                                                </form>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

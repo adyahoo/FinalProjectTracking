@@ -11,27 +11,21 @@
 
 @section('content')
     @include('project.employee.include.project_page_tab', [
-        'project'             => $project,
-        'latestVersionNumber' => $latestVersion->version_number
+        'requestVersion' => $selectedVersion->id
     ])
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Project Modules <span class="badge badge-secondary">{{ $project->projectDetails->count() }}</span></h4>
+                    <h4>Project Modules <span class="badge badge-secondary">{{ $projectModules->count() }}</span></h4>
                     <div class="card-header-form mr-4">
-                        <form action="{{ route('employee.projects.module.all', $project) }}">
+                        <form role="form" method="GET">
                             <div class="input-group">
-                                <select name="user" class="form-control form-control-sm py-1 mr-2" style="height: 32px; border-radius: 30px !important;">
+                                <input type="hidden" name="version" value="{{ $selectedVersion->id }}">
+                                <select name="user" class="form-control form-control-sm py-1" style="height: 32px;">
                                     <option value="">All Module</option>
                                     <option value="{{ Auth::user()->id }}" @if($request->user == Auth::user()->id) selected @endif>Assigned to Me</option>
-                                </select>
-                                <select name="version" class="form-control form-control-sm py-1" style="height: 32px;">
-                                    <option value="">All Version</option>
-                                    @foreach($versions as $version)
-                                        <option value="{{ $version->id }}" @if($request->version == $version->id) selected @endif>{{ $version->version_number }}</option>
-                                    @endforeach
-                                </select>
+                                </select>                                
                                 <div class="input-group-btn">
                                     <button class="btn btn-primary py-1" title="Search" type="submit" style="height: 32px; margin-top: 0;"><i class="fas fa-search"></i></button>
                                 </div>
@@ -47,8 +41,8 @@
                                     <th>Name</th>
                                     <th>Status</th>
                                     <th>Assignee</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
+                                    <th>Start Date Plan</th>
+                                    <th>End Date Plan</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>

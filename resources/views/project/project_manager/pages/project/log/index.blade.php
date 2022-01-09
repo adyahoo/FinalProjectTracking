@@ -31,29 +31,24 @@
                             </thead>
                             <tbody>
                                 @foreach($logs as $log)
-                                    @if($log->id == 80)
-                                    {{ $log->subject->project }}
-                                    @endif
-                                    {{-- @if(!empty($log->subject->project) &&  $log->subject->project->id == $project->id && $log->subject->projectVersion->id == $selectedVersion->id)
-                                        <tr>
-                                            <td>
-                                                <img alt="image" 
-                                                @empty($log->causer->profile_image)
-                                                    src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}"
-                                                @else
-                                                    src="{{ asset('storage/profile_images/' . $log->causer->profile_image) }}"
-                                                @endempty
-                                                class="rounded-circle mb-2 mr-2" width="35" data-toggle="tooltip" title="{{ $log->causer->name }}">
-                                                {{ $log->causer->name }}
-                                            </td>
-                                            <td>
-                                                {{ $log->description }}
-                                            </td>
-                                            <td>
-                                                {{ $log->created_at->format('d-m-Y') }} ({{ $log->created_at->format('H:i') }})
-                                            </td>
-                                        </tr>
-                                    @endif --}}
+                                    <tr>
+                                        <td>
+                                            <img alt="image" 
+                                            @empty($log->causer->profile_image)
+                                                src="{{ asset('templates/stisla/assets/img/avatar/avatar-1.png') }}"
+                                            @else
+                                                src="{{ asset('storage/profile_images/' . $log->causer->profile_image) }}"
+                                            @endempty
+                                            class="rounded-circle mb-2 mr-2" width="35" data-toggle="tooltip" title="{{ $log->causer->name }}">
+                                            {{ $log->causer->name }}
+                                        </td>
+                                        <td>
+                                            {{ $log->description }}
+                                        </td>
+                                        <td>
+                                            {{ $log->created_at->format('d-m-Y') }} ({{ $log->created_at->format('H:i') }})
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>

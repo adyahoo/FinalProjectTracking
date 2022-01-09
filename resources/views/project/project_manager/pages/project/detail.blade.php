@@ -18,7 +18,9 @@
                             <p>{{ $project->description }}</p>
                         </div>
                         <div class="col-1 text-right">
-                            <a href="{{ route('project_manager.projects.edit', $project) }}" class="h5" style="color: #78828a"><i class="fa fa-edit"></i></a>
+                            @if($project->user_id == Auth::user()->id)
+                                <a href="{{ route('project_manager.projects.edit', $project) }}" class="h5" style="color: #78828a"><i class="fa fa-edit"></i></a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -68,10 +70,12 @@
                                     <p class="text-limit">{{ strip_tags($project->scope) }}</p>
                                 </div>
                                 <div class="col-1 text-right">
-                                    <a href="{{ route('project_manager.projects.edit', $project) }}" class="h5" style="color: #78828a"><i class="fa fa-edit"></i></a>
+                                    @if($project->user_id == Auth::user()->id)
+                                        <a href="{{ route('project_manager.projects.edit', $project) }}" class="h5" style="color: #78828a"><i class="fa fa-edit"></i></a>
+                                    @endif
                                 </div>
                             </div>
-                            <a href="{{ route('project_manager.projects.scope', $project) }}"><i class="fa fa-book-open"></i> Read More</a>
+                            <a href="{{ route('project_manager.projects.scope', $project) }}"><i class="fa fa-book-open mr-2"></i>Read More</a>
                         </div>
                     </div>
                 </div>
@@ -88,10 +92,12 @@
                                     <p class="text-limit">{{ strip_tags($project->credentials) }}</p>
                                 </div>
                                 <div class="col-1 text-right">
-                                    <a href="{{ route('project_manager.projects.edit', $project) }}" class="h5" style="color: #78828a"><i class="fa fa-edit"></i></a>
+                                    @if($project->user_id == Auth::user()->id)
+                                        <a href="{{ route('project_manager.projects.edit', $project) }}" class="h5" style="color: #78828a"><i class="fa fa-edit"></i></a>
+                                    @endif
                                 </div>
                             </div>
-                            <a href="{{ route('project_manager.projects.credentials', $project) }}"><i class="fa fa-book-open"></i> Read More</a>
+                            <a href="{{ route('project_manager.projects.credentials', $project) }}"><i class="fa fa-book-open mr-2"></i>Read More</a>
                         </div>
                     </div>
                 </div>
@@ -107,14 +113,18 @@
                         <div class="card-body">
                             @empty($project->launch_date)
                                 <p>No launch date created</p>
-                                <a href="#" data-action="{{ route('project_manager.projects.addLaunchDate', $project) }}" class="btn-add btn btn-primary" data-toggle="modal" data-target="#modal"><i class="fa fa-plus"></i>Add launch date</a>
+                                @if($project->user_id == Auth::user()->id)
+                                    <a href="#" data-action="{{ route('project_manager.projects.addLaunchDate', $project) }}" class="btn-add btn btn-primary" data-toggle="modal" data-target="#modal"><i class="fa fa-plus"></i>Add launch date</a>
+                                @endif
                             @else
                                 <div class="row">
                                     <div class="col-9">
                                         <p class="text-dark"><b><i class="fa fa-calendar-day"></i> {{ $project->launch_date->format('d F Y') }}</b></p>
                                     </div>
                                     <div class="col-3 text-right">
-                                        <a href="#" data-action="{{ route('project_manager.projects.addLaunchDate', $project) }}" data-detail="{{ $project->launch_date->format('Y-m-d') }}" class="btn-edit" data-toggle="modal" data-target="#modal" class="h5" style="color: #78828a"><i class="fa fa-edit"></i></a>
+                                        @if($project->user_id == Auth::user()->id)
+                                            <a href="#" data-action="{{ route('project_manager.projects.addLaunchDate', $project) }}" data-detail="{{ $project->launch_date->format('Y-m-d') }}" class="btn-edit" data-toggle="modal" data-target="#modal" class="h5" style="color: #78828a"><i class="fa fa-edit"></i></a>
+                                        @endif
                                     </div>
                                 </div>
                             @endempty
@@ -128,7 +138,9 @@
                         <div class="card-header">
                             <h4>Members <span class="badge badge-secondary">{{ $selectedVersion->userAssignments->groupBy('user_id')->count() }}</span></h4>
                             <div class="card-header-action">
-                                <a href="{{ route('project_manager.projects.module.all', $project) }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                @if($project->user_id == Auth::user()->id)
+                                    <a href="{{ route('project_manager.projects.module.all', $project) }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                @endif
                             </div>
                         </div>
                         <div class="card-body">
@@ -163,34 +175,26 @@
                     <a href="{{ route('project_manager.projects.logs.all', $project) }}" class="btn btn-outline-primary ml-2">View All</a>
                 </h2>
                 <div class="row">
-                    @php
-                        $logCount = 0;
-                    @endphp
                     @foreach($logs as $log)
-                        @if($log->subject->projectVersion->project_id == $project->id && $log->subject->projectVersion->id == $selectedVersion->id && $logCount < 4)
-                            <div class="col-6">
-                                <div class="activities">
-                                    <div class="activity">
-                                        <div class="activity-icon bg-primary text-white shadow-primary">
-                                            <i class="fas fa-history"></i>
+                        <div class="col-6">
+                            <div class="activities">
+                                <div class="activity">
+                                    <div class="activity-icon bg-primary text-white shadow-primary">
+                                        <i class="fas fa-history"></i>
+                                    </div>
+                                    <div class="activity-detail">
+                                        <div class="mb-2">
+                                            <span class="text-job text-primary">{{ $log->created_at->format('d F Y') }} ({{ $log->created_at->format('H:i') }})</span>
+                                            <span class="bullet"></span>
+                                            <span class="text-job" href=""><i class="fa fa-user-circle"></i> {{ $log->causer->name }}</span>
                                         </div>
-                                        <div class="activity-detail">
-                                            <div class="mb-2">
-                                                <span class="text-job text-primary">{{ $log->created_at->format('d F Y') }} ({{ $log->created_at->format('H:i') }})</span>
-                                                <span class="bullet"></span>
-                                                <span class="text-job" href=""><i class="fa fa-user-circle"></i> {{ $log->causer->name }}</span>
-                                            </div>
-                                            <p>
-                                                {{ $log->description }}
-                                            </p>
-                                        </div>
+                                        <p>
+                                            {{ $log->description }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-                            @php
-                                $logCount += 1;
-                            @endphp
-                        @endif
+                        </div>
                     @endforeach
                 </div>
             </div>

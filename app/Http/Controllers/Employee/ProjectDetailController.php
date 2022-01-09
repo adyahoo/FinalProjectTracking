@@ -11,25 +11,28 @@ use App\Models\Module;
 use App\Models\Role;
 use App\Models\SpecialModule;
 use App\Http\Requests\ModuleRequest;
+use App\Traits\ProjectVersionTrait;
 use DateTime;
 
 class ProjectDetailController extends Controller
 {
+    use ProjectVersionTrait;
+
     public function index(Project $project, Request $request)
     {
-        $modules        = Module::get();
-        $employees      = Role::whereEmployee()->first()->user;
-        $latestVersion  = ProjectVersion::where('project_id', $project->id)->latest()->first();
-        $versions       = ProjectVersion::where('project_id', $project->id)->get();
-        $statusOptions  = (new ProjectDetail())->statusOption;
-        $projectModules = $project->projectDetails()->whereVersion($request->version)
-                                                    ->whereUserAssignee($request->user)
-                                                    ->get();
+        $modules         = Module::get();
+        $employees       = Role::whereEmployee()->first()->user;
+        $versions        = ProjectVersion::where('project_id', $project->id)->latest()->get();
+        $selectedVersion = $this->selectedVersion($versions, $request->version);
+        $statusOptions   = (new ProjectDetail())->statusOption;
+        $projectModules  = ProjectDetail::where('project_version_id', $selectedVersion->id)
+                                        ->whereUserAssignee($request->user)
+                                        ->get();
 
         return view('project.employee.pages.project.module.index', compact(
             'project',
             'projectModules',
-            'latestVersion',
+            'selectedVersion',
             'modules',
             'employees',
             'versions',
@@ -80,9 +83,15 @@ class ProjectDetailController extends Controller
 
     public function show(ProjectDetail $projectDetail)
     {
-        $employees = Role::whereEmployee()->first()->user;
+        $startInterval = '';
+        $endInterval   = '';
 
-        return view('project.employee.pages.project.module.detail', compact('projectDetail', 'employees'));
+        if(!empty($projectDetail->start_date_actual)) {
+            $startInterval = $projectDetail->start_date->diff($projectDetail->start_date_actual);
+            $endInterval   = $projectDetail->end_date->diff($projectDetail->end_date_actual);
+        }
+
+        return view('project.employee.pages.project.module.detail', compact('projectDetail', 'startInterval', 'endInterval'));
     }
 
     public function edit(ProjectDetail $projectDetail)

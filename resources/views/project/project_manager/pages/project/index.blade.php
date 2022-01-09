@@ -293,14 +293,17 @@
     <script src="{{ asset('templates/stisla/node_modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script>
         $('.daterange-cus').daterangepicker({
-            locale: {format: 'DD-MM-YYYY'},
+            timePicker: true,
+            locale: {
+                format: 'YYYY-MM-DD HH:mm'
+            },
             drops: 'down',
             opens: 'right',
             autoUpdateInput: false
         });
 
         $('.daterange-cus').on('apply.daterangepicker', function(ev, picker) {
-            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+            $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm') + ' - ' + picker.endDate.format('YYYY-MM-DD HH:mm'));
         });
 
         $('.daterange-cus').on('cancel.daterangepicker', function(ev, picker) {

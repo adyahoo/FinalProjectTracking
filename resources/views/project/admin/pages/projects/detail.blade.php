@@ -161,34 +161,26 @@
                     <a href="{{ route('project_manager.projects.logs.all', $project) }}" class="btn btn-outline-primary ml-2">View All</a>
                 </h2>
                 <div class="row">
-                    @php
-                        $logCount = 0;
-                    @endphp
                     @foreach($logs as $log)
-                        @if($log->subject->projectVersion->project_id == $project->id && $log->subject->projectVersion->id == $selectedVersion->id && $logCount < 4)
-                            <div class="col-6">
-                                <div class="activities">
-                                    <div class="activity">
-                                        <div class="activity-icon bg-primary text-white shadow-primary">
-                                            <i class="fas fa-history"></i>
+                        <div class="col-6">
+                            <div class="activities">
+                                <div class="activity">
+                                    <div class="activity-icon bg-primary text-white shadow-primary">
+                                        <i class="fas fa-history"></i>
+                                    </div>
+                                    <div class="activity-detail">
+                                        <div class="mb-2">
+                                            <span class="text-job text-primary">{{ $log->created_at->format('d F Y') }} ({{ $log->created_at->format('H:i') }})</span>
+                                            <span class="bullet"></span>
+                                            <span class="text-job" href=""><i class="fa fa-user-circle"></i> {{ $log->causer->name }}</span>
                                         </div>
-                                        <div class="activity-detail">
-                                            <div class="mb-2">
-                                                <span class="text-job text-primary">{{ $log->created_at->format('d F Y') }} ({{ $log->created_at->format('H:i') }})</span>
-                                                <span class="bullet"></span>
-                                                <span class="text-job" href=""><i class="fa fa-user-circle"></i> {{ $log->causer->name }}</span>
-                                            </div>
-                                            <p>
-                                                {{ $log->description }}
-                                            </p>
-                                        </div>
+                                        <p>
+                                            {{ $log->description }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-                            @php
-                                $logCount += 1;
-                            @endphp
-                        @endif
+                        </div>
                     @endforeach
                 </div>
             </div>

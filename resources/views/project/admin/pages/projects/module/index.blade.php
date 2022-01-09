@@ -45,20 +45,27 @@
                                         <tr>
                                             <td>
                                                 <b>{{ $projectDetail->moduleable->name }}</b>
+                                                @if($projectDetail->moduleable_type == $projectDetail->moduleType['special_module'])
+                                                    <span class="badge" style="background-color: #34395e; color: #fff;">Special</span>
+                                                @endif
                                                 <div class="mt-1">
                                                     <span>Added at : v{{ $projectDetail->projectVersion->version_number }}</span>
                                                 </div>
                                             </td>
                                             <td>
-                                                {{-- <div class="badge 
-                                                    @if($projectDetail->status == $projectDetail->statusOption['not_yet'])
+                                                <div class="badge 
+                                                    @if($projectDetail->status == $projectDetail->statusOption['open'])
                                                         badge-danger
                                                     @elseif($projectDetail->status == $projectDetail->statusOption['on_progress'])
+                                                        badge-primary
+                                                    @elseif($projectDetail->status == $projectDetail->statusOption['pending'])
                                                         badge-warning
-                                                    @elseif($projectDetail->status == $projectDetail->statusOption['done'])
+                                                    @elseif($projectDetail->status == $projectDetail->statusOption['testing'])
+                                                        badge-info
+                                                    @elseif($projectDetail->status == $projectDetail->statusOption['finish'])
                                                         badge-success
                                                     @endif
-                                                ">{{ $projectDetail->status }}</div> --}}
+                                                ">{{ $projectDetail->status }}</div>
                                             </td>
                                             <td>
                                                 @if($projectDetail->userAssignments->count() == 0)
@@ -91,7 +98,10 @@
                                                 <a data-action="{{ route('admin.admin_projects.project_module.member.store', $projectDetail) }}" title="Add Member" href="#" class="btn btn-primary btn-add-member" data-toggle="modal" data-target="#modalMember" title="Add Member"><i class="fa fa-user-plus"></i></a>
 
                                                 @if($projectDetail->moduleable_type == $projectDetail->moduleType['special_module'])
-                                                    <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.special.update', $projectDetail) }}" href="#" class="btn btn-success btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status"><i class="fa fa-exchange-alt"></i></a>
+                                                    @if($projectDetail->userAssignments->count() > 0)
+                                                        <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.special.update', $projectDetail) }}" href="#" class="btn btn-success btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status"><i class="fa fa-exchange-alt"></i></a>
+                                                    @endif
+
                                                     <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.special.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit-special" data-toggle="modal" data-target="#modalSpecial" title="Edit"><i class="fa fa-pencil-alt"></i></a>
 
                                                     <a href="#" onclick="deleteConfirm('del{{ $projectDetail->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
@@ -102,7 +112,10 @@
                                                         @csrf
                                                     </form>
                                                 @else
-                                                    <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.update', $projectDetail) }}" href="#" class="btn btn-success btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status"><i class="fa fa-exchange-alt"></i></a>
+                                                    @if($projectDetail->userAssignments->count() > 0)
+                                                        <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.update', $projectDetail) }}" href="#" class="btn btn-success btn-change-status" data-toggle="modal" data-target="#modalChangeStatus" title="Change Status"><i class="fa fa-exchange-alt"></i></a>
+                                                    @endif
+
                                                     <a data-detail="{{ route('admin.admin_projects.project_module.edit', $projectDetail) }}" data-action="{{ route('admin.admin_projects.project_module.update', $projectDetail) }}" href="#" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#modal" title="Edit"><i class="fa fa-pencil-alt"></i></a>
 
                                                     <a href="#" onclick="deleteConfirm('del{{ $projectDetail->id }}')" class="btn btn-danger btn-action" data-toggle="tooltip" title="Delete">
@@ -150,21 +163,25 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6 col-lg-6">
-                                <label>Start Date</label>
-                                <input value="{{ old('start_date') }}" id="start" type="text" name="start_date" class="form-control datetimepicker">
-                                @error('start_date')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
+                        <div class="form-group">
+                            <label>Start - End Date Plan</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-calendar"></i>
+                                    </div>
+                                </div>
+                                <input
+                                    type="text"
+                                    name="start_end_date"
+                                    id="startEndDate"
+                                    class="form-control daterange-cus"
+                                    value=""
+                                />
                             </div>
-                            <div class="form-group col-md-6 col-lg-6">
-                                <label>End Date</label>
-                                <input value="{{ old('end_date') }}" id="end" type="text" name="end_date" class="form-control datetimepicker">
-                                @error('end_date')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
+                            @error('start_end_date')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
                     </div>
                     <div class="modal-footer bg-whitesmoke br">
@@ -203,21 +220,25 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6 col-lg-6">
-                                <label>Start Date</label>
-                                <input value="{{ old('start_date') }}" type="text" id="startSpecial" name="start_date" class="form-control datetimepicker">
-                                @error('start_date')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
+                        <div class="form-group">
+                            <label>Start - End Date Plan</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-calendar"></i>
+                                    </div>
+                                </div>
+                                <input
+                                    type="text"
+                                    name="start_end_date"
+                                    id="startEndDateSpecial"
+                                    class="form-control daterange-cus"
+                                    value=""
+                                />
                             </div>
-                            <div class="form-group col-md-6 col-lg-6">
-                                <label>End Date</label>
-                                <input value="{{ old('end_date') }}" type="text" id="endSpecial" name="end_date" class="form-control datetimepicker">
-                                @error('end_date')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
+                            @error('start_end_date')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
                     </div>
                     <div class="modal-footer bg-whitesmoke br">
@@ -305,6 +326,25 @@
     <script src="{{ asset('templates/stisla/node_modules/sweetalert/dist/sweetalert.min.js') }}"></script>
     <script src="{{ asset('templates/stisla/node_modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('templates/stisla/node_modules/bootstrap-timepicker/js/bootstrap-timepicker.min.js') }}"></script>
+    <script>
+        $(function() {
+            $('#startEndDate').daterangepicker({
+                timePicker: true,
+                locale: {
+                    format: 'YYYY-MM-DD HH:mm'
+                }
+            });
+        });
+
+        $(function() {
+            $('#startEndDateSpecial').daterangepicker({
+                timePicker: true,
+                locale: {
+                    format: 'YYYY-MM-DD HH:mm'
+                }
+            });
+        });
+    </script>
     @if (Session::has('success'))
         <script>
             swal("Success!", "{{ Session::get('success') }}", "success").then(function(){

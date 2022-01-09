@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProjectDetailRequest extends FormRequest
+class ProjectDetailSpecialRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,20 +23,11 @@ class ProjectDetailRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [];
-
-        if($this->method() == 'POST') {
-            $rules += [
-                'moduleable_id'  => 'required',
-                'start_end_date' => 'required',
-            ];
-        } elseif($this->method() == 'PUT') {
-            $rules += [
-                'start_end_date_actual' => 'required',
-            ];
-        }
-
-        return $rules;
+        return [
+            'name'           => 'required',
+            'description'    => 'required',
+            'start_end_date' => 'required',
+        ];
     }
 
     public function messages()

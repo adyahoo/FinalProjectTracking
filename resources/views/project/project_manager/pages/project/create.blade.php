@@ -2,6 +2,10 @@
 
 @section('title','Create Project')
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('templates/stisla/node_modules/bootstrap-daterangepicker/daterangepicker.css') }}"/>
+@endsection
+
 @section('content')
     <div class="section-header">
         <h1>Projects</h1>
@@ -44,25 +48,25 @@
                       </div>
                   @enderror
                 </div>
-                <div class="form-row">
-                      <div class="form-group col-md-6 col-lg-6">
-                          <label>Start Date</label>
-                          <input value="{{ old('start_date') }}" type="date" @error('start_date') class="form-control is-invalid" @else class="form-control" @enderror name="start_date">
-                          @error('start_date')
-                              <div class="invalid-feedback">
-                                {{ $message }}
-                              </div>
-                          @enderror
+                <div class="form-group">
+                  <label>Start - End Date</label>
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                          <div class="input-group-text">
+                              <i class="fas fa-calendar"></i>
+                          </div>
                       </div>
-                      <div class="form-group col-md-6 col-lg-6">
-                          <label>End Date</label>
-                          <input value="{{ old('end_date') }}" type="date" @error('end_date') class="form-control is-invalid" @else class="form-control" @enderror name="end_date">
-                          @error('end_date')
-                              <div class="invalid-feedback">
-                                {{ $message }}
-                              </div>
-                          @enderror
-                      </div>
+                      <input
+                          type="text"
+                          name="start_end_date"
+                          id="startEndDate"
+                          class="form-control daterange-cus"
+                          value=""
+                      />
+                  </div>
+                  @error('start_end_date')
+                      <small class="text-danger">{{ $message }}</small>
+                  @enderror
                 </div>
                 <div class="form-group">
                   <label>Scope</label>
@@ -95,6 +99,17 @@
 @endsection
 @section('script')
     <script src="{{ asset('templates/stisla/node_modules/jquery_upload_preview/assets/js/jquery.uploadPreview.min.js') }}"></script>
+    <script src="{{ asset('templates/stisla/node_modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script>
+        $(function() {
+            $('#startEndDate').daterangepicker({
+                timePicker: true,
+                locale: {
+                    format: 'YYYY-MM-DD HH:mm'
+                }
+            });
+        });
+    </script>
     <script>
       function showPreview(event){
           if(event.target.files.length > 0){

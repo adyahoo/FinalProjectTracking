@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\Contracts\Activity;
 use Spatie\Activitylog\LogOptions;
 
 class UserAssignment extends Model
@@ -22,6 +23,11 @@ class UserAssignment extends Model
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->useLogName('project');
+    }
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->properties = ['project_id' => $this->projectDetail->projectVersion->project_id];
     }
 
     public function getDescriptionForEvent(string $eventName): string

@@ -12,21 +12,47 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\ProjectVersion;
 use App\Models\ProjectDetail;
+use App\Traits\ProjectVersionTrait;
 use Auth;
 
 class ProjectController extends Controller
 {
+    use ProjectVersionTrait;
+
     public function index(Request $request)
     {
-        $projects  = Project::whereUserAssignee(Auth::user()->id)
-                            ->whereStartDate($request->start_date)
-                            ->whereEndDate($request->end_date)
-                            ->whereUserAssignee($request->user)
-                            ->whereRoleAssignee($request->role)
-                            ->get();
-        $roles     = Role::whereEmployee()->get();
+        $startDate = "";
+        $endDate   = "";
 
-        return view('project.employee.pages.project.index', compact('projects', 'request', 'roles'));
+        if(!empty($request->start_end_date)) {
+            $dates     = explode(' - ', $request->start_end_date);
+            $startDate = $dates[0];
+            $endDate   = $dates[1];
+        }
+
+        if(empty($request->user)) {
+            $request->user = [Auth::user()->id];
+        } else {
+            $request->user += [Auth::user()->id];
+        }
+
+        $projects        = Project::whereStartDate($startDate)
+                                    ->whereEndDate($endDate)
+                                    ->whereUserAssignee($request->user)
+                                    ->whereRoleAssignee($request->role)
+                                    ->whereProjectManager($request->project_manager)
+                                    ->get();
+        $roles           = Role::whereEmployee()->get();
+        $projectManagers = Role::whereProjectManager()->first()->user;
+        $employees       = Role::whereEmployee()->first()->user;
+
+        return view('project.employee.pages.project.index', compact(
+            'projects',
+            'request',
+            'roles',
+            'projectManagers',
+            'employees'
+        ));
     }
 
     public function create()
@@ -70,23 +96,28 @@ class ProjectController extends Controller
         return redirect()->back()->with('success', 'Project deleted successfully');
     }
 
-    public function detail(Project $project)
+    public function detail(Project $project, Request $request)
     {
-        $latestVersion    = ProjectVersion::where('project_id', $project->id)->latest()->first();
-        $projectDetail    = new ProjectDetail();
-        $logs             = Activity::where('subject_type', get_class($projectDetail))->latest()->get();
+        $versions        = ProjectVersion::where('project_id', $project->id)->latest()->get();
+        $logs            = Activity::where('log_name', 'project')
+                                    ->where('properties->project_id', $project->id)
+                                    ->latest()
+                                    ->take(4)
+                                    ->get();
+        $selectedVersion = $this->selectedVersion($versions, $request->version);
 
-        if($latestVersion->projectDetails->count() == 0) {
+        if($selectedVersion->projectDetails->count() == 0) {
             $progressPercentage = 0;
         } else {
-            $progressPercentage = ($latestVersion->projectDetails()->whereDone()->count() / $latestVersion->projectDetails->count()) * 100;
+            $progressPercentage = ($selectedVersion->projectDetails()->whereDone()->count() / $selectedVersion->projectDetails->count()) * 100;
         }
 
         return view('project.employee.pages.project.detail', compact(
             'project',
-            'latestVersion',
+            'versions',
             'progressPercentage',
-            'logs'
+            'logs',
+            'selectedVersion'
         ));
     }
 
