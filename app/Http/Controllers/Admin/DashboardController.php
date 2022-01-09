@@ -26,8 +26,8 @@ class DashboardController extends Controller
                 'url'             => route('admin.admin_projects.detail', $project->id),
                 'start'           => Carbon::parse($project->start_date)->format('Y-m-d'),
                 'end'             => Carbon::parse($project->end_date)->format('Y-m-d'),
-                'backgroundColor' => "#6dda5f",
-                'borderColor'     => "#6dda5f",
+                'backgroundColor' => "#".substr(md5(rand()), 0, 6),
+                'borderColor'     => "#fff",
                 'textColor'       => '#fff',
             ]);
         }

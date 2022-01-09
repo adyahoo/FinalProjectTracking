@@ -41,7 +41,7 @@ class ProjectDetail extends Model
     ];
 
     protected static $logName       = 'project';
-    protected static $logAttributes = ['status', 'start_date', 'end_date', 'start_date_actual', 'end_date_actual', 'realization'];
+    protected static $logAttributes = ['moduleable_type', 'moduleable_id',];
 
     public function getActivitylogOptions(): LogOptions
     {

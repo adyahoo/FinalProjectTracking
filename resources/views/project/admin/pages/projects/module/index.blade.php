@@ -66,7 +66,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="badge 
+                                                {{-- <div class="badge 
                                                     @if($projectDetail->status == $projectDetail->statusOption['not_yet'])
                                                         badge-danger
                                                     @elseif($projectDetail->status == $projectDetail->statusOption['on_progress'])
@@ -74,7 +74,7 @@
                                                     @elseif($projectDetail->status == $projectDetail->statusOption['done'])
                                                         badge-success
                                                     @endif
-                                                ">{{ $projectDetail->status }}</div>
+                                                ">{{ $projectDetail->status }}</div> --}}
                                             </td>
                                             <td>
                                                 @if($projectDetail->userAssignments->count() == 0)
