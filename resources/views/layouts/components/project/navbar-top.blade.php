@@ -1,6 +1,6 @@
 <div style="background-color:#6dda5f" class="navbar-bg"></div>
 <nav class="navbar navbar-expand-lg main-navbar">
-    <a href="index.html" class="navbar-brand sidebar-gone-hide">Project Tracker</a>
+    <a href="" class="navbar-brand sidebar-gone-hide">Project Tracker</a>
     <div class="navbar-nav">
     <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
     </div>

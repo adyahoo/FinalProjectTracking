@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\UserAssignment;
 use App\Models\ProjectDetail;
+use App\Http\Requests\AssignRequest;
 
 class UserAssignmentController extends Controller
 {
-    public function store(Request $request, ProjectDetail $projectDetail)
+    public function store(AssignRequest $request, ProjectDetail $projectDetail)
     {
         $check = UserAssignment::where('project_detail_id',$projectDetail->id)->where('user_id', $request->user_id)->first();
         if (!$check) {

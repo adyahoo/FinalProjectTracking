@@ -148,6 +148,7 @@
                     <div class="form-group">
                         <label>Member</label>
                         <select id="member" name="user_id" class="form-control">
+                            <option value="">Select Member</option>
                             @foreach($employees as $employee)
                                 <option value="{{ $employee->id }}">{{ $employee->name }}</option>
                             @endforeach
@@ -251,12 +252,9 @@
     };
     
     gantt.init("gantt_here");
-    gantt.templates.rightside_text = function(start, end, task){
-        return "<b>Assignee: </b>" + task.assignee;
-    };
 
     gantt.templates.task_text=function(start,end,task){
-        return "<b>Module Name:</b> "+task.text+",<b> Status:</b> "+task.status;
+        return "<b> Status:</b> "+task.status+", <b>Assignee: </b>" + task.assignee;
     };
 
     gantt.templates.task_class  = function(start, end, task){

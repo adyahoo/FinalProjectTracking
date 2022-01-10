@@ -24,8 +24,8 @@ class BlogReviewController extends Controller
         
         $blog_review->save();
 
-        if($request->status == 'Published') {
-            $blogReview += ['published_at' => Carbon::now()];
+        if($request->status == 'Published' && $blog->published_at == null) {
+            $blog->update(['status' => $request->status, 'published_at' => Carbon::now()]);
         }
 
         $blog->update(['status' => $request->status]);
