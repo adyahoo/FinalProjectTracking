@@ -109,7 +109,7 @@ Route::group([
         'as'     => 'gantt_chart.',
         'prefix' => 'gantt_chart'
     ], function () {
-        Route::get('/{project}', 'GanttChartController@retriveData')
+        Route::get('/{project}/{version}', 'GanttChartController@retriveData')
                     ->name('index');
     });
 });

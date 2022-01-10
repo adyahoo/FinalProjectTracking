@@ -17,30 +17,30 @@ class DashboardController extends Controller
         $totalProjects    = Project::count();
         $totalBlogs       = Blog::get()->count();
         $logs             = Activity::latest()->get()->take(4);
-        return $logs;
-        // $launchedProjects = Project::whereLaunched()->count();
-        // $projects         = Project::all();
-        // foreach($projects as $project) {
-        //     array_push($temp, [
-        //         'title'           => 'Project: '.$project->name,
-        //         'description'     => 'Description: '.$project->description,
-        //         'url'             => route('admin.admin_projects.detail', $project->id),
-        //         'start'           => Carbon::parse($project->start_date)->format('Y-m-d'),
-        //         'end'             => Carbon::parse($project->end_date)->format('Y-m-d'),
-        //         'backgroundColor' => "#".substr(md5(rand()), 0, 6),
-        //         'borderColor'     => "#fff",
-        //         'textColor'       => '#fff',
-        //     ]);
-        // }
+        // return $logs;
+        $launchedProjects = Project::whereLaunched()->count();
+        $projects         = Project::all();
+        foreach($projects as $project) {
+            array_push($temp, [
+                'title'           => 'Project: '.$project->name,
+                'description'     => 'Description: '.$project->description,
+                'url'             => route('admin.admin_projects.detail', $project->id),
+                'start'           => Carbon::parse($project->start_date)->format('Y-m-d'),
+                'end'             => Carbon::parse($project->end_date)->format('Y-m-d'),
+                'backgroundColor' => "#".substr(md5(rand()), 0, 6),
+                'borderColor'     => "#fff",
+                'textColor'       => '#fff',
+            ]);
+        }
         
-        // $data = json_encode($temp);
-        // return view('project.admin.pages.dashboard.dashboard', compact(
-        //     'launchedProjects',
-        //     'totalProjects',
-        //     'latestProjects',
-        //     'totalBlogs',
-        //     'logs',
-        //     'data'
-        // ));
+        $data = json_encode($temp);
+        return view('project.admin.pages.dashboard.dashboard', compact(
+            'launchedProjects',
+            'totalProjects',
+            'latestProjects',
+            'totalBlogs',
+            'logs',
+            'data'
+        ));
     }
 }
