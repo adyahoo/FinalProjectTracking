@@ -21,7 +21,7 @@
 
     /* medium */
     .gantt_task_line.medium {
-        background-color: #f0ad4e;
+        background-color: #FFC107;
     }
     .gantt_task_line.medium .gantt_task_content {
         color: #fff;
@@ -32,6 +32,22 @@
         background-color: #5cb85c;
     }
     .gantt_task_line.low .gantt_task_content {
+        color: #fff;
+    }
+
+    /* critical */
+    .gantt_task_line.critical {
+        background-color: #2196F3;
+    }
+    .gantt_task_line.critical .gantt_task_content {
+        color: #fff;
+    }
+
+    /* urgent */
+    .gantt_task_line.urgent {
+        background-color: #6777ef;
+    }
+    .gantt_task_line.urgent .gantt_task_content {
         color: #fff;
     }
 
@@ -58,14 +74,16 @@
     <p class="section-lead">Description: {{$project->description}}</p>
     <div class="card">
     <div class="card-header">
-        <h4>Project Version: {{$project->projectVersions()->where('project_id', $project->id)->orderBy('created_at', 'desc')->first()->version_number}}</h4>
+        <h4>Current Version: {{$project->projectVersions()->find($version)->version_number}}</h4>
     </div>
     <div class="card-body">
         <div class="mb-2">
             <span>Info: </span>
-            <span class="badge badge-pill badge-success mr-1">Done</span>
-            <span class="badge badge-pill badge-warning mr-1">On Progress</span>
-            <span class="badge badge-pill badge-danger">Not Yet</span>
+            <span class="badge badge-pill badge-danger">Open</span>
+            <span class="badge badge-pill badge-primary mr-1">On Progress</span>
+            <span class="badge badge-pill badge-warning mr-1">Pending</span>
+            <span class="badge badge-pill badge-info mr-1">Testing</span>
+            <span class="badge badge-pill badge-success mr-1">Finish</span>
         </div>
         <div id="gantt_here" style='width:100%; height:500px;'></div>
     </div>
@@ -89,9 +107,9 @@
                     <div class="form-group">
                         <label>Status</label>
                         <select id="status" name="status" class="form-control">
-                            <option value="not yet">Not Yet</option>
-                            <option value="on progress">On Progress</option>
-                            <option value="done">Done</option>
+                            @foreach($statusOptions as $statusOption)
+                                <option value="{{ $statusOption }}">{{ $statusOption }}</option>
+                            @endforeach
                         </select>
                         @error('status')
                             <small class="text-danger">{{ $message }}</small>
@@ -172,9 +190,11 @@
         { name: "start_date", label: "Start Date", align: "center", width:90},
         { name: "end_date", label: "End Date", align: "center", width:90},
         {name: "buttons", align:"center", label: colHeader,width: 75,template: function (task) {
+            if(task.assignee != ''){
             return (
                         '<button id="btn-edit'+task.id+'" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal">Edit</button>'
                     );
+            }
         }},
         {name: "buttons", align:"center", label: colHeader2, width: 75,template: function (task) {
             return (
@@ -234,14 +254,20 @@
 
     gantt.templates.task_class  = function(start, end, task){
         switch (task.status){
-            case "not yet":
+            case "Open":
                 return "high";
                 break;
-            case "on progress":
+            case "Pending":
                 return "medium";
                 break;
-            case "done":
+            case "Finish":
                 return "low";
+                break;
+            case "On Progress":
+                return "urgent";
+                break;
+            case "Testing":
+                return "critical";
                 break;
             }
     };

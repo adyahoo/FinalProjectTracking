@@ -115,7 +115,7 @@ Route::group(['prefix'=>'projects'], function () {
 
         #Gantt Chart
         Route::group(['as' => 'gantt_chart.', 'prefix' => 'gantt_chart'], function () {
-            Route::get('/{project}', 'GanttChartController@retriveData')->name('index');
+            Route::get('/{project}/{version}', 'GanttChartController@retriveData')->name('index');
         });
 
     });

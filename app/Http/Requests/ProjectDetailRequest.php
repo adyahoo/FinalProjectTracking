@@ -30,10 +30,6 @@ class ProjectDetailRequest extends FormRequest
                 'moduleable_id'  => 'required',
                 'start_end_date' => 'required',
             ];
-        } elseif($this->method() == 'PUT') {
-            $rules += [
-                'start_end_date_actual' => 'required',
-            ];
         }
 
         return $rules;
