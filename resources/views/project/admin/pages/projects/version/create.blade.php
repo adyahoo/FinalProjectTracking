@@ -41,7 +41,7 @@
                         {{ $message }}
                     </div>
                 @enderror
-                <textarea name="description" class="form-control">{{ old('description') }}</textarea>
+                <textarea style="height: 200px;" name="description" class="form-control">{{ old('description') }}</textarea>
                 </div>
                 <div class="form-group">
                 <label>Note</label>
@@ -79,6 +79,7 @@
     @endif
     <script>
         $('.summernote').summernote({
+            minHeight    : 300,
             toolbar: [
                 ['style', ['bold', 'italic', 'underline', 'clear']],
                 ['font', ['strikethrough', 'superscript', 'subscript']],

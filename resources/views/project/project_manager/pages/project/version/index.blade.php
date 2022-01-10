@@ -28,9 +28,9 @@
                         <table class="table table-striped" id="table-1">
                             <thead>
                                 <tr>
-                                    <th>Version</th>
+                                    <th style="width: 20%">Version</th>
                                     <th>Description</th>
-                                    <th>Action</th>
+                                    <th style="width: 20%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>

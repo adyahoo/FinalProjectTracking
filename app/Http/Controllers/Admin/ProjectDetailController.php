@@ -16,6 +16,7 @@ use App\Http\Requests\ProjectDetailSpecialRequest;
 use App\Traits\ProjectVersionTrait;
 use App\Traits\DateTrait;
 use DateTime;
+use Carbon\Carbon;
 
 class ProjectDetailController extends Controller
 {
@@ -98,12 +99,20 @@ class ProjectDetailController extends Controller
 
     public function edit(ProjectDetail $projectDetail) {
         $projectDetail->setAttribute('moduleable', $projectDetail->moduleable);
-
+        $projectDetail->setAttribute('start_dates', $projectDetail->start_date->format('Y-m-d'));
+        $projectDetail->setAttribute('start_times', Carbon::parse($projectDetail->start_date)->format('H:i:s'));
+        $projectDetail->setAttribute('end_dates', $projectDetail->end_date->format('Y-m-d'));
+        $projectDetail->setAttribute('end_times', Carbon::parse($projectDetail->end_date)->format('H:i:s'));
+        
         return response()->json($projectDetail);
     }
 
     public function update(ProjectDetailRequest $request, ProjectDetail $projectDetail) {
         $projectDetailUpdate = $request->all();
+        $dates               = explode(' - ', $request->start_end_date);
+
+        $projectDetailUpdate += ['start_date' => $dates[0]];
+        $projectDetailUpdate += ['end_date'   => $dates[1]];
 
         if(!empty($request->start_end_date_actual)) {
             $dates               = explode(' - ', $request->start_end_date_actual);

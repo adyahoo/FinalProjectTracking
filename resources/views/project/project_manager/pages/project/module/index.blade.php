@@ -400,8 +400,7 @@
             $("#method").attr("value", "put");
             $.get(detail, function (data) {
                 $('#module').val(data.moduleable.id);
-                $('#start').val(data.start_date.date);
-                $('#end').val(data.end_date.date);
+                $('#startEndDate').val(data.start_dates + ' ' + data.start_times + ' - ' + data.end_dates + ' ' + data.end_times);
             });
         });
 
