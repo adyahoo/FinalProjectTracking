@@ -2,8 +2,8 @@
 @section('title','Project Version')
 @section('content')
     @include('project.admin.include.project_page_tab_version', [
-        'project'             => $project,
-        'latestVersionNumber' => $latestVersion->version_number
+        'project'        => $project,
+        'requestVersion' => $request->version
     ])
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12">

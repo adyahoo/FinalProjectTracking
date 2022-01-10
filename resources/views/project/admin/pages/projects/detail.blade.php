@@ -2,7 +2,7 @@
 @section('title','Project Detail')
 @section('content')
     @include('project.admin.include.project_page_tab', [
-        'requestVersion' => $selectedVersion->id
+        'requestVersion' => $request->version
     ])
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
@@ -36,7 +36,11 @@
                                 </div>
                                 <div class="col-lg-4 col-md-3 col-sm-12 text-right">
                                     <h6 class="text-primary">Gantt Chart</h6>
-                                    <a href="{{route('admin.admin_projects.gantt_chart.index', ['project'=>$project, 'version'=>$selectedVersion->id])}}" class="btn btn-outline-primary" style="border-radius:.25rem">View Gantt Chart <i class="fa fa-external-link-alt"></i></a>
+                                    @empty($request->version)
+                                        <a href="{{route('admin.admin_projects.gantt_chart.index', ['project'=>$project, 'version'=>$selectedVersion->id])}}" class="btn btn-outline-primary" style="border-radius:.25rem">View Gantt Chart <i class="fa fa-external-link-alt"></i></a>
+                                    @else
+                                        <a href="{{route('admin.admin_projects.gantt_chart.index', ['project'=>$project, 'version'=>$request->version])}}" class="btn btn-outline-primary" style="border-radius:.25rem">View Gantt Chart <i class="fa fa-external-link-alt"></i></a>
+                                    @endempty
                                 </div>
                             </div>
                         </div>
@@ -69,7 +73,7 @@
                                     <a href="{{ route('admin.admin_projects.edit', $project) }}" class="h5" style="color: #78828a"><i class="fa fa-edit"></i></a>
                                 </div>
                             </div>
-                            <a href="{{ route('admin.admin_projects.scope', $project) }}"><i class="fa fa-book-open"></i> Read More</a>
+                            <a href="{{ route('admin.admin_projects.scope', $project) }}"><i class="fa fa-book-open mr-2"></i>Read More</a>
                         </div>
                     </div>
                 </div>
@@ -89,11 +93,11 @@
                                     <a href="{{ route('admin.admin_projects.edit', $project) }}" class="h5" style="color: #78828a"><i class="fa fa-edit"></i></a>
                                 </div>
                             </div>
-                            <a href="{{ route('admin.admin_projects.credentials', $project) }}"><i class="fa fa-book-open"></i> Read More</a>
+                            <a href="{{ route('admin.admin_projects.credentials', $project) }}"><i class="fa fa-book-open mr-2"></i>Read More</a>
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-12">
             <div class="row">

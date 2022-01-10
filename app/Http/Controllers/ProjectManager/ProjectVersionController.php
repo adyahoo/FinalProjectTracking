@@ -13,22 +13,22 @@ class ProjectVersionController extends Controller
 {
     use VersionValidationTrait;
 
-    public function index(Project $project)
+    public function index(Project $project, Request $request)
     {
-        return view('project.project_manager.pages.project.version.index', compact('project'));
+        return view('project.project_manager.pages.project.version.index', compact('project', 'request'));
     }
 
-    public function detail(Project $project, ProjectVersion $projectVersion)
+    public function detail(Project $project, ProjectVersion $projectVersion, Request $request)
     {
-        return view('project.project_manager.pages.project.version.detail', compact('projectVersion'));
+        return view('project.project_manager.pages.project.version.detail', compact('projectVersion', 'request'));
     }
 
-    public function create(Project $project)
+    public function create(Project $project, Request $request)
     {
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
         $versionFetch  = explode('.', $latestVersion->version_number);
 
-        return view('project.project_manager.pages.project.version.create', compact('project', 'versionFetch'));
+        return view('project.project_manager.pages.project.version.create', compact('project', 'versionFetch', 'request'));
     }
 
     public function store(ProjectVersionRequest $request, Project $project)
@@ -49,9 +49,9 @@ class ProjectVersionController extends Controller
         return redirect()->route('project_manager.projects.version.all', $project)->with('success', 'Project created successfully');
     }
 
-    public function edit(ProjectVersion $projectVersion)
+    public function edit(ProjectVersion $projectVersion, Request $request)
     {
-        return view('project.project_manager.pages.project.version.edit', compact('projectVersion'));
+        return view('project.project_manager.pages.project.version.edit', compact('projectVersion', 'request'));
     }
 
     public function update(ProjectVersionRequest $request, ProjectVersion $projectVersion)

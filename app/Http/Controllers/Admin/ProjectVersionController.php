@@ -13,19 +13,19 @@ class ProjectVersionController extends Controller
 {
     use VersionValidationTrait;
 
-    public function index(Project $project) {
-        return view('project.admin.pages.projects.version.index', compact('project'));
+    public function index(Project $project, Request $request) {
+        return view('project.admin.pages.projects.version.index', compact('project', 'request'));
     }
 
-    public function detail(Project $project, ProjectVersion $projectVersion) {
-        return view('project.admin.pages.projects.version.detail', compact('projectVersion'));
+    public function detail(Project $project, ProjectVersion $projectVersion, Request $request) {
+        return view('project.admin.pages.projects.version.detail', compact('projectVersion', 'request'));
     }
 
-    public function create(Project $project) {
+    public function create(Project $project, Request $request) {
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
         $versionFetch  = explode('.', $latestVersion->version_number);
 
-        return view('project.admin.pages.projects.version.create', compact('latestVersion', 'project', 'versionFetch'));
+        return view('project.admin.pages.projects.version.create', compact('latestVersion', 'project', 'versionFetch', 'request'));
     }
 
     public function store(ProjectVersionRequest $request, Project $project) {
@@ -45,10 +45,10 @@ class ProjectVersionController extends Controller
         return redirect()->route('admin.admin_projects.version.index', $project)->with('success', 'Project created successfully');
     }
 
-    public function edit(ProjectVersion $projectVersion) {
+    public function edit(ProjectVersion $projectVersion, Request $request) {
         $latestVersion = ProjectVersion::where('project_id', $projectVersion->project_id)->latest()->first();
 
-        return view('project.admin.pages.projects.version.edit', compact('projectVersion', 'latestVersion'));
+        return view('project.admin.pages.projects.version.edit', compact('projectVersion', 'latestVersion', 'request'));
     }
 
     public function update(ProjectVersionRequest $request, ProjectVersion $projectVersion) {

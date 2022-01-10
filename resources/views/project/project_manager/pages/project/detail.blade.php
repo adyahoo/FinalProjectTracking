@@ -4,7 +4,7 @@
 
 @section('content')
     @include('project.project_manager.include.project_page_tab', [
-        'requestVersion' => $selectedVersion->id
+        'requestVersion' => $request->version
     ])
     <div class="row">
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
@@ -40,7 +40,11 @@
                                 </div>
                                 <div class="col-lg-4 col-md-3 col-sm-12 text-right">
                                     <h6 class="text-primary">Gantt Chart</h6>
-                                    <a href="{{route('project_manager.projects.gantt_chart.index', ['project'=>$project, 'version'=>$selectedVersion->id])}}" class="btn btn-outline-primary" style="border-radius:.25rem">View Gantt Chart <i class="fa fa-external-link-alt"></i></a>
+                                    @empty($request->version)
+                                        <a href="{{route('project_manager.projects.gantt_chart.index', ['project' => $project, 'version' => $selectedVersion->id])}}" class="btn btn-outline-primary" style="border-radius:.25rem">View Gantt Chart <i class="fa fa-external-link-alt"></i></a>
+                                    @else
+                                        <a href="{{route('project_manager.projects.gantt_chart.index', ['project' => $project, 'version' => $request->version])}}" class="btn btn-outline-primary" style="border-radius:.25rem">View Gantt Chart <i class="fa fa-external-link-alt"></i></a>
+                                    @endempty
                                 </div>
                             </div>
                         </div>

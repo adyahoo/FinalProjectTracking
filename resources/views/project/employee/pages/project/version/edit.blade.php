@@ -4,7 +4,8 @@
 
 @section('content')
     @include('project.employee.include.project_page_tab_version', [
-      'project' => $project
+      'project'        => $project,
+      'requestVersion' => $request->version
     ])
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12">

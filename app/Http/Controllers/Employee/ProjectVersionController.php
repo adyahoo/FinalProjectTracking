@@ -13,26 +13,26 @@ class ProjectVersionController extends Controller
 {
     use VersionValidationTrait;
 
-    public function index(Project $project)
+    public function index(Project $project, Request $request)
     {
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
 
-        return view('project.employee.pages.project.version.index', compact('project', 'latestVersion'));
+        return view('project.employee.pages.project.version.index', compact('project', 'latestVersion', 'request'));
     }
 
-    public function detail(Project $project, ProjectVersion $projectVersion)
+    public function detail(Project $project, ProjectVersion $projectVersion, Request $request)
     {
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
 
-        return view('project.employee.pages.project.version.detail', compact('latestVersion', 'projectVersion'));
+        return view('project.employee.pages.project.version.detail', compact('latestVersion', 'projectVersion', 'request'));
     }
 
-    public function create(Project $project)
+    public function create(Project $project, Request $request)
     {
         $latestVersion = ProjectVersion::where('project_id', $project->id)->latest()->first();
         $versionFetch  = explode('.', $latestVersion->version_number);
 
-        return view('project.employee.pages.project.version.create', compact('latestVersion', 'project', 'versionFetch'));
+        return view('project.employee.pages.project.version.create', compact('latestVersion', 'project', 'versionFetch', 'request'));
     }
 
     public function store(ProjectVersionRequest $request, Project $project)
@@ -53,11 +53,11 @@ class ProjectVersionController extends Controller
         return redirect()->route('employee.projects.version.all', $project)->with('success', 'Project created successfully');
     }
 
-    public function edit(ProjectVersion $projectVersion)
+    public function edit(ProjectVersion $projectVersion, Request $request)
     {
         $latestVersion = ProjectVersion::where('project_id', $projectVersion->project_id)->latest()->first();
 
-        return view('project.employee.pages.project.version.edit', compact('projectVersion', 'latestVersion'));
+        return view('project.employee.pages.project.version.edit', compact('projectVersion', 'latestVersion', 'request'));
     }
 
     public function update(ProjectVersionRequest $request, ProjectVersion $projectVersion)
