@@ -95,6 +95,20 @@ class User extends Authenticatable
         $this->attributes['profile_image'] = $this->uploadImage($value, self::IMAGE_PATH);
     }
 
+    public function scopeWhereEmployee($query)
+    {
+        return $query->whereHas('role', function($role){
+            $role->where('privilege', (new Role())->privileges['employee']);
+        });
+    }
+
+    public function scopeWhereProjectManager($query)
+    {
+        return $query->whereHas('role', function($role){
+            $role->where('privilege', (new Role())->privileges['project_manager']);
+        });
+    }
+
     public function role()
     {
         return $this->belongsTo(Role::class);
