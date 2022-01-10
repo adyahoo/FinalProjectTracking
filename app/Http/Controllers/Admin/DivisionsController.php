@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Division;
+use App\Models\User;
 use App\Http\Requests\DivisionRequest;
 
 class DivisionsController extends Controller
@@ -33,6 +34,12 @@ class DivisionsController extends Controller
     }
 
     public function destroy(Division $division) {
+        $check = User::where('division_id', $division->id)->get();
+
+        if($check) {
+            return redirect()->route('admin.divisions.index')->with('error', 'This division is still used on a user!');
+        }
+
         $division->delete();
         
         return redirect()->route('admin.divisions.index')->with('success', 'Division deleted successfully');

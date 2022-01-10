@@ -151,8 +151,14 @@ Route::group(['prefix'=>'blogs'], function () {
 
 });
 
+#Setting
+Route::group(['prefix'=>'pagesetting','as'=>'pagesetting.'],function () {
+    Route::get('/', 'PageSettingController@index')->name('index');
+    Route::post('/store','PageSettingController@store')->name('save');
+});
+
+#Logs
 Route::group(['prefix'=>'logs', 'as'=>'logs.'], function () {
-    #Logs
     Route::get('/index', 'LogController@index')->name('index');
     Route::get('/show/{log}', 'LogController@show')->name('show');
 });

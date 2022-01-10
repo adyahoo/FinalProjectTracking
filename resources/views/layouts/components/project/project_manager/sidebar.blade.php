@@ -1,5 +1,5 @@
 <div class="sidebar-brand">
-    <a href="index.html">Project Tracker</a>
+    <a href="index.html">@if($page != null) {{$page['title']}} @else Project Tracker @endif</a>
 </div>
 <div class="sidebar-brand sidebar-brand-sm">
     <a href="index.html">Pt</a>

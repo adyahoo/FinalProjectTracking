@@ -12,10 +12,11 @@ use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
 use App\Traits\ImageTrait;
 use Overtrue\LaravelLike\Traits\Liker;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, LogsActivity, ImageTrait, Liker;
+    use HasApiTokens, HasFactory, Notifiable, LogsActivity, ImageTrait, Liker, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

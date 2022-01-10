@@ -1,5 +1,5 @@
 <div class="sidebar-brand">
-    <a href="{{route('admin.dashboard')}}">Project Tracker</a>
+    <a href="{{route('admin.dashboard')}}">@if($page != null) {{$page['title']}} @else Project Tracker @endif</a>
 </div>
 <div class="sidebar-brand sidebar-brand-sm">
     <a href="{{route('admin.dashboard')}}">Pt</a>
@@ -30,10 +30,10 @@
             <li class="{{ Request::is('admin/blogs/review/*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.review.index')}}">Blog Review</a></li>
         </ul>
     </li>
-    <li class="nav-item dropdown">
+    <li class="nav-item dropdown {{ Request::is('admin/pagesetting') ? 'active' : '' }}">
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-tools"></i> <span>System Setting</span></a>
         <ul class="dropdown-menu">
-            <li><a class="nav-link" href="layout-default.html">Change Page Setting</a></li>
+            <li class="{{ Request::is('admin/pagesetting/*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.pagesetting.index')}}">Change Page Setting</a></li>
         </ul>
     </li>
     <li class="{{ Request::is('admin/logs/*') ? 'active' : '' }}"><a class="nav-link" href="{{route('admin.logs.index')}}"><i class="fas fa-list"></i> <span>Logs Activity</span></a></li>

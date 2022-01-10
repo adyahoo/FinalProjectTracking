@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Role;
+use App\Models\User;
 use App\Http\Requests\RoleRequest;
 
 class RolesController extends Controller
@@ -33,6 +34,11 @@ class RolesController extends Controller
     }
 
     public function destroy(Role $role) {
+        $check = User::where('role_id', $role->id)->get();
+        if($check) {
+            return redirect()->route('admin.roles.index')->with('error', 'This role is still used on a user!');
+        }
+
         $role->delete();
 
         return redirect()->route('admin.roles.index')->with('success', 'Role deleted successfully');

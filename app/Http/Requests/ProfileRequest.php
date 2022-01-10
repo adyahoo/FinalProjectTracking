@@ -28,6 +28,7 @@ class ProfileRequest extends FormRequest
             'email'         => 'required',
             'gender'        => 'required',
             'birth_date'    => 'required',
+            'phone'         => 'required',
             'profile_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'bio'           => 'required'
         ];

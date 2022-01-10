@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BlogCategories;
+use App\Models\Blog;
 use App\Http\Requests\BlogCategoryRequest;
 
 class BlogCategoriesController extends Controller
@@ -33,6 +34,12 @@ class BlogCategoriesController extends Controller
     }
 
     public function destroy(BlogCategories $category) {
+        $check = Blog::where('blog_category_id', $category->id)->get();
+
+        if($check) {
+            return redirect()->route('admin.blog_categories.index')->with('error', 'This category is still used on a blog!');
+        }
+
         $category->delete();
 
         return redirect()->route('admin.blog_categories.index')->with('success', 'Category deleted successfully');
