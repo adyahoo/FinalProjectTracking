@@ -43,8 +43,8 @@ class ProjectController extends Controller
                                     ->whereProjectManager($request->project_manager)
                                     ->get();
         $roles           = Role::whereEmployee()->get();
-        $projectManagers = Role::whereProjectManager()->first()->user;
-        $employees       = Role::whereEmployee()->first()->user;
+        $projectManagers = User::whereProjectManager()->get();
+        $employees       = User::whereEmployee()->get();
 
         return view('project.employee.pages.project.index', compact(
             'projects',

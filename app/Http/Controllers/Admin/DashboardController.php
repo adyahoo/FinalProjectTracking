@@ -17,7 +17,6 @@ class DashboardController extends Controller
         $totalProjects    = Project::count();
         $totalBlogs       = Blog::get()->count();
         $logs             = Activity::latest()->get()->take(4);
-        // return $logs;
         $launchedProjects = Project::whereLaunched()->count();
         $projects         = Project::all();
         foreach($projects as $project) {
