@@ -13,7 +13,7 @@
                             <option value="{{ $version->id }}" @if($requestVersion == $version->id) selected @endif>{{ $version->version_number }}</option>
                         @endforeach
                         @isset($versions[0])
-                            <option value="{{ $versions[0]->generalVersion['all_version'] }}" @if($requestVersion == $versions[0]->project_id) selected @endif>{{ $versions[0]->generalVersion['all_version'] }}</option>
+                            <option value="{{ $versions[0]->generalVersion['all_version'] }}" @if($requestVersion == $versions[0]->generalVersion['all_version']) selected @endif>{{ $versions[0]->generalVersion['all_version'] }}</option>
                         @endisset
                     </select>
                 </div>
@@ -24,16 +24,16 @@
         <div class="col-lg-8 col-md-8 col-12 col-sm-12">
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('employee/projects/detail*') ? 'active-tab' : '' }}" href="{{ route('employee.projects.detail', $project) }}">Detail</a>
+                    <a class="nav-link {{ Request::is('employee/projects/detail*') ? 'active-tab' : '' }}" href="{{ route('employee.projects.detail', [$project, 'version' => $requestVersion]) }}">Detail</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('employee/projects/module/*') ? 'active-tab' : '' }}" href="{{ route('employee.projects.module.all', $project) }}">Modules</a>
+                    <a class="nav-link {{ Request::is('employee/projects/module/*') ? 'active-tab' : '' }}" href="{{ route('employee.projects.module.all', [$project, 'version' => $requestVersion]) }}">Modules</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('employee/projects/version/*') ? 'active-tab' : '' }}" href="{{ route('employee.projects.version.all', $project) }}">Version</a>
+                    <a class="nav-link {{ Request::is('employee/projects/version/*') ? 'active-tab' : '' }}" href="{{ route('employee.projects.version.all', [$project, 'version' => $requestVersion]) }}">Version</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('employee/projects/logs/*') ? 'active-tab' : '' }}" href="{{ route('employee.projects.logs.all', $project) }}">Logs</a>
+                    <a class="nav-link {{ Request::is('employee/projects/logs/*') ? 'active-tab' : '' }}" href="{{ route('employee.projects.logs.all', [$project, 'version' => $requestVersion]) }}">Logs</a>
                 </li>
             </ul>
         </div>

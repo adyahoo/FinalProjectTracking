@@ -77,7 +77,7 @@ class ProjectDetailController extends Controller
         return redirect()->back()->with('success', 'Module created successfully');
     }
 
-    public function show(ProjectDetail $projectDetail)
+    public function show(ProjectDetail $projectDetail, Request $request)
     {
         $startInterval = '';
         $endInterval   = '';
@@ -87,7 +87,7 @@ class ProjectDetailController extends Controller
             $endInterval   = $projectDetail->end_date->diff($projectDetail->end_date_actual);
         }
 
-        return view('project.employee.pages.project.module.detail', compact('projectDetail', 'startInterval', 'endInterval'));
+        return view('project.employee.pages.project.module.detail', compact('projectDetail', 'startInterval', 'endInterval', 'request'));
     }
 
     public function edit(ProjectDetail $projectDetail)

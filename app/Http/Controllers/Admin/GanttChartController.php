@@ -7,20 +7,23 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\ProjectDetail;
 use App\Models\ProjectVersion;
+use App\Traits\ProjectVersionTrait;
 use Carbon\Carbon;
-use App\Models\Role;
+use App\Models\User;
 
 class GanttChartController extends Controller
 {
-    public function retriveData($project, $version) {
-        $project       = Project::where('id', $project)->first();
-        $versions      = ProjectVersion::where('id', $version)->first();
-        $temp          = array();
-        $employees     = Role::whereEmployee()->first()->user;
-        $statusOptions = (new ProjectDetail())->statusOption;
-        
+    use ProjectVersionTrait;
+
+    public function retriveData(Project $project, $version) {
+        $versions        = ProjectVersion::where('project_id', $project)->latest()->get();
+        $temp            = array();
+        $employees       = User::whereEmployee()->get();
+        $statusOptions   = (new ProjectDetail())->statusOption;
+        $selectedVersion = $this->selectedVersion($versions, $version, $project);
+
         if(isset($project->projectVersions)) {
-            foreach($versions->projectDetails as $detail) {
+            foreach($selectedVersion->projectDetails as $detail) {
                 $names    = array();
                 $assignee = $detail->userAssignments()->with('user')->get();
                 
@@ -47,7 +50,7 @@ class GanttChartController extends Controller
 
             $data = json_encode($datas);
             
-            return view('project.admin.pages.projects.gantt', compact('data', 'version', 'project', 'employees', 'statusOptions'));
+            return view('project.admin.pages.projects.gantt', compact('data', 'version', 'project', 'employees', 'statusOptions', 'selectedVersion'));
         }
 
         $datas = [

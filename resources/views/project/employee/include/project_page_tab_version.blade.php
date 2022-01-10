@@ -9,16 +9,16 @@
         <div class="col-lg-8 col-md-8 col-12 col-sm-12">
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('employee/projects/detail*') ? 'active-tab' : '' }}" href="{{ route('employee.projects.detail', $project) }}">Detail</a>
+                    <a class="nav-link {{ Request::is('employee/projects/detail*') ? 'active-tab' : '' }}" href="{{ route('employee.projects.detail', [$project, 'version' => $requestVersion]) }}">Detail</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('employee/projects/module/*') ? 'active-tab' : '' }}" href="{{ route('employee.projects.module.all', $project) }}">Modules</a>
+                    <a class="nav-link {{ Request::is('employee/projects/module/*') ? 'active-tab' : '' }}" href="{{ route('employee.projects.module.all', [$project, 'version' => $requestVersion]) }}">Modules</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('employee/projects/version/*') ? 'active-tab' : '' }}" href="{{ route('employee.projects.version.all', $project) }}">Version</a>
+                    <a class="nav-link {{ Request::is('employee/projects/version/*') ? 'active-tab' : '' }}" href="{{ route('employee.projects.version.all', [$project, 'version' => $requestVersion]) }}">Version</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('employee/projects/logs/*') ? 'active-tab' : '' }}" href="{{ route('employee.projects.logs.all', $project) }}">Logs</a>
+                    <a class="nav-link {{ Request::is('employee/projects/logs/*') ? 'active-tab' : '' }}" href="{{ route('employee.projects.logs.all', [$project, 'version' => $requestVersion]) }}">Logs</a>
                 </li>
             </ul>
         </div>

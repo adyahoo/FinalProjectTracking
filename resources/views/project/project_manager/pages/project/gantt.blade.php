@@ -63,17 +63,24 @@
 @section('content')
 <div class="section-header">
     <div class="section-header-back">
-        <a href="{{route('project_manager.projects.all')}}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+        <a href="{{ route('project_manager.projects.detail', $project) }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
     </div>
     <h1>Gantt Chart</h1>
 </div>
 
 <div class="section-body">
-    <h2 class="section-title">Project {{$project->name}}</h2>
-    <p class="section-lead">Description: {{$project->description}}</p>
+    <h2 class="section-title">Project {{ $project->name }}</h2>
+    <p class="section-lead">Description: {{ $project->description }}</p>
     <div class="card">
     <div class="card-header">
-        <h4>Current Version: {{$project->projectVersions()->find($version)->version_number}}</h4>
+        <h4>
+            Current Version: 
+            @empty($selectedVersion->version_number)
+                {{ $version }}
+            @else
+                {{ $selectedVersion->version_number }}
+            @endempty
+        </h4>
     </div>
     <div class="card-body">
         <div class="mb-2">

@@ -117,6 +117,7 @@ class ProjectController extends Controller
             'selectedVersion',
             'progressPercentage',
             'logs',
+            'request'
         ));
     }
 

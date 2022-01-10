@@ -70,11 +70,18 @@
 </div>
 
 <div class="section-body">
-    <h2 class="section-title">Project {{$project->name}}</h2>
-    <p class="section-lead">Description: {{$project->description}}</p>
+    <h2 class="section-title">Project {{ $project->name }}</h2>
+    <p class="section-lead">Description: {{ $project->description }}</p>
     <div class="card">
     <div class="card-header">
-        <h4>Current Version: {{$project->projectVersions()->find($version)->version_number}}</h4>
+        <h4>
+            Current Version: 
+            @empty($selectedVersion->version_number)
+                {{ $version }}
+            @else
+                {{ $selectedVersion->version_number }}
+            @endempty
+        </h4>
     </div>
     <div class="card-body">
         <div class="mb-2">
