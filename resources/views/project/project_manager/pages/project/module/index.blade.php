@@ -17,7 +17,7 @@
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Project Modules <span class="badge badge-secondary">{{ $projectModules->count() }}</span></h4>
+                    <h4>Project Modules <span class="badge badge-secondary">{{ $selectedVersion->projectDetails->count() }}</span></h4>
                     <div class="card-header-action">
                         @if($project->user_id == Auth::user()->id)
                             <button data-action="{{ route('project_manager.projects.module.store', $project) }}" class="btn btn-primary btn-round ml-auto btn-add text-white" data-toggle="modal" data-target="#modal">
@@ -45,7 +45,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                    @foreach($projectModules as $projectModule)
+                                    @foreach($selectedVersion->projectDetails as $projectModule)
                                         <tr>
                                             <td>
                                                 <b>{{ $projectModule->moduleable->name }} </b>

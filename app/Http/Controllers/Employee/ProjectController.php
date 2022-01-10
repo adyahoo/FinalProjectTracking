@@ -104,7 +104,7 @@ class ProjectController extends Controller
                                     ->latest()
                                     ->take(4)
                                     ->get();
-        $selectedVersion = $this->selectedVersion($versions, $request->version);
+        $selectedVersion = $this->selectedVersion($versions, $request->version, $project);
 
         if($selectedVersion->projectDetails->count() == 0) {
             $progressPercentage = 0;

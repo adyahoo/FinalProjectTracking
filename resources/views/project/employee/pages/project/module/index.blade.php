@@ -17,11 +17,11 @@
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Project Modules <span class="badge badge-secondary">{{ $projectModules->count() }}</span></h4>
+                    <h4>Project Modules <span class="badge badge-secondary">{{ $selectedVersion->projectDetails()->whereUserAssignee($request->user)->count() }}</span></h4>
                     <div class="card-header-form mr-4">
                         <form role="form" method="GET">
                             <div class="input-group">
-                                <input type="hidden" name="version" value="{{ $selectedVersion->id }}">
+                                <input type="hidden" name="version" value="{{ $request->version }}">
                                 <select name="user" class="form-control form-control-sm py-1" style="height: 32px;">
                                     <option value="">All Module</option>
                                     <option value="{{ Auth::user()->id }}" @if($request->user == Auth::user()->id) selected @endif>Assigned to Me</option>
@@ -47,7 +47,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                    @foreach($projectModules as $projectDetail)
+                                    @foreach($selectedVersion->projectDetails()->whereUserAssignee($request->user)->get() as $projectDetail)
                                         <tr>
                                             <td>
                                                 <b>{{ $projectDetail->moduleable->name }}</b>

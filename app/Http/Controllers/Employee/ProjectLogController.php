@@ -21,7 +21,7 @@ class ProjectLogController extends Controller
                                     ->latest()
                                     ->get();
         $versions        = ProjectVersion::where('project_id', $project->id)->latest()->get();
-        $selectedVersion = $this->selectedVersion($versions, $request->version);
+        $selectedVersion = $this->selectedVersion($versions, $request->version, $project);
 
         return view('project.employee.pages.project.log.index', compact('project', 'logs', 'versions', 'selectedVersion'));
     }

@@ -19,6 +19,10 @@ class ProjectVersion extends Model
         'description',
     ];
 
+    public $generalVersion = [
+        'all_version' => 'All Version',
+    ];
+
     protected static $logName       = 'project';
     protected static $logAttributes = ['note', 'description'];
 

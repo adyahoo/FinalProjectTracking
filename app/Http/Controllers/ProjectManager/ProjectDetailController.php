@@ -26,13 +26,11 @@ class ProjectDetailController extends Controller
         $modules         = Module::get();
         $employees       = Role::whereEmployee()->first()->user;
         $versions        = ProjectVersion::where('project_id', $project->id)->latest()->get();
-        $selectedVersion = $this->selectedVersion($versions, $request->version);
-        $projectModules  = ProjectDetail::where('project_version_id', $selectedVersion->id)->get();
+        $selectedVersion = $this->selectedVersion($versions, $request->version, $project);
         $statusOptions   = (new ProjectDetail())->statusOption;
 
         return view('project.project_manager.pages.project.module.index', compact(
             'project',
-            'projectModules',
             'selectedVersion',
             'modules',
             'employees',

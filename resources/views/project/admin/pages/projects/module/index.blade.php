@@ -15,7 +15,7 @@
         <div class="col-lg-12 col-md-12 col-12 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Project Modules <span class="badge badge-secondary">{{ $project->projectDetails->count() }}</span></h4>
+                    <h4>Project Modules <span class="badge badge-secondary">{{ $selectedVersion->projectDetails->count() }}</span></h4>
                     <div class="card-header-action">
                         <button data-action="{{ route('admin.admin_projects.project_module.store', $project) }}" class="btn btn-primary btn-round ml-auto btn-add text-white" data-toggle="modal" data-target="#modal">
                             <i class="fa fa-plus"></i>
@@ -41,7 +41,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                    @foreach($projectModules as $projectDetail)
+                                    @foreach($selectedVersion->projectDetails as $projectDetail)
                                         <tr>
                                             <td>
                                                 <b>{{ $projectDetail->moduleable->name }}</b>

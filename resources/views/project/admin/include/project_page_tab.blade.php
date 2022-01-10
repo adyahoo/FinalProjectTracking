@@ -12,6 +12,9 @@
                         @foreach($versions as $version)
                             <option value="{{ $version->id }}" @if($requestVersion == $version->id) selected @endif>{{ $version->version_number }}</option>
                         @endforeach
+                        @isset($versions[0])
+                            <option value="{{ $versions[0]->generalVersion['all_version'] }}" @if($requestVersion == $versions[0]->project_id) selected @endif>{{ $versions[0]->generalVersion['all_version'] }}</option>
+                        @endisset
                     </select>
                 </div>
             </form>
