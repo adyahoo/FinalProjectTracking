@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-    @include('project.project_manager.include.project_page_tab', [
+    @include('project.project_manager.include.project_page_tab_version', [
         'requestVersion' => $request->version
     ])
     <div class="row">

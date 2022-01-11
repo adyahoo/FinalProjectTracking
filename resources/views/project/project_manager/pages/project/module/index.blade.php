@@ -421,8 +421,7 @@
             $.get(detail, function (data) {
                 $('#nameSpecial').val(data.moduleable.name);
                 $('#descriptionSpecial').val(data.moduleable.description);
-                $('#startSpecial').val(data.start_date.date);
-                $('#endSpecial').val(data.end_date.date);
+                $('#startEndDateSpecial').val(data.start_dates + ' ' + data.start_times + ' - ' + data.end_dates + ' ' + data.end_times);
             });
         });
 

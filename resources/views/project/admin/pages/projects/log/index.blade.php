@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-    @include('project.admin.include.project_page_tab', [
+    @include('project.admin.include.project_page_tab_version', [
         'requestVersion' => $request->version
     ])
     <div class="row">

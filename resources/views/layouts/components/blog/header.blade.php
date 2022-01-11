@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand" href="/">
-                @if($page['logo'] != null)
+                @if($page != null)
                     <img alt="Image of Brand" src="{{ Storage::url('app_logo/'. $page['logo']) }}">
                 @else
                     <img alt="Image of Brand" src="{{asset('images/logo-timedoor.svg')}}">

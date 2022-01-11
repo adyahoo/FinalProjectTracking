@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <label>Blog App Front Page Logo</label>
                     <input name="logo" style="width: 250px" class="form-control" value="{{ old('logo') }}" type="file" onchange="showPreview(event);" accept="image/jpg, image/jpeg, image/gif"/>
-                    @if($pageSetting->logo)
+                    @if($pageSetting)
                         <img id="logo" style="width: 250px; height: 250px;" class="img-fluid" src="{{Storage::url('app_logo/'.$pageSetting->logo)}}" alt="">
                     @else
                         <img id="logo" class="img-fluid" src="https://via.placeholder.com/250x250" alt="">
@@ -28,7 +28,11 @@
                 </div>
                 <div class="form-group">
                     <label>Project Management App Name</label>
-                    <input value="{{$pageSetting->title}}" name="title" type="text" class="form-control" placeholder="Input Name">
+                    @if($pageSetting)
+                        <input value="{{$pageSetting->title}}" name="title" type="text" class="form-control" placeholder="Input Name">
+                    @else
+                        <input value="" name="title" type="text" class="form-control" placeholder="Input Name">
+                    @endif
                     @error('title')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
