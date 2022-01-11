@@ -13,17 +13,17 @@ Named **Catalyst** :green_heart:, this project created for tracking and manage T
 
 ## Get Started
 
-To run the app, you need to follow the installation step below.
+To run the app, you need to follow the installation steps below.
 
 - Clone this project to your machine.
 - Run `composer install` to install all the vendors used in this project.
 - Run `php artisan migrate` to generate all database tables used in this project.
 - Run `php artisan db:seed --class="RoleSeeder"` to generate all role in the database.
 - Run `php artisan db:seed --class="DivisionSeeder"` to generate all division in the database.
-- Run `php artisan db:seed --class="AdminSeeder"` to generate Admin roled user.
-- Run `php artisan db:seed --class="ProjectManagerSeeder"` to generate Project Manager roled user (or also can be created on Admin dashboard).
-- Run `php artisan db:seed --class="ProgrammerSeeder"` to generate Programmer roled user (or also can be created on Admin dashboard).
-- Run `php artisan db:seed` to generate 10 dummy Programmer roled user.
+- Run `php artisan db:seed --class="AdminSeeder"` to generate **Admin** roled user.
+- Run `php artisan db:seed --class="ProjectManagerSeeder"` to generate **Project Manager** roled user (or also can be created on Admin dashboard).
+- Run `php artisan db:seed --class="ProgrammerSeeder"` to generate **Programmer** roled user (or also can be created on Admin dashboard).
+- Run `php artisan db:seed` to generate 10 dummy **Programmer** roled user.
 - Run `php artisan serve` to run the app.
 - Enjoy :+1:
 
@@ -34,13 +34,19 @@ If you already generate all the user based on instruction above, you can login t
 Login Form : baseurl/login
 
 ###### Admin
-Email___ : admin@timedoor.com\
+<pre>
+Email    : admin@timedoor.com
 Password : admin
+</pre>
 
 ###### Project Manager
-Email___ : pm@timedoor.com\
+<pre>
+Email    : pm@timedoor.com
 Password : projectmanager
+</pre>
 
 ###### Programmer
-Email___ : programmer@timedoor.com\
+<pre>
+Email    : programmer@timedoor.com
 Password : programmer
+</pre>
