@@ -29,8 +29,8 @@
                 <div class="form-group">
                   <label for="image-upload">Logo</label>
                   <div class="col-sm-12 col-md-7 mx-auto">
-                      <input name="logo" class="form-control" value="{{ old('logo') }}" type="file" onchange="showPreview(event);" accept="image/jpg, image/jpeg, image/gif"/>
-                      <img id="logo" class="img-fluid" id="propic" src="https://via.placeholder.com/480x480" alt="">
+                      <input name="logo" class="form-control mb-3" value="{{ old('logo') }}" type="file" onchange="showPreview(event);" accept="image/jpg, image/jpeg, image/gif"/>
+                      <img id="logo" class="img-fluid" id="propic" src="https://via.placeholder.com/560x560" alt="">
                   </div>
                   @error('logo')
                       <small class="text-danger">{{ $message }}</small>

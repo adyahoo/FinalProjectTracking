@@ -5,7 +5,7 @@
                 @if($page != null)
                     <img alt="Image of Brand" src="{{ Storage::url('app_logo/'. $page['logo']) }}">
                 @else
-                    <img alt="Image of Brand" src="{{asset('images/logo-timedoor.svg')}}">
+                    <img alt="Image of Brand" src="{{asset('images/logo.png')}}">
                 @endif
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,6 +24,9 @@
                             Category
                         </a>
                         <div class="dropdown-menu mb-3" aria-labelledby="navbarDropdown">
+                            @if($categories->count() < 1)
+                            <p class="dropdown-item disabled">No Category Found</p>
+                            @else
                             @foreach($categories as $category)
                             <a class="dropdown-item" href="#" onclick="searchCategory('{{$category->id}}')">{{$category->name}}</a>
                             <form id="formSearch{{$category->id}}" action="{{ route('kategori') }}" method="post">
@@ -32,6 +35,7 @@
                                 <input type="hidden" name="categoryId" value="{{$category->id}}">
                             </form>
                             @endforeach                            
+                            @endif
                         </div>
                     </li>
                 </ul>

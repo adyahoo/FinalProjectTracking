@@ -44,40 +44,6 @@
             </div>                        
         </div>
     </div>
-    <div class="section section-related-blogs">
-        <h3 class="section-related__title">
-            Discover Related Blogs
-        </h3>
-        <div class="row">
-            @if($relatedBlogs->count() < 1)
-                <h2>No Data Found</h2>
-            @else
-                <x-content-list-home :blogs="$relatedBlogs"></x-content-list-home>
-            @endif
-        </div>
-    </div>
-    <div class="section-btn-share fab-container">
-        <div class="fab shadow">
-            <div class="fab-content">
-                <span class="material-icons">share</span>
-            </div>
-        </div>
-        <div class="sub-button shadow">
-            <a href="#" target="_blank">
-                <i class="material-icons fa-facebook"></i>
-            </a>
-        </div>
-        <div class="sub-button shadow">
-            <a href="#" target="_blank">
-                <i class="material-icons fa-instagram"></i>
-            </a>
-        </div>
-        <div class="sub-button shadow">
-            <a href="#" target="_blank">
-                <i class="material-icons fa-linkedin"></i>
-            </a>
-        </div>
-    </div>
 </div>
 @endsection
 

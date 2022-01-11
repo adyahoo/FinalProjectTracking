@@ -13,8 +13,8 @@ class ListBlogsController extends Controller
 {
     public function index()
     {
-        $blogs       = Blog::with('user')->get();
-        $bannerBlogs = Blog::with('user')->orderBy('published_at', 'DESC')->take(3)->get();
+        $blogs       = Blog::with('user')->whereNotNull('published_at')->get();
+        $bannerBlogs = Blog::with('user')->whereNotNull('published_at')->orderBy('published_at', 'DESC')->take(3)->get();
         return view('blog.blog_list', compact('blogs', 'bannerBlogs'));
     }
 
@@ -22,7 +22,7 @@ class ListBlogsController extends Controller
     {
         if ($request->ajax()) {
             $data      = $request->all();
-            $blogs     = Blog::with('user');
+            $blogs     = Blog::with('user')->whereNotNull('published_at');
             $results   = $data['data'] == "oldest" ? $blogs->orderBy('published_at', "ASC")->get() : $blogs->orderBy('published_at', "DESC")->get();
     
             $component = $data['type'] == "grid" ? View::make("components.content-vert") : View::make("components.content-horiz");
@@ -39,7 +39,7 @@ class ListBlogsController extends Controller
     public function returnSearch(Request $request)
     {
         $user  = User::where('name','LIKE','%'.$request->searchInput.'%')->first();
-        $blogs = is_null($user) ? null : Blog::with('user')->where('user_id', $user->id)->get();
+        $blogs = is_null($user) ? null : Blog::with('user')->whereNotNull('published_at')->where('user_id', $user->id)->get();
         return view('blog.blog_search', compact('request', 'blogs'));
     }
 
@@ -59,14 +59,14 @@ class ListBlogsController extends Controller
             $blogs = $blogs->whereMonth('published_at', $month);
         }
 
-        $blogs = $blogs->get();
+        $blogs = $blogs->whereNotNull('published_at')->get();
 
         return view('blog.blog_search', compact('request', 'blogs'));
     }
 
     public function returnKategori(Request $request)
     {
-        $blogs = Blog::with('user', 'blogCategory')->where('blog_category_id', $request->categoryId)->get();
+        $blogs = Blog::with('user', 'blogCategory')->whereNotNull('published_at')->where('blog_category_id', $request->categoryId)->get();
         return view('blog.blog_search', compact('request', 'blogs'));
     }
 }
