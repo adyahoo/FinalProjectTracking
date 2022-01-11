@@ -1,5 +1,7 @@
 @extends('layouts.blog')
 @section('title', 'Detail Blog')
+@section('meta_title', '{{$blog->meta_title}}')
+@section('meta_description', '{{$blog->meta_description}}')
 
 @push('css')
 <link rel="stylesheet" href="{{asset('css/blog/detail/detail.css')}}">
