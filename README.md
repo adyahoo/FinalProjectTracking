@@ -9,7 +9,7 @@
 
 ## About This Project
 
-Named Catalyst, this project created for tracking and manage Timedoor Indonesia's projects as a software company and blogs. This project contains 3 roles of users which is Admin, Project Manager and Programmer.
+Named Catalyst :green_heart:, this project created for tracking and manage Timedoor Indonesia's projects as a software company and blogs. This project contains 3 roles of users which is Admin, Project Manager and Programmer.
 
 ## Get Started
 
@@ -33,17 +33,14 @@ If you already generate all the user based on instruction above, you can login t
 
 Login Form : baseurl/login
 
-### Admin
-Email    : admin@timedoor.com
+###### Admin
+Email    : admin@timedoor.com\
 Password : admin
 
-### Project Manager
-Email    : pm@timedoor.com
+###### Project Manager
+Email    : pm@timedoor.com\
 Password : projectmanager
 
-### Programmer
-Email    : programmer@timedoor.com
+###### Programmer
+Email    : programmer@timedoor.com\
 Password : programmer
-
-
-Made with :heart: from Denpasar
