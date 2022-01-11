@@ -161,7 +161,7 @@
                             <label>Member</label>
                             <select id="member" name="user_id" class="form-control">
                                 @foreach($employees as $employee)
-                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                    <option value="{{ $employee->id }}">{{ $employee->name }} ({{$employee->division->name}})</option>
                                 @endforeach
                             </select>
                             @error('user_id')

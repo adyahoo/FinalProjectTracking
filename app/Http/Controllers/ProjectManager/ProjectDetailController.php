@@ -112,10 +112,12 @@ class ProjectDetailController extends Controller
     public function update(ProjectDetailRequest $request, ProjectDetail $projectDetail)
     {
         $projectDetailUpdate = $request->all();
-        $dates               = explode(' - ', $request->start_end_date);
 
-        $projectDetailUpdate += ['start_date' => $dates[0]];
-        $projectDetailUpdate += ['end_date'   => $dates[1]];
+        if($request->start_end_date) {
+            $dates               = explode(' - ', $request->start_end_date);
+            $projectDetailUpdate += ['start_date' => $dates[0]];
+            $projectDetailUpdate += ['end_date'   => $dates[1]];
+        }
 
         if(!empty($request->start_end_date_actual)) {
             $dates               = explode(' - ', $request->start_end_date_actual);
