@@ -18,6 +18,7 @@ class ProgrammerSeeder extends Seeder
     {
         DB::table('users')->insert([
             'role_id'        => 3,
+            'division_id'    => 3,
             'name'           => 'programmer',
             'email'          => 'programmer@timedoor.com',
             'password'       => Hash::make('programmer'),

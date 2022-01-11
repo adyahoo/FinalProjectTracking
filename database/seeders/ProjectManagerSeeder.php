@@ -18,6 +18,7 @@ class ProjectManagerSeeder extends Seeder
     {
         DB::table('users')->insert([
             'role_id'        => 2,
+            'division_id'    => 2,
             'name'           => 'project manager',
             'email'          => 'pm@timedoor.com',
             'password'       => Hash::make('projectmanager'),

@@ -17,5 +17,13 @@ class DivisionSeeder extends Seeder
         DB::table('divisions')->insert([
             'name' => 'admin',
         ]);
+        
+        DB::table('divisions')->insert([
+            'name' => 'project_manager',
+        ]);
+
+        DB::table('divisions')->insert([
+            'name' => 'programmer',
+        ]);
     }
 }
