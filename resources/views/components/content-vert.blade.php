@@ -7,7 +7,7 @@
     </a>
     <div class="section-content__body p-3">
         <div class="row no-gutters justify-content-between">
-            <p class="section-content__date-created font-weight-bold">{{ $blog->published_at }} <br>{{
+            <p class="section-content__date-created font-weight-bold">{{ Carbon\Carbon::parse($blog->published_at)->format('d M Y, H:i:s') }} <br>{{
                 $blog->user->name }}</p>
         </div>
         <h4 class="text-dark text-center">
