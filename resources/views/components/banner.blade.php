@@ -2,7 +2,7 @@
     <img class="section-banner__img" src="{{asset('images/banner-bg.svg')}}">
     <div class="container section-banner__content">
         <div class="swiper">
-            <div class="swiper-wrapper">
+            <div class="swiper-wrapper {{ $blogs->count() < 1 ? 'justify-content-center' : ' ' }}">
                 @if($blogs->count() < 1)
                     <h2>No Data Found</h2>
                 @else
