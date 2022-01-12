@@ -303,8 +303,7 @@
             $("#formDateActual").attr("method", "post");
             $("#methodDateActual").attr("value", "put");
             $.get(detail, function (data) {
-                $('#startActual').val(data.start_date_actual.date);
-                $('#endActual').val(data.end_date_actual.date);
+                $('#startEndDateActual').val(data.start_date_actuals + ' ' + data.start_time_actuals + ' - ' + data.end_date_actuals + ' ' + data.end_time_actuals);
             });
         });
     </script>
