@@ -100,7 +100,7 @@ class ProjectDetailController extends Controller
 
     public function edit(ProjectDetail $projectDetail)
     {
-        $projectDetail->setAttribute('moduleable', $projectDetail->moduleable);
+        $projectDetail->setAttribute('moduleable', $projectDetail->moduleable); 
         $projectDetail->setAttribute('start_dates', $projectDetail->start_date->format('Y-m-d'));
         $projectDetail->setAttribute('start_times', Carbon::parse($projectDetail->start_date)->format('H:i:s'));
         $projectDetail->setAttribute('end_dates', $projectDetail->end_date->format('Y-m-d'));
