@@ -106,16 +106,23 @@ class ProjectDetailController extends Controller
         $projectDetail->setAttribute('end_dates', $projectDetail->end_date->format('Y-m-d'));
         $projectDetail->setAttribute('end_times', Carbon::parse($projectDetail->end_date)->format('H:i:s'));
 
+        $projectDetail->setAttribute('start_dates_actual', $projectDetail->start_date_actual->format('Y-m-d'));
+        $projectDetail->setAttribute('start_times_actual', Carbon::parse($projectDetail->start_date_actual)->format('H:i:s'));
+        $projectDetail->setAttribute('end_dates_actual', $projectDetail->end_date_actual->format('Y-m-d'));
+        $projectDetail->setAttribute('end_times_actual', Carbon::parse($projectDetail->end_date_actual)->format('H:i:s'));
+
         return response()->json($projectDetail);
     }
 
     public function update(ProjectDetailRequest $request, ProjectDetail $projectDetail)
     {
         $projectDetailUpdate = $request->all();
-        $dates               = explode(' - ', $request->start_end_date);
 
-        $projectDetailUpdate += ['start_date' => $dates[0]];
-        $projectDetailUpdate += ['end_date'   => $dates[1]];
+        if(!empty($request->start_end_date)) {
+            $dates               = explode(' - ', $request->start_end_date);
+            $projectDetailUpdate += ['start_date' => $dates[0]];
+            $projectDetailUpdate += ['end_date'   => $dates[1]];
+        }
 
         if(!empty($request->start_end_date_actual)) {
             $dates               = explode(' - ', $request->start_end_date_actual);
