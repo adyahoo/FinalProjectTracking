@@ -118,3 +118,28 @@
         </div>
     </div>
 @endsection
+@section('script')
+<script src="{{ asset('templates/stisla/node_modules/sweetalert/dist/sweetalert.min.js') }}"></script>
+@if (Session::has('success'))
+        <script>
+            swal("Success!", "{{ Session::get('success') }}", "success").then(function(){
+                window.location.reload(window.location.href)
+            });
+        </script>
+    @endif
+<script>
+    window.deleteConfirm = function(formId) {
+        swal({
+            title: 'Delete Confirmation',
+            icon: 'warning',
+            text: 'Do you want to delete this?',
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                $('#'+formId).submit();
+            }
+        });
+    }
+</script>
+@endsection
