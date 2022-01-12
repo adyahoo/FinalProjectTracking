@@ -16,7 +16,7 @@
                                     </div>
                                 </div>
                                 <div class="col-7">
-                                    <p class="section-banner__date-created font-weight-bold">{{$blog->published_at}} - {{$blog->user->name}}</p>
+                                    <p class="section-banner__date-created font-weight-bold">{{Carbon\Carbon::parse($blog->published_at)->format('d M Y')}} - {{$blog->user->name}}</p>
                                     <h2 class="text-dark">
                                         {{$blog->title}}
                                     </h2>

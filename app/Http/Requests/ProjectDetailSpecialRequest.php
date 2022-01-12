@@ -23,6 +23,14 @@ class ProjectDetailSpecialRequest extends FormRequest
      */
     public function rules()
     {
+        if($this->method() == 'PUT') {
+            return [
+                'name'           => 'nullable',
+                'description'    => 'nullable',
+                'start_end_date' => 'nullable',
+            ];
+        }
+        
         return [
             'name'           => 'required',
             'description'    => 'required',

@@ -1,7 +1,7 @@
 @extends('layouts.blog')
 @section('title', 'Detail Blog')
-@section('meta_title', '{{$blog->meta_title}}')
-@section('meta_description', '{{$blog->meta_description}}')
+@section('meta_title', $blog->meta_title)
+@section('meta_description', $blog->meta_description)
 
 @push('css')
 <link rel="stylesheet" href="{{asset('css/blog/detail/detail.css')}}">
@@ -32,7 +32,7 @@
                             <p class="section-detail__profile-name font-weight-bold d-inline-block mb-0">{{$blog->user->name}}</p>
                         </a>
                         <p>
-                            Published at: {{$blog->published_at}}<br>
+                            Published at: {{Carbon\Carbon::parse($blog->published_at)->format('d M Y, H:i')}}<br>
                         </p>
                         <i class="far fa-eye">{{$blog->view_count}}</i>
                     </div>

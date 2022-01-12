@@ -161,7 +161,7 @@
                             <label>Member</label>
                             <select id="member" name="user_id" class="form-control">
                                 @foreach($employees as $employee)
-                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                    <option value="{{ $employee->id }}">{{ $employee->name }} ({{$employee->division->name}})</option>
                                 @endforeach
                             </select>
                             @error('user_id')
@@ -303,8 +303,7 @@
             $("#formDateActual").attr("method", "post");
             $("#methodDateActual").attr("value", "put");
             $.get(detail, function (data) {
-                $('#startActual').val(data.start_date_actual.date);
-                $('#endActual').val(data.end_date_actual.date);
+                $('#startEndDateActual').val(data.start_date_actuals + ' ' + data.start_time_actuals + ' - ' + data.end_date_actuals + ' ' + data.end_time_actuals);
             });
         });
     </script>

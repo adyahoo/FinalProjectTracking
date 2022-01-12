@@ -44,7 +44,9 @@ class Blog extends Model
 
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults()->useLogName('blog');
+        return LogOptions::defaults()
+                ->useLogName('blog')
+                ->dontLogIfAttributesChangedOnly(['view_count', 'updated_at']);
     }
 
     public function getDescriptionForEvent(string $eventName): string

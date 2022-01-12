@@ -25,7 +25,7 @@ class BlogRequest extends FormRequest
     {
         $rules = [
             'blog_category_id' => 'required',
-            'title'            => 'required|min:10|max:60',
+            'title'            => 'required|min:10|max:200',
             'content'          => 'required|min:100',
             'status'           => 'required',
             'slug'             => 'nullable|min:10|max:70',
@@ -35,7 +35,7 @@ class BlogRequest extends FormRequest
         if($this->method() == 'PUT'){
             $rules += [
                 'image'            => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'meta_title'       => 'required|min:10|max:60',
+                'meta_title'       => 'required|min:10|max:200',
                 'meta_description' => 'required|min:30',
             ]; 
         }else{
