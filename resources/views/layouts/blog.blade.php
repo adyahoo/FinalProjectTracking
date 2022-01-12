@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@yield('title')</title>
+    <meta name="robots" content="noindex,nofollow">
     <meta name="title" content="@yield('meta_title')">
     <meta name="description" content="@yield('meta_description')">
     <meta name="viewport" content="width=device-width, initial-scale=1">
