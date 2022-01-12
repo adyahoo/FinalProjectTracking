@@ -311,7 +311,11 @@
             $("#formDateActual").attr("method", "post");
             $("#methodDateActual").attr("value", "put");
             $.get(detail, function (data) {
+<<<<<<< HEAD
+                $('#startEndDateActual').val(data.start_dates_actual + ' ' + data.start_times_actual + ' - ' + data.end_dates_actual + ' ' + data.end_times_actual);
+=======
                 $('#startEndDateActual').val(data.start_date_actuals + ' ' + data.start_time_actuals + ' - ' + data.end_date_actuals + ' ' + data.end_time_actuals);
+>>>>>>> 86f229a5ce3f80ce6085d6cedbeb775a3630297c
             });
         });
     </script>
