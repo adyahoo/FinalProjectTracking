@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{ asset('css/blog/content.css') }}">
     <link rel="stylesheet" href="{{ asset('css/tagsinput.css') }}">
     @stack('css')
-</head>
+</head> 
 
 <body>
     @include('layouts.components.blog.header')
