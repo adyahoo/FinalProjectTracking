@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', 'HomeBlogController@index');
+Route::get('/', 'HomeBlogController@index')->middleware('tmd-bsa');
 Route::get('/blog', 'ListBlogsController@index')->name("blog");
 Route::post('/sort_blog', 'ListBlogsController@sort')->name("sort_blog");
 Route::post('/author_sort_blog', 'AuthorController@sort')->name("author_sort_blog");

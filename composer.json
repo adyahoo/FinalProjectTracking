@@ -18,7 +18,8 @@
         "overtrue/laravel-follow": "dev-master",
         "overtrue/laravel-like": "^4.0",
         "spatie/laravel-activitylog": "^3.17.0",
-        "staudenmeir/eloquent-has-many-deep": "^1.7"
+        "staudenmeir/eloquent-has-many-deep": "^1.7",
+        "timedoor/tmd-basic-auth": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
