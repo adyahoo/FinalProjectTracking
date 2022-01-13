@@ -17,7 +17,7 @@
         "laravel/tinker": "^2.5",
         "overtrue/laravel-follow": "dev-master",
         "overtrue/laravel-like": "^4.0",
-        "spatie/laravel-activitylog": "^4.3",
+        "spatie/laravel-activitylog": "^3.17.0",
         "staudenmeir/eloquent-has-many-deep": "^1.7"
     },
     "require-dev": {
